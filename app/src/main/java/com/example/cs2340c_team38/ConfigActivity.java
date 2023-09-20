@@ -32,9 +32,10 @@ public class ConfigActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isValidConfig()) {
-                    // TODO: Pass this configuration to the game activity
-                    // For now, just navigate to the Main start screen
-                    Intent intent = new Intent(ConfigActivity.this, MainActivity.class);
+                    Intent intent = new Intent(ConfigActivity.this, GameDisplayActivity.class);
+                    intent.putExtra("PLAYER_NAME", editPlayerName.getText().toString());
+                    intent.putExtra("DIFFICULTY", spinnerDifficulty.getSelectedItem().toString());
+                    intent.putExtra("CHARACTER_SPRITE", radioGroupCharacterSprite.getCheckedRadioButtonId());
                     startActivity(intent);
                 } else {
                     Toast.makeText(ConfigActivity.this, "Please fill in all details", Toast.LENGTH_SHORT).show();
