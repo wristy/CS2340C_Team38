@@ -14,4 +14,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "CS2340C_Team38"
-include ':app'
+include(":app")
+ 
