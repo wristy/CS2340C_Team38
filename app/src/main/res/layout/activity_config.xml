@@ -27,7 +27,9 @@
             android:id="@+id/radioCharacter1"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:adjustViewBounds="true"
             android:drawableTop="@drawable/character1"
+            android:scaleType="centerInside"
             android:text="Character 1" />
 
         <RadioButton
