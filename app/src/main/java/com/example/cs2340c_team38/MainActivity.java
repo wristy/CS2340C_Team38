@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity { // welcome screen
         Button buttonExit = (Button) findViewById(R.id.buttonExit);
         buttonExit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                System.exit(0);
                 finish();
             }
         });
