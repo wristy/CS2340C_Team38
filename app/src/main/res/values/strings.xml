@@ -5,5 +5,8 @@
         <item>Medium</item>
         <item>Hard</item>
     </string-array>
+    <string name="easy_health">150</string>
+    <string name="medium_health">100</string>
+    <string name="hard_health">50</string>
 
 </resources>
