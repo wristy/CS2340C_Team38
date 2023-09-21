@@ -13,10 +13,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ConfigActivity extends AppCompatActivity {
-    EditText editPlayerName;
-    Spinner spinnerDifficulty;
-    RadioGroup radioGroupCharacterSprite;
-    Button buttonContinue;
+    private EditText editPlayerName;
+    private Spinner spinnerDifficulty;
+    private RadioGroup radioGroupCharacterSprite;
+    private Button buttonContinue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +32,17 @@ public class ConfigActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isValidConfig()) {
-                    Intent intent = new Intent(ConfigActivity.this, GameDisplayActivity.class);
+                    Intent intent = new Intent(ConfigActivity.this,
+                            GameDisplayActivity.class);
                     intent.putExtra("PLAYER_NAME", editPlayerName.getText().toString());
-                    intent.putExtra("DIFFICULTY", spinnerDifficulty.getSelectedItem().toString());
-                    intent.putExtra("CHARACTER_SPRITE", radioGroupCharacterSprite.getCheckedRadioButtonId());
+                    intent.putExtra("DIFFICULTY",
+                            spinnerDifficulty.getSelectedItem().toString());
+                    intent.putExtra("CHARACTER_SPRITE",
+                            radioGroupCharacterSprite.getCheckedRadioButtonId());
                     startActivity(intent);
                 } else {
-                    Toast.makeText(ConfigActivity.this, "Please fill in all details", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ConfigActivity.this, "Please fill in all details",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
