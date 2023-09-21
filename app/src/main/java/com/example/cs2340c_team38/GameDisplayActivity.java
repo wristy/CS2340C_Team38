@@ -35,6 +35,15 @@ public class GameDisplayActivity extends AppCompatActivity {
             characterImageView.setImageResource(R.drawable.character3);
         }
 
+        TextView healthTextView = findViewById(R.id.textView);
+        if (difficulty.equals("Easy")) {
+            healthTextView.setText("Health: 150");
+        } else if (difficulty.equals("Medium")) {
+            healthTextView.setText("Health: 100");
+        } else if (difficulty.equals("Hard")) {
+            healthTextView.setText("Health: 50");
+        }
+
         Button exitButton = findViewById(R.id.exitButton);
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
