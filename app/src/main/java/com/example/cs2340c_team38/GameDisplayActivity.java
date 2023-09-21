@@ -41,7 +41,7 @@ public class GameDisplayActivity extends AppCompatActivity {
         } else if (difficulty.equals("Medium")) {
             healthTextView.setText("Health: 100");
         } else if (difficulty.equals("Hard")) {
-            healthTextView.setText("Health: 75");
+            healthTextView.setText("Health: 85");
         }
 
         Button exitButton = findViewById(R.id.exitButton);
