@@ -11,6 +11,6 @@ public class EndActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end);
 
-        // TODO: Leaderboard and whether player successfully completed the game
+        //TODO leaderboard and whether player successfully completed the game
     }
 }
