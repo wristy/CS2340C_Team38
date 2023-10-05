@@ -14,11 +14,11 @@ public class MainViewModel extends ViewModel {
 
     public MutableLiveData<Void> getEndEvent() {
         return endEvent;
-    }
+    } // see MainActivity.java
 
     public void onButtonStartClicked() {
         startEvent.setValue(null);
-    }
+    } // actual bound (@="...") in xml
 
     public void onButtonExitClicked() {
         endEvent.setValue(null);

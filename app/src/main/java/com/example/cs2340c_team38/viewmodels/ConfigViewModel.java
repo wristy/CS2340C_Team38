@@ -1,6 +1,5 @@
 package com.example.cs2340c_team38.viewmodels;
 
-import android.content.Intent;
 import android.text.TextUtils;
 
 import androidx.lifecycle.MutableLiveData;

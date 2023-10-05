@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<data>
+    <variable
+        name="viewModel"
+        type="com.example.cs2340c_team38.viewmodels.GameDisplayViewModel" />
+</data>
+<androidx.constraintlayout.widget.ConstraintLayout 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GameDisplayActivity">
@@ -10,7 +17,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Player Name"
+        android:text="@{viewModel.playerName}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.281"
@@ -22,7 +29,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Health: 100"
+        android:text="@{viewModel.healthText}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.887"
@@ -34,7 +41,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Difficulty"
+        android:text="@{viewModel.difficultyText}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.579"
@@ -53,6 +60,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.036"
         tools:srcCompat="@tools:sample/avatars" />
+
 
     <ImageView
         android:id="@+id/imageView2"
@@ -77,3 +85,4 @@
         app:layout_constraintVertical_bias="0.948" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
