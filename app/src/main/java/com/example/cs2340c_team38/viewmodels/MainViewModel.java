@@ -10,11 +10,18 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.cs2340c_team38.ConfigActivity;
 public class MainViewModel extends ViewModel {
+
+    private MutableLiveData<Void> startEvent = new MutableLiveData<>();
+    private MutableLiveData<Void> endEvent = new MutableLiveData<>();
+
+
     public MutableLiveData<Void> getStartEvent() {
         return startEvent;
     }
 
-    private MutableLiveData<Void> startEvent = new MutableLiveData<>();
+    public MutableLiveData<Void> getEndEvent() {
+        return endEvent;
+    }
 
     public void onButtonStartClicked() {
         // Handle button start click event
@@ -22,6 +29,6 @@ public class MainViewModel extends ViewModel {
     }
 
     public void onButtonExitClicked() {
-        // Handle button exit click event
+        endEvent.setValue(null);
     }
 }

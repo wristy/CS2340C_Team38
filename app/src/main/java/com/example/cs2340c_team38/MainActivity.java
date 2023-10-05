@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import com.example.cs2340c_team38.databinding.ActivityMainBinding;
 import com.example.cs2340c_team38.viewmodels.MainViewModel;
@@ -27,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
       viewModel.getStartEvent().observe(this, message -> {
             Intent intent = new Intent(MainActivity.this, ConfigActivity.class);
             startActivity(intent);
+      });
+
+      viewModel.getEndEvent().observe(this, message -> {
+          finish();
       });
     }
 }
