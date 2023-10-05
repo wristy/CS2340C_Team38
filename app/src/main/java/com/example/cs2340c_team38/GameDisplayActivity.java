@@ -17,14 +17,26 @@ public class GameDisplayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_display);
 
         String playerName = getIntent().getStringExtra("PLAYER_NAME");
-        String difficulty = getIntent().getStringExtra("DIFFICULTY");
+        int difficulty = getIntent().getIntExtra("DIFFICULTY", 3);
         int characterSpriteId = getIntent().getIntExtra("CHARACTER_SPRITE", -1);
 
         TextView playerNameTextView = findViewById(R.id.textView3);
         playerNameTextView.setText(playerName);
 
         TextView difficultyTextView = findViewById(R.id.textView2);
-        difficultyTextView.setText(difficulty);
+        String diff;
+        switch (difficulty) {
+            case 0:
+                diff = "Easy";
+                break;
+            case 1:
+                diff = "Medium";
+                break;
+            default:
+                diff = "Hard";
+                break;
+        }
+        difficultyTextView.setText(diff);
 
         ImageView characterImageView = findViewById(R.id.imageView);
         if (characterSpriteId == R.id.radioCharacter1) {
@@ -36,11 +48,11 @@ public class GameDisplayActivity extends AppCompatActivity {
         }
 
         TextView healthTextView = findViewById(R.id.textView);
-        if (difficulty.equals("Easy")) {
+        if (diff.equals("Easy")) {
             healthTextView.setText("Health: 150");
-        } else if (difficulty.equals("Medium")) {
+        } else if (diff.equals("Medium")) {
             healthTextView.setText("Health: 100");
-        } else if (difficulty.equals("Hard")) {
+        } else if (diff.equals("Hard")) {
             healthTextView.setText("Health: 85");
         }
 

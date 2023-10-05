@@ -1,56 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ConfigActivity"
+    >
 
-    <EditText
-        android:id="@+id/editPlayerName"
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.cs2340c_team38.viewmodels.ConfigViewModel" />
+    </data>
+    
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Player Name"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <Spinner
-        android:id="@+id/spinnerDifficulty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/difficulty_levels"/>
+        <EditText
+            android:id="@+id/editPlayerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Player Name"
+            android:text="@={viewModel.playerName}" />
 
-    <RadioGroup
-        android:id="@+id/radioGroupCharacterSprite"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <!-- Assuming you have 3 sprites: character1, character2, character3 -->
-        <RadioButton
-            android:id="@+id/radioCharacter1"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:adjustViewBounds="true"
-            android:drawableTop="@drawable/character1"
-            android:scaleType="centerInside"
-            android:text="Character 1" />
+        <Spinner
+            android:id="@+id/spinnerDifficulty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/difficulty_levels"
+            android:selectedItemPosition="@={viewModel.difficulty}"/>
 
-        <RadioButton
-            android:id="@+id/radioCharacter2"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:drawableTop="@drawable/character2"
-            android:text="Character 2" />
+        <RadioGroup
+            android:id="@+id/radioGroupCharacterSprite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checkedButton="@={viewModel.characterSprite}">
+            <!-- Assuming you have 3 sprites: character1, character2, character3 -->
+            <RadioButton
+                android:id="@+id/radioCharacter1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:adjustViewBounds="true"
+                android:drawableTop="@drawable/character1"
+                android:scaleType="centerInside"
+                android:text="Character 1"
+                android:value="@drawable/character1" />
 
-        <RadioButton
-            android:id="@+id/radioCharacter3"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:drawableTop="@drawable/character3"
-            android:text="Character 3" />
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/radioCharacter2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:drawableTop="@drawable/character2"
+                android:text="Character 2"
+                android:value="@drawable/character2" />
 
-    <Button
-        android:id="@+id/buttonContinue"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Continue"/>
+            <RadioButton
+                android:id="@+id/radioCharacter3"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:drawableTop="@drawable/character3"
+                android:text="Character 3"
+                android:value="@drawable/character3" />
+        </RadioGroup>
 
-</LinearLayout>
+        <Button
+            android:id="@+id/buttonContinue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Continue"
+            android:onClick="@{() -> viewModel.onButtonContinueClicked()}" />
+
+    </LinearLayout>
+</layout>
