@@ -13,26 +13,4 @@ public class BindingAdapters {
         imageView.setImageResource(drawableResourceId);
 
     }
-
-    @BindingAdapter("checkedButtonAttrChanged")
-    public static void setListeners(RadioGroup radioGroup, final InverseBindingListener listener) {
-        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            if (listener != null) {
-                listener.onChange();
-            }
-        });
-    }
-
-    @InverseBindingAdapter(attribute = "checkedButtonAttrChanged", event = "checkedButtonAttrChanged")
-    public static int getCheckedRadioButtonId(RadioGroup radioGroup) {
-        return radioGroup.getCheckedRadioButtonId();
-    }
-
-    @BindingAdapter("android:checkedButton")
-    public static void setCheckedRadioButtonId(RadioGroup group, int id) {
-        if (id != -1 && id != group.getCheckedRadioButtonId()) {
-            group.check(id);
-        }
-    }
-
 }
