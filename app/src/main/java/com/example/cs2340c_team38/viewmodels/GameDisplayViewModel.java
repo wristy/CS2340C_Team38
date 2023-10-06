@@ -1,12 +1,33 @@
 package com.example.cs2340c_team38.viewmodels;
 
 import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.MutableLiveData;
 
 public class GameDisplayViewModel extends ViewModel {
 
     private String playerName;
     private int difficulty;
     private int characterSpriteId;
+
+    private MutableLiveData<Integer> drawableImage = new MutableLiveData<>();
+
+    public MutableLiveData<Void> getEndEvent() {
+        return endEvent;
+    }
+
+    public void setEndEvent(MutableLiveData<Void> endEvent) {
+        this.endEvent = endEvent;
+    }
+
+    private MutableLiveData<Void> endEvent = new MutableLiveData<>();
+
+    public void setDrawableImage(int drawableResourceId) {
+        this.drawableImage.setValue(drawableResourceId);
+    }
+
+    public MutableLiveData<Integer> getDrawableImage() {
+        return drawableImage;
+    }
 
     public String getHealthText() {
         return String.valueOf(getHealth());
@@ -30,6 +51,8 @@ public class GameDisplayViewModel extends ViewModel {
         return difficulty;
     }
 
+    public void onButtonClick() { endEvent.setValue(null);}
+
     public void setCharacterSpriteId(int characterSpriteId) {
         this.characterSpriteId = characterSpriteId;
     }
@@ -48,6 +71,7 @@ public class GameDisplayViewModel extends ViewModel {
                 return "Hard";
         }
     }
+
 
     public int getHealth() {
         switch (difficulty) {

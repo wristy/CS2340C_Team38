@@ -1,11 +1,10 @@
 package com.example.cs2340c_team38.viewmodels;
 
 import android.text.TextUtils;
+import android.widget.RadioGroup;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.example.cs2340c_team38.GameDisplayActivity;
 
 public class ConfigViewModel extends ViewModel {
     private MutableLiveData<String> playerName = new MutableLiveData<>();
@@ -28,6 +27,15 @@ public class ConfigViewModel extends ViewModel {
     public MutableLiveData<Boolean> getIsValidConfig() {
         return isValidConfig;
     }
+
+    public void onSplitTypeChanged(RadioGroup radioGroup, int id) {
+        this.characterSprite.setValue(radioGroup.getCheckedRadioButtonId());
+    }
+
+    public void setCharacterSprite(MutableLiveData<Integer> characterSprite) {
+        this.characterSprite = characterSprite;
+    }
+
 
     public void onButtonContinueClicked() {
         if (isValidConfig()) {

@@ -1,4 +1,4 @@
-package com.example.cs2340c_team38;
+package com.example.cs2340c_team38.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.cs2340c_team38.R;
 import com.example.cs2340c_team38.databinding.ActivityMainBinding;
 import com.example.cs2340c_team38.viewmodels.MainViewModel;
 
