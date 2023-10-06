@@ -1,8 +1,10 @@
-package com.example.cs2340c_team38;
+package com.example.cs2340c_team38.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.cs2340c_team38.R;
 
 public class EndActivity extends AppCompatActivity {
 

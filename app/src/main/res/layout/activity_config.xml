@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ConfigActivity"
+    tools:context=".views.ConfigActivity"
     >
 
     <data>
@@ -35,7 +35,7 @@
             android:id="@+id/radioGroupCharacterSprite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checkedButton="@={viewModel.characterSprite}">
+            android:onCheckedChanged="@{viewModel.onSplitTypeChanged}">
             <!-- Assuming you have 3 sprites: character1, character2, character3 -->
             <RadioButton
                 android:id="@+id/radioCharacter1"
