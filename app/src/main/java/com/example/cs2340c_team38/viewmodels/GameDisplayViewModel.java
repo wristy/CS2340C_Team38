@@ -7,16 +7,11 @@ public class GameDisplayViewModel extends ViewModel {
 
     private String playerName;
     private int difficulty;
-    private int characterSpriteId;
 
     private MutableLiveData<Integer> drawableImage = new MutableLiveData<>();
 
     public MutableLiveData<Void> getEndEvent() {
         return endEvent;
-    }
-
-    public void setEndEvent(MutableLiveData<Void> endEvent) {
-        this.endEvent = endEvent;
     }
 
     private MutableLiveData<Void> endEvent = new MutableLiveData<>();
@@ -33,8 +28,6 @@ public class GameDisplayViewModel extends ViewModel {
         return String.valueOf(getHealth());
     }
 
-    private String healthText;
-
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
@@ -47,19 +40,8 @@ public class GameDisplayViewModel extends ViewModel {
         this.difficulty = difficulty;
     }
 
-    public int getDifficulty() {
-        return difficulty;
-    }
-
     public void onButtonClick() { endEvent.setValue(null);}
 
-    public void setCharacterSpriteId(int characterSpriteId) {
-        this.characterSpriteId = characterSpriteId;
-    }
-
-    public int getCharacterSpriteId() {
-        return characterSpriteId;
-    }
 
     public String getDifficultyText() {
         switch (difficulty) {
@@ -71,7 +53,6 @@ public class GameDisplayViewModel extends ViewModel {
                 return "Hard";
         }
     }
-
 
     public int getHealth() {
         switch (difficulty) {
