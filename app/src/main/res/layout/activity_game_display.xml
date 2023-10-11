@@ -71,7 +71,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dungeon_map" />
+        app:srcCompat="@drawable/map1"/>
 
     <Button
         android:id="@+id/exitButton"
