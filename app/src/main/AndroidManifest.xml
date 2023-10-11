@@ -14,9 +14,9 @@
         tools:targetApi="31">
         <activity
             android:name=".views.GameDisplayActivity2"
-            android:exported="false"
             android:label="@string/title_activity_game_display2"
-            android:theme="@style/Theme.CS2340C_Team38" />
+            android:theme="@style/Theme.CS2340C_Team38">
+            </activity>
         <activity android:name=".views.EndActivity"></activity>
         <activity android:name=".views.GameDisplayActivity"></activity>
         <activity android:name=".views.ConfigActivity"></activity>

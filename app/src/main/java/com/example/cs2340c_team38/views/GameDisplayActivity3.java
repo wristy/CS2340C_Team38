@@ -10,10 +10,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.cs2340c_team38.R;
 import com.example.cs2340c_team38.databinding.ActivityGameDisplayBinding;
 import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel;
-import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel2;
 
 
-public class GameDisplayActivity2 extends AppCompatActivity {
+public class GameDisplayActivity3 extends AppCompatActivity {
 
     private GameDisplayViewModel viewModel;
 
@@ -34,7 +33,7 @@ public class GameDisplayActivity2 extends AppCompatActivity {
         viewModel.setDrawableImage(characterSpriteId);
 
         viewModel.getEndEvent().observe(this, message -> {
-            Intent intent = new Intent(GameDisplayActivity2.this, EndActivity.class);
+            Intent intent = new Intent(GameDisplayActivity3.this, EndActivity.class);
             startActivity(intent);
         });
     }

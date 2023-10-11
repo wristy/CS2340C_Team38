@@ -34,7 +34,7 @@ public class GameDisplayActivity extends AppCompatActivity {
 
         viewModel.getEndEvent().observe(this, message -> {
             Intent intent = new Intent(GameDisplayActivity.this, EndActivity.class);
-            startActivity(intent);
+           startActivity(intent);
         });
     }
 }
