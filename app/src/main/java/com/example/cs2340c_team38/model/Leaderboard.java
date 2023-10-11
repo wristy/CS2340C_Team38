@@ -29,7 +29,7 @@ public class Leaderboard {
     private List<ScoreEntry> scores;
 
     private Leaderboard() {
-        scores = new ArrayList<>();
+        this.scores = new ArrayList<>();
     }
 
     public static Leaderboard getInstance() {
