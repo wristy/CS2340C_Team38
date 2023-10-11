@@ -8,6 +8,8 @@ import java.util.List;
 public class Leaderboard {
     private volatile static Leaderboard leaderboard;
 
+    private static ScoreEntry recent;
+
     public void clearAll() {
         scores.clear();
     }
@@ -43,11 +45,20 @@ public class Leaderboard {
 
     public void addScore(String playerName, int score) {
         scores.add(new ScoreEntry(playerName, score));
+        recent = new ScoreEntry(playerName, score);
         Collections.sort(scores, (a, b) -> b.score - a.score); // Sort in descending order by score
     }
 
     public List<ScoreEntry> getTopScores(int limit) {
         return scores.subList(0, Math.min(limit, scores.size()));
     }
+
+    public ScoreEntry getMostRecent() {
+        if (scores.isEmpty()) {
+            return null;
+        }
+        return recent;
+    }
+
 
 }

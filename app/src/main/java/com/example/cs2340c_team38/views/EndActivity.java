@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.cs2340c_team38.R;
 import com.example.cs2340c_team38.model.Leaderboard;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class EndActivity extends AppCompatActivity {
@@ -19,6 +21,7 @@ public class EndActivity extends AppCompatActivity {
         setContentView(R.layout.activity_end);
         populateHardCodedEntries();
         displayLeaderboard();
+        displayRecentAttempt();
     }
 
     private void displayLeaderboard() {
@@ -38,6 +41,19 @@ public class EndActivity extends AppCompatActivity {
         leaderboard.addScore("Charlie", 4900);
         leaderboard.addScore("Dave", 5100);
         leaderboard.addScore("Eve", 4800);
+    }
+
+    private void displayRecentAttempt() {
+        Leaderboard leaderboard = Leaderboard.getInstance();
+        Leaderboard.ScoreEntry recentEntry = leaderboard.getMostRecent(); // Assuming you add this method
+
+        TextView recentPlayerNameTextView = findViewById(R.id.recentPlayerNameTextView);
+        TextView recentScoreTextView = findViewById(R.id.recentScoreTextView);
+        TextView recentDateTextView = findViewById(R.id.recentDateTextView);
+
+        recentPlayerNameTextView.setText(recentEntry.playerName);
+        recentScoreTextView.setText(String.valueOf(recentEntry.score));
+        recentDateTextView.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(recentEntry.dateTime));
     }
 
 }
