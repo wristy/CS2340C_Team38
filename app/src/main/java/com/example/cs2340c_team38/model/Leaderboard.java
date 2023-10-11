@@ -8,6 +8,10 @@ import java.util.List;
 public class Leaderboard {
     private volatile static Leaderboard leaderboard;
 
+    public void clearAll() {
+        scores.clear();
+    }
+
     public static class ScoreEntry {
         public String playerName;
         public int score;
