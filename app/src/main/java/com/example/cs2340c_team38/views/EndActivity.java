@@ -24,7 +24,11 @@ public class EndActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end);
-        populateHardCodedEntries();
+        //populateHardCodedEntries();
+        int currScore = getIntent().getIntExtra("finalScore", 100);
+        String currName = getIntent().getStringExtra("currName");
+        Leaderboard l = Leaderboard.getInstance();
+        l.addScore(currName, currScore);
         displayLeaderboard();
         displayRecentAttempt();
 

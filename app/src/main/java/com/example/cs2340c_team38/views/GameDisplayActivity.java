@@ -11,7 +11,8 @@ import com.example.cs2340c_team38.R;
 import com.example.cs2340c_team38.databinding.ActivityGameDisplayBinding;
 import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel;
 
-
+import android.os.Handler;
+import android.widget.TextView;
 public class GameDisplayActivity extends AppCompatActivity {
 
     private GameDisplayViewModel viewModel;
@@ -36,14 +37,32 @@ public class GameDisplayActivity extends AppCompatActivity {
             Intent intent = new Intent(GameDisplayActivity.this, EndActivity.class);
            startActivity(intent);
         });
-
+        TextView scoreText = findViewById(R.id.textView6);
+        int[] currScore = {5000};
+        Handler h = new Handler();
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                if (currScore[0] != 0) {
+                    currScore[0] = currScore[0] - 1;
+                    scoreText.setText("Score: " + currScore[0]);
+                }
+                h.postDelayed(this, 1000);
+            }
+        };
+        h.postDelayed(r, 1000);
         viewModel.getContinueEvent().observe(this, message -> {
             Intent intent = new Intent(GameDisplayActivity.this, GameDisplayActivity2.class);
             intent.putExtra("PLAYER_NAME", viewModel.getPlayerName());
             intent.putExtra("DIFFICULTY", difficulty);
             intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
+            intent.putExtra("currentScore", currScore[0]);
             startActivity(intent);
         });
+
+//        Intent intent1 = new Intent(GameDisplayActivity.this, GameDisplayActivity2.class);
+//
+//        startActivity(intent1);
 
     }
 }
