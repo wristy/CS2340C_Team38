@@ -2,8 +2,11 @@ package com.example.cs2340c_team38.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,6 +29,17 @@ public class EndActivity extends AppCompatActivity {
         l.addScore(currName, currScore);
         displayLeaderboard();
         displayRecentAttempt();
+
+        Button buttonRestart = findViewById(R.id.buttonRestart);
+        buttonRestart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EndActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish(); // Optional: Close the EndActivity
+            }
+        });
+
     }
 
     private void displayLeaderboard() {

@@ -27,6 +27,6 @@ public class MainActivity extends AppCompatActivity {
         viewModel.getStartEvent().observe(this, message -> startActivity(
                 new Intent(MainActivity.this, ConfigActivity.class)
         ));
-        viewModel.getEndEvent().observe(this, message -> finish());
+        viewModel.getEndEvent().observe(this, message -> this.finishAffinity());
     }
 }
