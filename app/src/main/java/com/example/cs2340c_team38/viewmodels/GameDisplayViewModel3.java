@@ -40,28 +40,30 @@ public class GameDisplayViewModel3 extends ViewModel {
         this.difficulty = difficulty;
     }
 
-    public void onButtonClick() { endEvent.setValue(null);}
+    public void onButtonClick() {
+        endEvent.setValue(null);
+    }
 
 
     public String getDifficultyText() {
         switch (difficulty) {
-            case 0:
-                return "Easy";
-            case 1:
-                return "Medium";
-            default:
-                return "Hard";
+        case 0:
+            return "Easy";
+        case 1:
+            return "Medium";
+        default:
+            return "Hard";
         }
     }
 
     public int getHealth() {
         switch (difficulty) {
-            case 0:
-                return 150;
-            case 1:
-                return 100;
-            default:
-                return 85;
+        case 0:
+            return 150;
+        case 1:
+            return 100;
+        default:
+            return 85;
         }
     }
 }

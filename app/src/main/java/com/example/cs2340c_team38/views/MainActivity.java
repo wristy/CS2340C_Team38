@@ -27,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
         viewModel.getStartEvent().observe(this, message -> startActivity(
                 new Intent(MainActivity.this, ConfigActivity.class)
         ));
-        viewModel.getEndEvent().observe(this, message -> this.finishAffinity());
+        viewModel.getEndEvent().observe(this, message -> {
+            moveTaskToBack(true);
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(1);
+        });
+
     }
 }

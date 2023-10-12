@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -65,15 +64,16 @@ public class EndActivity extends AppCompatActivity {
 
     private void displayRecentAttempt() {
         Leaderboard leaderboard = Leaderboard.getInstance();
-        Leaderboard.ScoreEntry recentEntry = leaderboard.getMostRecent(); // Assuming you add this method
+        Leaderboard.ScoreEntry recentEntry = leaderboard.getMostRecent();
 
         TextView recentPlayerNameTextView = findViewById(R.id.recentPlayerNameTextView);
         TextView recentScoreTextView = findViewById(R.id.recentScoreTextView);
         TextView recentDateTextView = findViewById(R.id.recentDateTextView);
 
-        recentPlayerNameTextView.setText(recentEntry.playerName);
-        recentScoreTextView.setText(String.valueOf(recentEntry.score));
-        recentDateTextView.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(recentEntry.dateTime));
+        recentPlayerNameTextView.setText(recentEntry.getPlayerName());
+        recentScoreTextView.setText(String.valueOf(recentEntry.getScore()));
+        recentDateTextView.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm")
+                .format(recentEntry.getDateTime()));
     }
 
 }

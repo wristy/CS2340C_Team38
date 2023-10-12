@@ -3,8 +3,6 @@ package com.example.cs2340c_team38.viewmodels;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.cs2340c_team38.views.GameDisplayActivity2;
-
 public class GameDisplayViewModel extends ViewModel {
 
     private String playerName;
@@ -48,31 +46,35 @@ public class GameDisplayViewModel extends ViewModel {
         this.difficulty = difficulty;
     }
 
-    public void onButtonClick() { endEvent.setValue(null);}
+    public void onButtonClick() {
+        endEvent.setValue(null);
+    }
 
-    public void onContinueButtonClick() { continueEvent.setValue(null); }
+    public void onContinueButtonClick() {
+        continueEvent.setValue(null);
+    }
 
 
 
     public String getDifficultyText() {
         switch (difficulty) {
-            case 0:
-                return "Easy";
-            case 1:
-                return "Medium";
-            default:
-                return "Hard";
+        case 0:
+            return "Easy";
+        case 1:
+            return "Medium";
+        default:
+            return "Hard";
         }
     }
 
     public int getHealth() {
         switch (difficulty) {
-            case 0:
-                return 150;
-            case 1:
-                return 100;
-            default:
-                return 85;
+        case 0:
+            return 150;
+        case 1:
+            return 100;
+        default:
+            return 85;
         }
     }
 }

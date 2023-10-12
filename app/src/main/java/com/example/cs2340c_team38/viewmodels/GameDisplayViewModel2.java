@@ -1,6 +1,5 @@
 package com.example.cs2340c_team38.viewmodels;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -45,9 +44,13 @@ public class GameDisplayViewModel2 extends ViewModel {
         this.difficulty = difficulty;
     }
 
-    public void onButtonClick() { endEvent.setValue(null);}
+    public void onButtonClick() {
+        endEvent.setValue(null);
+    }
 
-    public void onContinueButtonClick() { continueEvent.setValue(null); }
+    public void onContinueButtonClick() {
+        continueEvent.setValue(null);
+    }
 
     private MutableLiveData<Void> continueEvent = new MutableLiveData<>();
 
@@ -56,23 +59,23 @@ public class GameDisplayViewModel2 extends ViewModel {
 
     public String getDifficultyText() {
         switch (difficulty) {
-            case 0:
-                return "Easy";
-            case 1:
-                return "Medium";
-            default:
-                return "Hard";
+        case 0:
+            return "Easy";
+        case 1:
+            return "Medium";
+        default:
+            return "Hard";
         }
     }
 
     public int getHealth() {
         switch (difficulty) {
-            case 0:
-                return 150;
-            case 1:
-                return 100;
-            default:
-                return 85;
+        case 0:
+            return 150;
+        case 1:
+            return 100;
+        default:
+            return 85;
         }
     }
 

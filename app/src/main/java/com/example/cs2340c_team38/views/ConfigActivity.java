@@ -26,7 +26,6 @@ public class ConfigActivity extends AppCompatActivity {
 
         viewModel.getIsValidConfig().observe(this, isValid -> {
             if (isValid) {
-                Toast.makeText(ConfigActivity.this, ":)", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(ConfigActivity.this, GameDisplayActivity.class);
                 intent.putExtra("PLAYER_NAME", viewModel.getPlayerName().getValue());
                 intent.putExtra("DIFFICULTY", viewModel.getDifficulty().getValue());
@@ -44,7 +43,8 @@ public class ConfigActivity extends AppCompatActivity {
                 intent.putExtra("CHARACTER_SPRITE", character);
                 startActivity(intent);
             } else {
-                Toast.makeText(ConfigActivity.this, "Please fill in all details", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ConfigActivity.this, "Please fill in all details",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

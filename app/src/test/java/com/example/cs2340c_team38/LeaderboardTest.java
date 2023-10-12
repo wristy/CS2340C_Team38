@@ -24,10 +24,8 @@ public class LeaderboardTest {
     public void setUp() {
         leaderboard = Leaderboard.getInstance();
 
-        // Clear previous scores
-        leaderboard.clearAll(); // Assuming you've implemented a method to clear scores. If not, you'll need to.
+        leaderboard.clearAll();
 
-        // Populate with some test scores
         leaderboard.addScore("Test1", 500);
         leaderboard.addScore("Test2", 600);
         leaderboard.addScore("Test3", 550);
@@ -38,12 +36,10 @@ public class LeaderboardTest {
         leaderboard.addScore("Test4", 650);
         List<Leaderboard.ScoreEntry> topScores = leaderboard.getTopScores(5);
 
-        // We should have 4 entries now
         assertEquals(4, topScores.size());
 
-        // The highest score (650) should be the first one
-        assertEquals("Test4", topScores.get(0).playerName);
-        assertEquals(650, topScores.get(0).score);
+        assertEquals("Test4", topScores.get(0).getPlayerName());
+        assertEquals(650, topScores.get(0).getScore());
     }
     @Test
     public void testGetTopScores() {
@@ -53,12 +49,12 @@ public class LeaderboardTest {
         assertEquals(3, topScores.size());
 
         // Scores should be in descending order
-        assertTrue(topScores.get(0).score >= topScores.get(1).score);
-        assertTrue(topScores.get(1).score >= topScores.get(2).score);
+        assertTrue(topScores.get(0).getScore() >= topScores.get(1).getScore());
+        assertTrue(topScores.get(1).getScore() >= topScores.get(2).getScore());
 
         leaderboard.addScore("MAX", 99999999);
         List<Leaderboard.ScoreEntry> topScore = leaderboard.getTopScores(1);
-        assertTrue(topScore.get(0).score == 99999999);
+        assertTrue(topScore.get(0).getScore() == 99999999);
 
     }
 
