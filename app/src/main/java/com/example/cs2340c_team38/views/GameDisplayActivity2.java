@@ -7,13 +7,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cs2340c_team38.R;
 
 import com.example.cs2340c_team38.databinding.ActivityGameDisplay2Binding;
-import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel;
 import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel2;
 
 
@@ -25,10 +23,8 @@ public class GameDisplayActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        Intent intent2 = getIntent();
-//
-//
-        ActivityGameDisplay2Binding binding = DataBindingUtil.setContentView(this, R.layout.activity_game_display2);
+        ActivityGameDisplay2Binding binding = DataBindingUtil.setContentView(this,
+                R.layout.activity_game_display2);
         viewModel = new ViewModelProvider(this).get(GameDisplayViewModel2.class);
         binding.setViewModel(viewModel);
 

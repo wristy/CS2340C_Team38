@@ -21,7 +21,8 @@ public class GameDisplayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityGameDisplayBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_game_display);
+        ActivityGameDisplayBinding binding = DataBindingUtil.setContentView(this,
+                R.layout.activity_game_display);
         viewModel = new ViewModelProvider(this).get(GameDisplayViewModel.class);
         binding.setViewModel(viewModel);
 
@@ -35,7 +36,7 @@ public class GameDisplayActivity extends AppCompatActivity {
 
         viewModel.getEndEvent().observe(this, message -> {
             Intent intent = new Intent(GameDisplayActivity.this, EndActivity.class);
-           startActivity(intent);
+            startActivity(intent);
         });
         TextView scoreText = findViewById(R.id.textView6);
         int[] currScore = {5000};
@@ -50,6 +51,7 @@ public class GameDisplayActivity extends AppCompatActivity {
                 h.postDelayed(this, 1000);
             }
         };
+
         h.postDelayed(r, 1000);
         viewModel.getContinueEvent().observe(this, message -> {
             Intent intent = new Intent(GameDisplayActivity.this, GameDisplayActivity2.class);
@@ -59,10 +61,6 @@ public class GameDisplayActivity extends AppCompatActivity {
             intent.putExtra("currentScore", currScore[0]);
             startActivity(intent);
         });
-
-//        Intent intent1 = new Intent(GameDisplayActivity.this, GameDisplayActivity2.class);
-//
-//        startActivity(intent1);
 
     }
 }

@@ -6,7 +6,7 @@ public class Player {
     private double y;
     private double movementSpeed;
 
-    private volatile static Player player;
+    private static volatile Player player;
 
     /*
      * @param x x-coordinate of player (default 0.0)

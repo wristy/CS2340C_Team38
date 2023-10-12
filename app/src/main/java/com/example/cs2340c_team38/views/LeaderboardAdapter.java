@@ -50,9 +50,9 @@ public class LeaderboardAdapter extends BaseAdapter {
         TextView dateTextView = view.findViewById(R.id.dateTextView);
 
         Leaderboard.ScoreEntry entry = scores.get(position);
-        playerNameTextView.setText(entry.playerName);
-        scoreTextView.setText(String.valueOf(entry.score));
-        dateTextView.setText(dateFormat.format(entry.dateTime));
+        playerNameTextView.setText(entry.getPlayerName());
+        scoreTextView.setText(String.valueOf(entry.getScore()));
+        dateTextView.setText(dateFormat.format(entry.getDateTime()));
 
         return view;
     }

@@ -6,24 +6,12 @@ import java.util.Date;
 import java.util.List;
 
 public class Leaderboard {
-    private volatile static Leaderboard leaderboard;
+    private static volatile Leaderboard leaderboard;
 
     private static ScoreEntry recent;
 
     public void clearAll() {
         scores.clear();
-    }
-
-    public static class ScoreEntry {
-        public String playerName;
-        public int score;
-        public Date dateTime;
-
-        public ScoreEntry(String playerName, int score) {
-            this.playerName = playerName;
-            this.score = score;
-            this.dateTime = new Date();
-        }
     }
 
     private List<ScoreEntry> scores;
@@ -58,6 +46,44 @@ public class Leaderboard {
             return null;
         }
         return recent;
+    }
+
+    public static class ScoreEntry {
+        private String playerName;
+
+        public int getScore() {
+            return score;
+        }
+
+        public void setScore(int score) {
+            this.score = score;
+        }
+
+        private int score;
+
+        public Date getDateTime() {
+            return dateTime;
+        }
+
+        public void setDateTime(Date dateTime) {
+            this.dateTime = dateTime;
+        }
+
+        private Date dateTime;
+
+        public ScoreEntry(String playerName, int score) {
+            this.playerName = playerName;
+            this.score = score;
+            this.dateTime = new Date();
+        }
+
+        public String getPlayerName() {
+            return playerName;
+        }
+
+        public void setPlayerName(String playerName) {
+            this.playerName = playerName;
+        }
     }
 
 

@@ -40,7 +40,9 @@ public class ConfigViewModel extends ViewModel {
         return isValidConfig;
     }
 
-    public MutableLiveData<Integer> getCharacterSprite(){return characterSprite;}
+    public MutableLiveData<Integer> getCharacterSprite() {
+        return characterSprite;
+    }
 
     public void onSplitTypeChanged(RadioGroup radioGroup, int id) {
         this.characterSprite.setValue(radioGroup.getCheckedRadioButtonId());
@@ -54,10 +56,12 @@ public class ConfigViewModel extends ViewModel {
         }
     }
 
-    public boolean isValidConfig(MutableLiveData<String> playerName, MutableLiveData<Integer> difficulty, MutableLiveData<Integer> characterSprite) {
-        return  playerName.getValue().trim().length() != 0 &&
-                !TextUtils.isEmpty(playerName.getValue()) &&
-                difficulty.getValue() != null &&
-                characterSprite.getValue() != null;
+    public boolean isValidConfig(MutableLiveData<String> playerName,
+                                 MutableLiveData<Integer> difficulty,
+                                 MutableLiveData<Integer> characterSprite) {
+        return  playerName.getValue().trim().length() != 0
+                && !TextUtils.isEmpty(playerName.getValue())
+                && difficulty.getValue() != null
+                && characterSprite.getValue() != null;
     }
 }
