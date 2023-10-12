@@ -1,9 +1,12 @@
 package com.example.cs2340c_team38;
+
 import com.example.cs2340c_team38.model.Player;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+
 public class PlayerTest {
 
     private Player player;
@@ -20,6 +23,14 @@ public class PlayerTest {
         assertEquals(5.0, player.getY(), 0.001);
     }
 
+
+    @Test
+    public void testMoveRight() {
+        player.setX(710.0);
+        player.moveRight();
+        assertEquals(715.0, player.getX(), 0.001);
+    }
+
     @Test
     public void testMoveDown() {
         player.setY(10.0);
@@ -32,12 +43,6 @@ public class PlayerTest {
         player.setX(10.0);
         player.moveLeft();
         assertEquals(5.0, player.getX(), 0.001);
-    }
-    @Test
-    public void testMoveRight() {
-        player.setX(710.0);
-        player.moveRight();
-        assertEquals(715.0, player.getX(), 0.001);
     }
 
     @Test
