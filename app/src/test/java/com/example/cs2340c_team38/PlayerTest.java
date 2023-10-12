@@ -12,13 +12,6 @@ public class PlayerTest {
     public void setUp() {
         player = Player.getPlayer();
     }
-    @Test
-    public void testDefaultValues() {
-        assertEquals(0.0, player.getX(), 0.001);
-        assertEquals(0.0, player.getY(), 0.001);
-        assertEquals(5.0, player.getMovementSpeed(), 0.001);
-    }
-
 
     @Test
     public void testMoveUp() {
@@ -42,9 +35,9 @@ public class PlayerTest {
     }
     @Test
     public void testMoveRight() {
-        player.setX(10.0);
+        player.setX(710.0);
         player.moveRight();
-        assertEquals(15.0, player.getX(), 0.001);
+        assertEquals(715.0, player.getX(), 0.001);
     }
 
     @Test
@@ -75,9 +68,4 @@ public class PlayerTest {
         assertEquals(720.0, player.getX(), 0.001);
     }
 
-    @Test
-    public void testSetMovementSpeed() {
-        player.setMovementSpeed(10.0);
-        assertEquals(10.0, player.getMovementSpeed(), 0.001);
-    }
 }

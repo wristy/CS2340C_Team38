@@ -47,14 +47,14 @@ public class ConfigViewModel extends ViewModel {
     }
 
     public void onButtonContinueClicked() {
-        if (isValidConfig()) {
+        if (isValidConfig(playerName,  difficulty, characterSprite)) {
             isValidConfig.setValue(true);
         } else {
             isValidConfig.setValue(false);
         }
     }
 
-    public boolean isValidConfig() {
+    public boolean isValidConfig(MutableLiveData<String> playerName, MutableLiveData<Integer> difficulty, MutableLiveData<Integer> characterSprite) {
         return  playerName.getValue().trim().length() != 0 &&
                 !TextUtils.isEmpty(playerName.getValue()) &&
                 difficulty.getValue() != null &&
