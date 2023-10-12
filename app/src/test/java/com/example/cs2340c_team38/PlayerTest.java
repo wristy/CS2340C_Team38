@@ -22,7 +22,12 @@ public class PlayerTest {
         player.moveUp();
         assertEquals(5.0, player.getY(), 0.001);
     }
-
+    @Test
+    public void testMoveDown() {
+        player.setY(10.0);
+        player.moveDown();
+        assertEquals(15.0, player.getY(), 0.001);
+    }
 
     @Test
     public void testMoveRight() {
@@ -31,12 +36,7 @@ public class PlayerTest {
         assertEquals(715.0, player.getX(), 0.001);
     }
 
-    @Test
-    public void testMoveDown() {
-        player.setY(10.0);
-        player.moveDown();
-        assertEquals(15.0, player.getY(), 0.001);
-    }
+
 
 
     @Test
