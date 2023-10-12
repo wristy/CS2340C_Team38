@@ -5,23 +5,25 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cs2340c_team38.R;
-import com.example.cs2340c_team38.databinding.ActivityGameDisplayBinding;
+import com.example.cs2340c_team38.databinding.ActivityGameDisplay3Binding;
 import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel;
+import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel3;
 
 
-public class GameDisplayActivity extends AppCompatActivity {
+public class GameDisplayActivity3 extends AppCompatActivity {
 
-    private GameDisplayViewModel viewModel;
+    private GameDisplayViewModel3 viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityGameDisplayBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_game_display);
-        viewModel = new ViewModelProvider(this).get(GameDisplayViewModel.class);
+        ActivityGameDisplay3Binding binding = DataBindingUtil.setContentView(this, R.layout.activity_game_display3);
+        viewModel = new ViewModelProvider(this).get(GameDisplayViewModel3.class);
         binding.setViewModel(viewModel);
 
         String playerName = getIntent().getStringExtra("PLAYER_NAME");
@@ -33,17 +35,8 @@ public class GameDisplayActivity extends AppCompatActivity {
         viewModel.setDrawableImage(characterSpriteId);
 
         viewModel.getEndEvent().observe(this, message -> {
-            Intent intent = new Intent(GameDisplayActivity.this, EndActivity.class);
-           startActivity(intent);
-        });
-
-        viewModel.getContinueEvent().observe(this, message -> {
-            Intent intent = new Intent(GameDisplayActivity.this, GameDisplayActivity2.class);
-            intent.putExtra("PLAYER_NAME", viewModel.getPlayerName());
-            intent.putExtra("DIFFICULTY", difficulty);
-            intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
+            Intent intent = new Intent(GameDisplayActivity3.this, EndActivity.class);
             startActivity(intent);
         });
-
     }
 }

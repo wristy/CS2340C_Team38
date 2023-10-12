@@ -5,23 +5,26 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cs2340c_team38.R;
-import com.example.cs2340c_team38.databinding.ActivityGameDisplayBinding;
+
+import com.example.cs2340c_team38.databinding.ActivityGameDisplay2Binding;
 import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel;
+import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel2;
 
 
 public class GameDisplayActivity2 extends AppCompatActivity {
 
-    private GameDisplayViewModel viewModel;
+    private GameDisplayViewModel2 viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityGameDisplayBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_game_display);
-        viewModel = new ViewModelProvider(this).get(GameDisplayViewModel.class);
+        ActivityGameDisplay2Binding binding = DataBindingUtil.setContentView(this, R.layout.activity_game_display2);
+        viewModel = new ViewModelProvider(this).get(GameDisplayViewModel2.class);
         binding.setViewModel(viewModel);
 
         String playerName = getIntent().getStringExtra("PLAYER_NAME");
@@ -34,6 +37,14 @@ public class GameDisplayActivity2 extends AppCompatActivity {
 
         viewModel.getEndEvent().observe(this, message -> {
             Intent intent = new Intent(GameDisplayActivity2.this, EndActivity.class);
+            startActivity(intent);
+        });
+
+        viewModel.getContinueEvent().observe(this, message -> {
+            Intent intent = new Intent(GameDisplayActivity2.this, GameDisplayActivity3.class);
+            intent.putExtra("PLAYER_NAME", viewModel.getPlayerName());
+            intent.putExtra("DIFFICULTY", difficulty);
+            intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
             startActivity(intent);
         });
     }

@@ -1,11 +1,10 @@
 package com.example.cs2340c_team38.viewmodels;
 
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
-import com.example.cs2340c_team38.views.GameDisplayActivity2;
-
-public class GameDisplayViewModel extends ViewModel {
+public class GameDisplayViewModel2 extends ViewModel {
 
     private String playerName;
     private int difficulty;
@@ -21,8 +20,6 @@ public class GameDisplayViewModel extends ViewModel {
     }
 
     private MutableLiveData<Void> endEvent = new MutableLiveData<>();
-    private MutableLiveData<Void> continueEvent = new MutableLiveData<>();
-
 
     public void setDrawableImage(int drawableResourceId) {
         this.drawableImage.setValue(drawableResourceId);
@@ -52,6 +49,9 @@ public class GameDisplayViewModel extends ViewModel {
 
     public void onContinueButtonClick() { continueEvent.setValue(null); }
 
+    private MutableLiveData<Void> continueEvent = new MutableLiveData<>();
+
+
 
 
     public String getDifficultyText() {
@@ -75,4 +75,5 @@ public class GameDisplayViewModel extends ViewModel {
                 return 85;
         }
     }
+
 }
