@@ -29,6 +29,7 @@ public class PlayerTest {
         player.moveDown();
         assertEquals(15.0, player.getY(), 0.001);
     }
+
     @Test
     public void testMoveRight() {
         player.setX(710.0);
@@ -37,40 +38,40 @@ public class PlayerTest {
     }
 
 
-
     @Test
     public void testMoveLeft() {
         player.setX(10.0);
         player.moveLeft();
         assertEquals(5.0, player.getX(), 0.001);
     }
+
     @Test
     public void testMoveRightBoundary() {
         player.setX(720.0);
         player.moveRight();
         assertEquals(720.0, player.getX(), 0.001);
     }
+
     @Test
     public void testMoveUpBoundary() {
         player.setY(0.0);
         player.moveUp();
         assertEquals(0.0, player.getY(), 0.001);
     }
+
     @Test
     public void testMoveLeftBoundary() {
         player.setX(0.0);
         player.moveLeft();
         assertEquals(0.0, player.getX(), 0.001);
     }
+
     @Test
     public void testMoveDownBoundary() {
         player.setY(720.0);
         player.moveDown();
         assertEquals(720.0, player.getY(), 0.001);
     }
-
-
-
 
 
 }
