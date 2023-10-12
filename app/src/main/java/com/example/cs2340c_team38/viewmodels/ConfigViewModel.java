@@ -7,6 +7,22 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class ConfigViewModel extends ViewModel {
+    public void setPlayerName(MutableLiveData<String> playerName) {
+        this.playerName = playerName;
+    }
+
+    public void setDifficulty(MutableLiveData<Integer> difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public void setCharacterSprite(MutableLiveData<Integer> characterSprite) {
+        this.characterSprite = characterSprite;
+    }
+
+    public void setIsValidConfig(MutableLiveData<Boolean> isValidConfig) {
+        this.isValidConfig = isValidConfig;
+    }
+
     private MutableLiveData<String> playerName = new MutableLiveData<>();
     private MutableLiveData<Integer> difficulty = new MutableLiveData<>();
     private MutableLiveData<Integer> characterSprite = new MutableLiveData<>();
@@ -38,7 +54,7 @@ public class ConfigViewModel extends ViewModel {
         }
     }
 
-    private boolean isValidConfig() {
+    public boolean isValidConfig() {
         return  playerName.getValue().trim().length() != 0 &&
                 !TextUtils.isEmpty(playerName.getValue()) &&
                 difficulty.getValue() != null &&
