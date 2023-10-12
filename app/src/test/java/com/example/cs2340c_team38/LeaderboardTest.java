@@ -45,6 +45,18 @@ public class LeaderboardTest {
         assertEquals("Test4", topScores.get(0).playerName);
         assertEquals(650, topScores.get(0).score);
     }
+    @Test
+    public void testAddNegativeScore() {
+        leaderboard.addScore("Test4", -650);
+        List<Leaderboard.ScoreEntry> topScores = leaderboard.getTopScores(5);
+
+        // We should have 4 entries now
+        assertEquals(4, topScores.size());
+
+        // The highest score (650) should be the first one
+        assertEquals("Test4", topScores.get(0).playerName);
+        assertEquals(650, topScores.get(0).score);
+    }
 
     @Test
     public void testGetTopScores() {

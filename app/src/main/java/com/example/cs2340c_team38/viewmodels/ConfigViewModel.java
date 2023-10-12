@@ -24,6 +24,8 @@ public class ConfigViewModel extends ViewModel {
         return isValidConfig;
     }
 
+    public MutableLiveData<Integer> getCharacterSprite(){return characterSprite;}
+
     public void onSplitTypeChanged(RadioGroup radioGroup, int id) {
         this.characterSprite.setValue(radioGroup.getCheckedRadioButtonId());
     }
