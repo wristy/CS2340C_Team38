@@ -36,5 +36,14 @@ public class GameDisplayActivity extends AppCompatActivity {
             Intent intent = new Intent(GameDisplayActivity.this, EndActivity.class);
            startActivity(intent);
         });
+
+        viewModel.getContinueEvent().observe(this, message -> {
+            Intent intent = new Intent(GameDisplayActivity.this, GameDisplayActivity2.class);
+            intent.putExtra("PLAYER_NAME", viewModel.getPlayerName());
+            intent.putExtra("DIFFICULTY", difficulty);
+            intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
+            startActivity(intent);
+        });
+
     }
 }

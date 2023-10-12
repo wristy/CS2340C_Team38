@@ -17,6 +17,11 @@
             android:label="@string/title_activity_game_display2"
             android:theme="@style/Theme.CS2340C_Team38">
             </activity>
+        <activity
+            android:name=".views.GameDisplayActivity3"
+            android:label="GameDisplayActivity3"
+            android:theme="@style/Theme.CS2340C_Team38">
+            </activity>
         <activity android:name=".views.EndActivity"></activity>
         <activity android:name=".views.GameDisplayActivity"></activity>
         <activity android:name=".views.ConfigActivity"></activity>
