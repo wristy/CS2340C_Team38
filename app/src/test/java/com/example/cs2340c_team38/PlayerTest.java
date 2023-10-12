@@ -19,6 +19,7 @@ public class PlayerTest {
         assertEquals(5.0, player.getMovementSpeed(), 0.001);
     }
 
+
     @Test
     public void testMoveUp() {
         player.setY(10.0);
