@@ -67,25 +67,27 @@
         android:id="@+id/imageView2"
         android:layout_width="701dp"
         android:layout_height="911dp"
+        android:scaleX="0.76"
+        android:scaleY="0.82"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.283"
-        app:srcCompat="@drawable/map1" />
+        app:srcCompat="@drawable/game_screen1" />
 
     <Button
         android:id="@+id/exitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="End Game"
         android:onClick="@{(view) -> viewModel.onButtonClick()}"
+        android:text="End Game"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintHorizontal_bias="0.946"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.948" />
+        app:layout_constraintVertical_bias="0.976"
+        app:rippleColor="#DD1313" />
 
     <Button
         android:id="@+id/button"
@@ -95,10 +97,11 @@
         android:text="Next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.582"
+        app:layout_constraintHorizontal_bias="0.049"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.947" />
+        app:layout_constraintVertical_bias="0.976"
+        app:rippleColor="#9427A6" />
 
     <TextView
         android:id="@+id/textView6"
