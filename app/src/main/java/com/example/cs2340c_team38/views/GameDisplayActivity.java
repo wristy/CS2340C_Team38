@@ -9,13 +9,37 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cs2340c_team38.R;
 import com.example.cs2340c_team38.databinding.ActivityGameDisplayBinding;
+import com.example.cs2340c_team38.model.Player;
+import com.example.cs2340c_team38.model.TileType;
 import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel;
 
 import android.os.Handler;
+import android.widget.Button;
 import android.widget.TextView;
 public class GameDisplayActivity extends AppCompatActivity {
 
     private GameDisplayViewModel viewModel;
+
+    private final TileType[][] tileMap = {{TileType.GRASS,TileType.GRASS,TileType.GRASS,TileType.GRASS,TileType.WALL,TileType.EXIT,TileType.EXIT,TileType.WALL,TileType.GRASS,TileType.GRASS,TileType.GRASS,TileType.GRASS},
+            {TileType.WALL,TileType.WALL,TileType.WALL,TileType.GRASS,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.GRASS,TileType.WALL,TileType.WALL,TileType.WALL},
+            {TileType.WALL,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.WALL,TileType.FLOOR,TileType.WALL},
+            {TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.WALL},
+            {TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.LAVA,TileType.LAVA,TileType.FLOOR,TileType.FLOOR,TileType.LAVA,TileType.FLOOR,TileType.WALL},
+            {TileType.WALL,TileType.FLOOR,TileType.LAVA,TileType.FLOOR,TileType.FLOOR,TileType.LAVA,TileType.LAVA,TileType.FLOOR,TileType.FLOOR,TileType.LAVA,TileType.FLOOR,TileType.WALL},
+            {TileType.WALL,TileType.FLOOR,TileType.LAVA,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.WALL},
+            {TileType.WALL,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.WALL,TileType.FLOOR,TileType.WALL},
+            {TileType.WALL,TileType.WALL,TileType.WALL,TileType.GRASS,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.GRASS,TileType.WALL,TileType.WALL,TileType.WALL},
+            {TileType.GRASS,TileType.GRASS,TileType.GRASS,TileType.GRASS,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.GRASS,TileType.GRASS,TileType.GRASS,TileType.GRASS},
+            {TileType.GRASS,TileType.GRASS,TileType.WALL,TileType.WALL,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.WALL,TileType.GRASS,TileType.GRASS},
+            {TileType.GRASS,TileType.GRASS,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.GRASS,TileType.GRASS},
+            {TileType.GRASS,TileType.GRASS,TileType.WALL,TileType.FLOOR,TileType.LAVA,TileType.LAVA,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.GRASS,TileType.GRASS},
+            {TileType.GRASS,TileType.WALL,TileType.WALL,TileType.WALL,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.WALL,TileType.WALL,TileType.GRASS},
+            {TileType.GRASS,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.GRASS},
+            {TileType.GRASS,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.LAVA,TileType.LAVA,TileType.FLOOR,TileType.WALL,TileType.GRASS},
+            {TileType.GRASS,TileType.WALL,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.GRASS},
+            {TileType.GRASS,TileType.GRASS,TileType.WALL,TileType.WALL,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.WALL,TileType.GRASS,TileType.GRASS},
+            {TileType.GRASS,TileType.GRASS,TileType.GRASS,TileType.GRASS,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.GRASS,TileType.GRASS,TileType.GRASS,TileType.GRASS},
+            {TileType.GRASS,TileType.GRASS,TileType.GRASS,TileType.GRASS,TileType.WALL,TileType.ENTRANCE,TileType.ENTRANCE,TileType.WALL,TileType.GRASS,TileType.GRASS,TileType.GRASS,TileType.GRASS}};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,5 +86,57 @@ public class GameDisplayActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+
+        // Movements
+
+        int startY = 18;
+        int startX = 5;
+
+        Player player = Player.getPlayer();
+        player.setPosition(startX, startY);
+        player.setCurrentTile(tileMap[startY][startX]);
+
+
+        Button upButton = findViewById(R.id.upButton);
+        upButton.setOnClickListener(v -> {
+            movePlayer("UP");
+
+        });
+
+        Button downButton = findViewById(R.id.downButton);
+        downButton.setOnClickListener(v -> movePlayer("DOWN"));
+
+        Button leftButton = findViewById(R.id.leftButton);
+        leftButton.setOnClickListener(v -> movePlayer("LEFT"));
+
+        Button rightButton = findViewById(R.id.rightButton);
+        rightButton.setOnClickListener(v -> movePlayer("RIGHT"));
+
+
+
+    }
+
+
+    public void movePlayer(String direction) {
+        Player player = Player.getPlayer();
+
+        int newX = player.getX();
+        int newY = player.getY();
+
+        switch (direction) {
+            case "UP": newY--; break;
+            case "DOWN": newY++; break;
+            case "LEFT": newX--; break;
+            case "RIGHT": newX++; break;
+        }
+
+        if (isInBounds(newX, newY) && tileMap[newY][newX].isWalkable()) {
+            player.setPosition(newX, newY);
+            player.setCurrentTile(tileMap[newY][newX]);
+        }
+    }
+
+    public boolean isInBounds(int x, int y) {
+        return x >= 0 && x < tileMap[0].length && y >= 0 && y < tileMap.length;
     }
 }
