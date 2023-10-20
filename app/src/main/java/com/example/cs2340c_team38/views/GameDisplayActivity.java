@@ -19,23 +19,20 @@ import com.example.cs2340c_team38.model.TileType;
 import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel;
 
 import android.os.Handler;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.ImageView;
 import android.widget.Space;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class GameDisplayActivity extends AppCompatActivity implements Observer {
 
     private GameDisplayViewModel viewModel;
-    String playerName;
-    int difficulty;
-    int characterSpriteId;
-    int[] currScore;
+    private String playerName;
+    private int difficulty;
+    private int characterSpriteId;
+    private int[] currScore;
 
     private final TileType[][] tileMap = {{TileType.GRASS, TileType.GRASS, TileType.GRASS,
             TileType.GRASS, TileType.WALL, TileType.EXIT, TileType.EXIT, TileType.WALL,
@@ -181,36 +178,24 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
 
             player.setMoveStrategy(new MoveUp());
             player.move(tileMap);
-//            Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d",
-//                            player.getX(), player.getY()),
-//                    Toast.LENGTH_SHORT).show();
         });
 
         Button downButton = findViewById(R.id.downButton);
         downButton.setOnClickListener(v -> {
             player.setMoveStrategy(new MoveDown());
             player.move(tileMap);
-//            Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d",
-//                            player.getX(), player.getY()),
-//                    Toast.LENGTH_SHORT).show();
         });
 
         Button leftButton = findViewById(R.id.leftButton);
         leftButton.setOnClickListener(v -> {
             player.setMoveStrategy(new MoveLeft());
             player.move(tileMap);
-//            Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d",
-//                            player.getX(), player.getY()),
-//                    Toast.LENGTH_SHORT).show();
         });
 
         Button rightButton = findViewById(R.id.rightButton);
         rightButton.setOnClickListener(v -> {
             player.setMoveStrategy(new MoveRight());
             player.move(tileMap);
-//            Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d",
-//                            player.getX(), player.getY()),
-//                    Toast.LENGTH_SHORT).show();
         });
 
     }
