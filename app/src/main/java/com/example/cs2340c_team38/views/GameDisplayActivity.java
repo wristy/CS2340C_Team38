@@ -147,7 +147,8 @@ public class GameDisplayActivity extends AppCompatActivity {
         upButton.setOnClickListener(v -> {
             player.setMoveStrategy(new MoveUp());
             player.move(tileMap);
-            Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d", player.getX(), player.getY()),
+            Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d",
+                            player.getX(), player.getY()),
                     Toast.LENGTH_SHORT).show();
         });
 
@@ -155,7 +156,8 @@ public class GameDisplayActivity extends AppCompatActivity {
         downButton.setOnClickListener(v -> {
             player.setMoveStrategy(new MoveDown());
             player.move(tileMap);
-            Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d", player.getX(), player.getY()),
+            Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d",
+                            player.getX(), player.getY()),
                     Toast.LENGTH_SHORT).show();
         });
 
@@ -163,7 +165,8 @@ public class GameDisplayActivity extends AppCompatActivity {
         leftButton.setOnClickListener(v -> {
             player.setMoveStrategy(new MoveLeft());
             player.move(tileMap);
-            Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d", player.getX(), player.getY()),
+            Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d",
+                            player.getX(), player.getY()),
                     Toast.LENGTH_SHORT).show();
         });
 
@@ -171,46 +174,9 @@ public class GameDisplayActivity extends AppCompatActivity {
         rightButton.setOnClickListener(v -> {
             player.setMoveStrategy(new MoveRight());
             player.move(tileMap);
-            Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d", player.getX(), player.getY()),
+            Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d",
+                            player.getX(), player.getY()),
                     Toast.LENGTH_SHORT).show();
         });
-
-
-
-    }
-
-
-    public void movePlayer(String direction) {
-        Player player = Player.getPlayer();
-
-        int newX = player.getX();
-        int newY = player.getY();
-
-        switch (direction) {
-        case "UP":
-            newY--;
-            break;
-        case "DOWN":
-            newY++;
-            break;
-        case "LEFT":
-            newX--;
-            break;
-        case "RIGHT":
-            newX++;
-            break;
-        default:
-            newY++;
-            break;
-        }
-
-        if (isInBounds(newX, newY) && tileMap[newY][newX].isWalkable()) {
-            player.setPosition(newX, newY);
-            player.setCurrentTile(tileMap[newY][newX]);
-        }
-    }
-
-    public boolean isInBounds(int x, int y) {
-        return x >= 0 && x < tileMap[0].length && y >= 0 && y < tileMap.length;
     }
 }
