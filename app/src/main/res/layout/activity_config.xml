@@ -72,5 +72,6 @@
             android:text="Continue"
             android:onClick="@{() -> viewModel.onButtonContinueClicked()}" />
 
+
     </LinearLayout>
 </layout>
