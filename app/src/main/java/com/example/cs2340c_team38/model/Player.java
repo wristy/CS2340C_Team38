@@ -1,6 +1,9 @@
 package com.example.cs2340c_team38.model;
 
-public class Player {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Player implements Observable {
 
     private int x;
     private int y; // Player's position on the tile map
@@ -14,6 +17,8 @@ public class Player {
     public void move(TileType[][] tileMap) {
         moveStrategy.move(player, tileMap);
     }
+
+    private final List<Observer> observers = new ArrayList<>();
 
     private static volatile Player player;
 
@@ -60,5 +65,22 @@ public class Player {
 
     public void setCurrentTile(TileType currentTile) {
         this.currentTile = currentTile;
+    }
+
+    @Override
+    public void addObserver(Observer o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void removeObserver(Observer o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(x, y);
+        }
     }
 }
