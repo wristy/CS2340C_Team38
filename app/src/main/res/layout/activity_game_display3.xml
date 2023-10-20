@@ -76,7 +76,7 @@
             app:layout_constraintVertical_bias="0.008" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/sprite"
             android:layout_width="50dp"
             android:layout_height="40dp"
             app:drawableImage="@{viewModel.drawableImage}"
@@ -89,18 +89,19 @@
             />
 
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="701dp"
-            android:layout_height="911dp"
-            android:scaleX="0.76"
-            android:scaleY="0.76"
+        <GridLayout
+            android:id="@+id/gameGrid"
+            android:layout_width="0dp"
+            android:layout_height="692dp"
+            android:background="@drawable/game_screen_3"
+            android:columnCount="12"
+            android:rowCount="20"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.394"
-            app:srcCompat="@drawable/game_screen_3" />
+            ></GridLayout>
 
         <Button
             android:id="@+id/exitButton"

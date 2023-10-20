@@ -54,9 +54,6 @@ public class GameDisplayViewModel2 extends ViewModel {
 
     private MutableLiveData<Void> continueEvent = new MutableLiveData<>();
 
-
-
-
     public String getDifficultyText() {
         switch (difficulty) {
         case 0:

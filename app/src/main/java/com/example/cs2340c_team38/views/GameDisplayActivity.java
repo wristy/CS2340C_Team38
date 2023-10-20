@@ -13,6 +13,7 @@ import com.example.cs2340c_team38.model.MoveDown;
 import com.example.cs2340c_team38.model.MoveLeft;
 import com.example.cs2340c_team38.model.MoveRight;
 import com.example.cs2340c_team38.model.MoveUp;
+import com.example.cs2340c_team38.model.Observer;
 import com.example.cs2340c_team38.model.Player;
 import com.example.cs2340c_team38.model.TileType;
 import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel;
@@ -22,7 +23,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class GameDisplayActivity extends AppCompatActivity {
+public class GameDisplayActivity extends AppCompatActivity implements Observer {
 
     private GameDisplayViewModel viewModel;
 
@@ -139,6 +140,7 @@ public class GameDisplayActivity extends AppCompatActivity {
         int startX = 5;
 
         Player player = Player.getPlayer();
+        player.addObserver(this);
         player.setPosition(startX, startY);
         player.setCurrentTile(tileMap[startY][startX]);
 
@@ -178,5 +180,16 @@ public class GameDisplayActivity extends AppCompatActivity {
                             player.getX(), player.getY()),
                     Toast.LENGTH_SHORT).show();
         });
+    }
+
+    @Override
+    public void update(int x, int y) {
+        // Redraw the sprite at the new position (x, y)
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Player.getPlayer().removeObserver(this); // Unregister the activity when it's destroyed
     }
 }
