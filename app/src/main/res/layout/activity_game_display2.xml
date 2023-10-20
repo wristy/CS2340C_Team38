@@ -87,7 +87,20 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            ></GridLayout>
+            >
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:layout_width="50dp"
+                android:layout_height="46dp"
+                android:layout_gravity="fill"
+                android:visibility="visible"
+                app:drawableImage="@{viewModel.drawableImage}" />
+
+        </GridLayout>
+
 
         <TextView
             android:id="@+id/textView6"
