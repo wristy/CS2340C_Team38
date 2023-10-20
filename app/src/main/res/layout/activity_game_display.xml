@@ -32,8 +32,8 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:fontFamily="sans-serif-smallcaps"
             android:text="@{viewModel.healthText}"
             android:textColor="#FFFFFF"
@@ -63,7 +63,7 @@
 
         <GridLayout
             android:id="@+id/gameGrid"
-            android:layout_width="0dp"
+            android:layout_width="400dp"
             android:layout_height="692dp"
             android:background="@drawable/game_screen1"
             android:columnCount="12"
@@ -73,7 +73,36 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            ></GridLayout>
+            >
+
+            <TextView
+                android:id="@+id/AHHHHH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                tools:text="omg wtf   "
+                android:text="omg wtf   "/>
+            <TextView
+                android:id="@+id/AHHHHHASDF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WTF"
+                android:layout_row="1"
+                android:layout_column="2"
+                android:textColor="#FFFFFF"
+                tools:text="WTF " />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_row="1"
+                android:layout_column="2"
+                android:layout_gravity="center"
+                android:visibility="visible"
+                android:src="@drawable/character1" />
+
+        </GridLayout>
 
 
 
@@ -188,17 +217,6 @@
             app:layout_constraintVertical_bias="0.976"
             app:rippleColor="#9427A6" />
 
-        <ImageView
-            android:id="@+id/sprite"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            app:drawableImage="@{viewModel.drawableImage}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.044"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
