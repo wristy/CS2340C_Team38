@@ -4,7 +4,16 @@ public class Player {
 
     private int x;
     private int y; // Player's position on the tile map
-    private TileType currentTile; // The type of tile the player is currently on
+    private TileType currentTile;
+    private MoveStrategy moveStrategy;
+
+    public void setMoveStrategy(MoveStrategy moveStrategy) {
+        this.moveStrategy = moveStrategy;
+    }
+
+    public void move(TileType[][] tileMap) {
+        moveStrategy.move(player, tileMap);
+    }
 
     private static volatile Player player;
 
@@ -52,16 +61,4 @@ public class Player {
     public void setCurrentTile(TileType currentTile) {
         this.currentTile = currentTile;
     }
-
-    public TileType getCurrentTile() {
-        return currentTile;
-    }
-
-    public boolean isOnWalkableTile() {
-        if (currentTile == null) {
-            return false;
-        }
-        return currentTile.isWalkable();
-    }
-
 }

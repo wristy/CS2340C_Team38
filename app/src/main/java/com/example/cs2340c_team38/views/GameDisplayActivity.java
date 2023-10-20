@@ -9,6 +9,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cs2340c_team38.R;
 import com.example.cs2340c_team38.databinding.ActivityGameDisplayBinding;
+import com.example.cs2340c_team38.model.MoveDown;
+import com.example.cs2340c_team38.model.MoveLeft;
+import com.example.cs2340c_team38.model.MoveRight;
+import com.example.cs2340c_team38.model.MoveUp;
 import com.example.cs2340c_team38.model.Player;
 import com.example.cs2340c_team38.model.TileType;
 import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel;
@@ -141,28 +145,32 @@ public class GameDisplayActivity extends AppCompatActivity {
 
         Button upButton = findViewById(R.id.upButton);
         upButton.setOnClickListener(v -> {
-            movePlayer("UP");
+            player.setMoveStrategy(new MoveUp());
+            player.move(tileMap);
             Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d", player.getX(), player.getY()),
                     Toast.LENGTH_SHORT).show();
         });
 
         Button downButton = findViewById(R.id.downButton);
         downButton.setOnClickListener(v -> {
-            movePlayer("DOWN");
+            player.setMoveStrategy(new MoveDown());
+            player.move(tileMap);
             Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d", player.getX(), player.getY()),
                     Toast.LENGTH_SHORT).show();
         });
 
         Button leftButton = findViewById(R.id.leftButton);
         leftButton.setOnClickListener(v -> {
-            movePlayer("LEFT");
+            player.setMoveStrategy(new MoveLeft());
+            player.move(tileMap);
             Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d", player.getX(), player.getY()),
                     Toast.LENGTH_SHORT).show();
         });
 
         Button rightButton = findViewById(R.id.rightButton);
         rightButton.setOnClickListener(v -> {
-            movePlayer("RIGHT");
+            player.setMoveStrategy(new MoveRight());
+            player.move(tileMap);
             Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d", player.getX(), player.getY()),
                     Toast.LENGTH_SHORT).show();
         });
