@@ -3,8 +3,6 @@ package com.example.cs2340c_team38.viewmodels;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.cs2340c_team38.model.TileType;
-
 public class GameDisplayViewModel extends ViewModel {
 
     private String playerName;
@@ -57,7 +55,7 @@ public class GameDisplayViewModel extends ViewModel {
     }
 
 
-public String getDifficultyText() {
+    public String getDifficultyText() {
         switch (difficulty) {
         case 0:
             return "Easy";
