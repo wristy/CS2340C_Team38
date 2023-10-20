@@ -11,19 +11,25 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Player Name"/>
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="Player Name"
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/scoreTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Score"/>
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="Score"
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/dateTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Date"/>
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="Date"
+        android:textColor="#FFFFFF" />
 </LinearLayout>
