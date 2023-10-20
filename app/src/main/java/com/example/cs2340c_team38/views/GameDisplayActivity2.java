@@ -3,7 +3,9 @@ package com.example.cs2340c_team38.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -12,12 +14,80 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.cs2340c_team38.R;
 
 import com.example.cs2340c_team38.databinding.ActivityGameDisplay2Binding;
+import com.example.cs2340c_team38.model.MoveDown;
+import com.example.cs2340c_team38.model.MoveLeft;
+import com.example.cs2340c_team38.model.MoveRight;
+import com.example.cs2340c_team38.model.MoveUp;
+import com.example.cs2340c_team38.model.Player;
+import com.example.cs2340c_team38.model.TileType;
 import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel2;
 
 
 public class GameDisplayActivity2 extends AppCompatActivity {
 
     private GameDisplayViewModel2 viewModel;
+
+    // TODO: Update this for map 2
+    private final TileType[][] tileMap = {{TileType.GRASS, TileType.GRASS, TileType.GRASS,
+            TileType.GRASS, TileType.WALL, TileType.EXIT, TileType.EXIT, TileType.WALL,
+            TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.GRASS},
+        {TileType.WALL, TileType.WALL, TileType.WALL, TileType.GRASS, TileType.WALL,
+                TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.GRASS, TileType.WALL,
+                TileType.WALL, TileType.WALL},
+        {TileType.WALL, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL,
+                TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL,
+                TileType.FLOOR, TileType.WALL},
+        {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
+                TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
+                TileType.FLOOR, TileType.WALL},
+        {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
+                TileType.LAVA, TileType.LAVA, TileType.FLOOR, TileType.FLOOR, TileType.LAVA,
+                TileType.FLOOR, TileType.WALL},
+        {TileType.WALL, TileType.FLOOR, TileType.LAVA, TileType.FLOOR, TileType.FLOOR,
+                TileType.LAVA, TileType.LAVA, TileType.FLOOR, TileType.FLOOR, TileType.LAVA,
+                TileType.FLOOR, TileType.WALL},
+        {TileType.WALL, TileType.FLOOR, TileType.LAVA, TileType.FLOOR, TileType.FLOOR,
+                TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
+                TileType.FLOOR, TileType.WALL},
+        {TileType.WALL, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL,
+                TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL,
+                TileType.FLOOR, TileType.WALL},
+        {TileType.WALL, TileType.WALL, TileType.WALL, TileType.GRASS, TileType.WALL,
+                TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.GRASS, TileType.WALL,
+                TileType.WALL, TileType.WALL},
+        {TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.WALL,
+                TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.GRASS, TileType.GRASS,
+                TileType.GRASS, TileType.GRASS},
+        {TileType.GRASS, TileType.GRASS, TileType.WALL, TileType.WALL, TileType.WALL,
+                TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL,
+                TileType.GRASS, TileType.GRASS},
+        {TileType.GRASS, TileType.GRASS, TileType.WALL, TileType.FLOOR, TileType.FLOOR,
+                TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.WALL,
+                TileType.GRASS, TileType.GRASS},
+        {TileType.GRASS, TileType.GRASS, TileType.WALL, TileType.FLOOR, TileType.LAVA,
+                TileType.LAVA, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.WALL,
+                TileType.GRASS, TileType.GRASS},
+        {TileType.GRASS, TileType.WALL, TileType.WALL, TileType.WALL, TileType.WALL,
+                TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL,
+                TileType.WALL, TileType.GRASS},
+        {TileType.GRASS, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
+                TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
+                TileType.WALL, TileType.GRASS},
+        {TileType.GRASS, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
+                TileType.FLOOR, TileType.FLOOR, TileType.LAVA, TileType.LAVA, TileType.FLOOR,
+                TileType.WALL, TileType.GRASS},
+        {TileType.GRASS, TileType.WALL, TileType.WALL, TileType.FLOOR, TileType.FLOOR,
+                TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.WALL,
+                TileType.WALL, TileType.GRASS},
+        {TileType.GRASS, TileType.GRASS, TileType.WALL, TileType.WALL, TileType.WALL,
+                TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL,
+                TileType.GRASS, TileType.GRASS},
+        {TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.WALL,
+                TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.GRASS, TileType.GRASS,
+                TileType.GRASS, TileType.GRASS},
+        {TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.WALL,
+                TileType.ENTRANCE, TileType.ENTRANCE, TileType.WALL, TileType.GRASS,
+                TileType.GRASS, TileType.GRASS, TileType.GRASS}};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +132,52 @@ public class GameDisplayActivity2 extends AppCompatActivity {
             intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
             intent.putExtra("currentScore", currScore2[0]);
             startActivity(intent);
+        });
+
+        // Movements
+
+        int startY = 18;
+        int startX = 5;
+
+        Player player = Player.getPlayer();
+        player.setPosition(startX, startY);
+        player.setCurrentTile(tileMap[startY][startX]);
+
+
+        Button upButton = findViewById(R.id.upButton);
+        upButton.setOnClickListener(v -> {
+            player.setMoveStrategy(new MoveUp());
+            player.move(tileMap);
+            Toast.makeText(GameDisplayActivity2.this, String.format("X: %d, Y: %d",
+                            player.getX(), player.getY()),
+                    Toast.LENGTH_SHORT).show();
+        });
+
+        Button downButton = findViewById(R.id.downButton);
+        downButton.setOnClickListener(v -> {
+            player.setMoveStrategy(new MoveDown());
+            player.move(tileMap);
+            Toast.makeText(GameDisplayActivity2.this, String.format("X: %d, Y: %d",
+                            player.getX(), player.getY()),
+                    Toast.LENGTH_SHORT).show();
+        });
+
+        Button leftButton = findViewById(R.id.leftButton);
+        leftButton.setOnClickListener(v -> {
+            player.setMoveStrategy(new MoveLeft());
+            player.move(tileMap);
+            Toast.makeText(GameDisplayActivity2.this, String.format("X: %d, Y: %d",
+                            player.getX(), player.getY()),
+                    Toast.LENGTH_SHORT).show();
+        });
+
+        Button rightButton = findViewById(R.id.rightButton);
+        rightButton.setOnClickListener(v -> {
+            player.setMoveStrategy(new MoveRight());
+            player.move(tileMap);
+            Toast.makeText(GameDisplayActivity2.this, String.format("X: %d, Y: %d",
+                            player.getX(), player.getY()),
+                    Toast.LENGTH_SHORT).show();
         });
     }
 }
