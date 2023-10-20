@@ -16,6 +16,7 @@ public class Player implements Observable {
 
     public void move(TileType[][] tileMap) {
         moveStrategy.move(player, tileMap);
+        notifyObservers();
     }
 
     private final List<Observer> observers = new ArrayList<>();
@@ -53,6 +54,7 @@ public class Player implements Observable {
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
+        notifyObservers();
     }
 
     public int getX() {

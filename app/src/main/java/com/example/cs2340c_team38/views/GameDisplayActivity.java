@@ -19,7 +19,13 @@ import com.example.cs2340c_team38.model.TileType;
 import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel;
 
 import android.os.Handler;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.ImageView;
+import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -139,14 +145,36 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         int startY = 18;
         int startX = 5;
 
+        GridLayout gridLayout = findViewById(R.id.gameGrid);
+
+        for (int x = 0; x < gridLayout.getColumnCount(); x++) {
+            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+            params.rowSpec = GridLayout.spec(0, 1, 1);
+            params.columnSpec = GridLayout.spec(x, 1, 1);
+            params.setGravity(Gravity.FILL);
+            params.width = 0;
+            gridLayout.addView(new Space(this), params);
+        }
+        for (int y = 0; y < gridLayout.getRowCount(); y++) {
+            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+            params.rowSpec = GridLayout.spec(y, 1, 1);
+            params.columnSpec = GridLayout.spec(0, 1, 1);
+            params.setGravity(Gravity.FILL);
+            params.width = 0;
+            gridLayout.addView(new Space(this), params);
+        }
+
+
+
         Player player = Player.getPlayer();
         player.addObserver(this);
         player.setPosition(startX, startY);
         player.setCurrentTile(tileMap[startY][startX]);
-
+        moveViewToPosition(findViewById(R.id.imageView), startY, startX);
 
         Button upButton = findViewById(R.id.upButton);
         upButton.setOnClickListener(v -> {
+
             player.setMoveStrategy(new MoveUp());
             player.move(tileMap);
             Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d",
@@ -180,11 +208,14 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
                             player.getX(), player.getY()),
                     Toast.LENGTH_SHORT).show();
         });
+
+        moveViewToPosition(findViewById(R.id.AHHHHH), 3, 3);
+
     }
 
     @Override
     public void update(int x, int y) {
-        // Redraw the sprite at the new position (x, y)
+        moveViewToPosition(findViewById(R.id.imageView), y, x);
     }
 
     @Override
@@ -192,4 +223,22 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         super.onDestroy();
         Player.getPlayer().removeObserver(this); // Unregister the activity when it's destroyed
     }
+
+
+    private void moveViewToPosition(View view, int newRow, int newColumn) {
+        // Get the current layout parameters of the view
+        GridLayout.LayoutParams params = (GridLayout.LayoutParams) view.getLayoutParams();
+
+        // Update the position
+        params.rowSpec = GridLayout.spec(newRow);
+        params.columnSpec = GridLayout.spec(newColumn);
+
+        // Apply the updated layout parameters
+        view.setLayoutParams(params);
+
+        // Request the parent GridLayout to re-layout its children
+        view.getParent().requestLayout();
+    }
+
+
 }
