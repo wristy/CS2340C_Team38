@@ -9,14 +9,12 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.Space;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cs2340c_team38.R;
-
 import com.example.cs2340c_team38.databinding.ActivityGameDisplay2Binding;
 import com.example.cs2340c_team38.model.MoveDown;
 import com.example.cs2340c_team38.model.MoveLeft;
@@ -30,32 +28,33 @@ import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel2;
 
 public class GameDisplayActivity2 extends AppCompatActivity implements Observer {
 
-    private GameDisplayViewModel2 viewModel;
+    private final TileType[][] tileMap = {{TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.WALL, TileType.EXIT, TileType.EXIT, TileType.WALL, TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.GRASS},
+            {TileType.WALL, TileType.WALL, TileType.WALL, TileType.WALL, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL, TileType.WALL, TileType.WALL},
+            {TileType.WALL, TileType.LAVA, TileType.LAVA, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.LAVA, TileType.LAVA, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.LAVA, TileType.LAVA, TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.LAVA, TileType.FLOOR, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.LAVA, TileType.LAVA, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.LAVA, TileType.LAVA, TileType.WALL, TileType.FLOOR, TileType.LAVA, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.LAVA, TileType.LAVA, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.LAVA, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.LAVA, TileType.FLOOR, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.WALL, TileType.WALL, TileType.WALL, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL, TileType.WALL, TileType.WALL},
+            {TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.WALL, TileType.ENTRANCE, TileType.ENTRANCE, TileType.WALL, TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.GRASS}};
     String playerName;
     int difficulty;
     int characterSpriteId;
     int currScore;
     int[] currScore2;
-    private final TileType[][] tileMap = {{TileType.GRASS,TileType.GRASS,TileType.GRASS,TileType.GRASS,TileType.WALL,TileType.EXIT,TileType.EXIT,TileType.WALL,TileType.GRASS,TileType.GRASS,TileType.GRASS,TileType.GRASS},
-            {TileType.WALL,TileType.WALL,TileType.WALL,TileType.WALL,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.WALL,TileType.WALL,TileType.WALL},
-            {TileType.WALL,TileType.LAVA,TileType.LAVA,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.LAVA,TileType.LAVA,TileType.WALL},
-            {TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.WALL},
-            {TileType.WALL,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.FLOOR,TileType.WALL},
-            {TileType.WALL,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.LAVA,TileType.LAVA,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.FLOOR,TileType.WALL},
-            {TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL},
-            {TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.LAVA,TileType.FLOOR,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.WALL},
-            {TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.LAVA,TileType.LAVA,TileType.FLOOR,TileType.WALL},
-            {TileType.WALL,TileType.FLOOR,TileType.LAVA,TileType.LAVA,TileType.WALL,TileType.FLOOR,TileType.LAVA,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.WALL},
-            {TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL},
-            {TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL},
-            {TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL},
-            {TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.LAVA,TileType.LAVA,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL},
-            {TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL},
-            {TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL},
-            {TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.WALL},
-            {TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.LAVA,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.FLOOR,TileType.LAVA,TileType.FLOOR,TileType.FLOOR,TileType.WALL},
-            {TileType.WALL,TileType.WALL,TileType.WALL,TileType.WALL,TileType.WALL,TileType.FLOOR,TileType.FLOOR,TileType.WALL,TileType.WALL,TileType.WALL,TileType.WALL,TileType.WALL},
-            {TileType.GRASS,TileType.GRASS,TileType.GRASS,TileType.GRASS,TileType.WALL,TileType.ENTRANCE,TileType.ENTRANCE,TileType.WALL,TileType.GRASS,TileType.GRASS,TileType.GRASS,TileType.GRASS}};
+    private GameDisplayViewModel2 viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,36 +137,36 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         upButton.setOnClickListener(v -> {
             player.setMoveStrategy(new MoveUp());
             player.move(tileMap);
-            Toast.makeText(GameDisplayActivity2.this, String.format("X: %d, Y: %d",
-                            player.getX(), player.getY()),
-                    Toast.LENGTH_SHORT).show();
+//            Toast.makeText(GameDisplayActivity2.this, String.format("X: %d, Y: %d",
+//                            player.getX(), player.getY()),
+//                    Toast.LENGTH_SHORT).show();
         });
 
         Button downButton = findViewById(R.id.downButton);
         downButton.setOnClickListener(v -> {
             player.setMoveStrategy(new MoveDown());
             player.move(tileMap);
-            Toast.makeText(GameDisplayActivity2.this, String.format("X: %d, Y: %d",
-                            player.getX(), player.getY()),
-                    Toast.LENGTH_SHORT).show();
+//            Toast.makeText(GameDisplayActivity2.this, String.format("X: %d, Y: %d",
+//                            player.getX(), player.getY()),
+//                    Toast.LENGTH_SHORT).show();
         });
 
         Button leftButton = findViewById(R.id.leftButton);
         leftButton.setOnClickListener(v -> {
             player.setMoveStrategy(new MoveLeft());
             player.move(tileMap);
-            Toast.makeText(GameDisplayActivity2.this, String.format("X: %d, Y: %d",
-                            player.getX(), player.getY()),
-                    Toast.LENGTH_SHORT).show();
+//            Toast.makeText(GameDisplayActivity2.this, String.format("X: %d, Y: %d",
+//                            player.getX(), player.getY()),
+//                    Toast.LENGTH_SHORT).show();
         });
 
         Button rightButton = findViewById(R.id.rightButton);
         rightButton.setOnClickListener(v -> {
             player.setMoveStrategy(new MoveRight());
             player.move(tileMap);
-            Toast.makeText(GameDisplayActivity2.this, String.format("X: %d, Y: %d",
-                            player.getX(), player.getY()),
-                    Toast.LENGTH_SHORT).show();
+//            Toast.makeText(GameDisplayActivity2.this, String.format("X: %d, Y: %d",
+//                            player.getX(), player.getY()),
+//                    Toast.LENGTH_SHORT).show();
         });
     }
 
