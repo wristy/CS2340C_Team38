@@ -2,7 +2,8 @@ package com.example.cs2340c_team38.model;
 
 public class Player {
 
-    private int x, y; // Player's position on the tile map
+    private int x;
+    private int y; // Player's position on the tile map
     private TileType currentTile; // The type of tile the player is currently on
 
     private static volatile Player player;
