@@ -32,6 +32,10 @@ import android.widget.Toast;
 public class GameDisplayActivity extends AppCompatActivity implements Observer {
 
     private GameDisplayViewModel viewModel;
+    String playerName;
+    int difficulty;
+    int characterSpriteId;
+    int[] currScore;
 
     private final TileType[][] tileMap = {{TileType.GRASS, TileType.GRASS, TileType.GRASS,
             TileType.GRASS, TileType.WALL, TileType.EXIT, TileType.EXIT, TileType.WALL,
@@ -103,9 +107,9 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         viewModel = new ViewModelProvider(this).get(GameDisplayViewModel.class);
         binding.setViewModel(viewModel);
 
-        String playerName = getIntent().getStringExtra("PLAYER_NAME");
-        int difficulty = getIntent().getIntExtra("DIFFICULTY", 3);
-        int characterSpriteId = getIntent().getIntExtra("CHARACTER_SPRITE", -1);
+        playerName = getIntent().getStringExtra("PLAYER_NAME");
+        difficulty = getIntent().getIntExtra("DIFFICULTY", 3);
+        characterSpriteId = getIntent().getIntExtra("CHARACTER_SPRITE", -1);
 
         viewModel.setPlayerName(playerName);
         viewModel.setDifficulty(difficulty);
@@ -116,7 +120,7 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
             startActivity(intent);
         });
         TextView scoreText = findViewById(R.id.textView6);
-        int[] currScore = {5000};
+        currScore = new int[]{5000};
         Handler h = new Handler();
         Runnable r = new Runnable() {
             @Override
@@ -177,45 +181,55 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
 
             player.setMoveStrategy(new MoveUp());
             player.move(tileMap);
-            Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d",
-                            player.getX(), player.getY()),
-                    Toast.LENGTH_SHORT).show();
+//            Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d",
+//                            player.getX(), player.getY()),
+//                    Toast.LENGTH_SHORT).show();
         });
 
         Button downButton = findViewById(R.id.downButton);
         downButton.setOnClickListener(v -> {
             player.setMoveStrategy(new MoveDown());
             player.move(tileMap);
-            Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d",
-                            player.getX(), player.getY()),
-                    Toast.LENGTH_SHORT).show();
+//            Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d",
+//                            player.getX(), player.getY()),
+//                    Toast.LENGTH_SHORT).show();
         });
 
         Button leftButton = findViewById(R.id.leftButton);
         leftButton.setOnClickListener(v -> {
             player.setMoveStrategy(new MoveLeft());
             player.move(tileMap);
-            Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d",
-                            player.getX(), player.getY()),
-                    Toast.LENGTH_SHORT).show();
+//            Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d",
+//                            player.getX(), player.getY()),
+//                    Toast.LENGTH_SHORT).show();
         });
 
         Button rightButton = findViewById(R.id.rightButton);
         rightButton.setOnClickListener(v -> {
             player.setMoveStrategy(new MoveRight());
             player.move(tileMap);
-            Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d",
-                            player.getX(), player.getY()),
-                    Toast.LENGTH_SHORT).show();
+//            Toast.makeText(GameDisplayActivity.this, String.format("X: %d, Y: %d",
+//                            player.getX(), player.getY()),
+//                    Toast.LENGTH_SHORT).show();
         });
-
-        moveViewToPosition(findViewById(R.id.AHHHHH), 3, 3);
 
     }
 
     @Override
     public void update(int x, int y) {
         moveViewToPosition(findViewById(R.id.imageView), y, x);
+        // Check if the player is on the EXIT tile
+        if (tileMap[y][x] == TileType.EXIT) {
+            // Launch the next activity
+            Intent intent = new Intent(GameDisplayActivity.this, GameDisplayActivity2.class);
+
+            // Add extras to the intent using instance variables
+            intent.putExtra("PLAYER_NAME", playerName);
+            intent.putExtra("DIFFICULTY", difficulty);
+            intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
+            intent.putExtra("currentScore", currScore[0]);
+            startActivity(intent);
+        }
     }
 
     @Override

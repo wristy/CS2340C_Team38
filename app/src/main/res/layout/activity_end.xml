@@ -101,7 +101,7 @@
 
     <ListView
         android:id="@+id/list"
-        android:layout_width="410dp"
+        android:layout_width="0dp"
         android:layout_height="393dp"
         android:cacheColorHint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"

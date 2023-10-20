@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.cs2340c_team38.viewmodels.GameDisplayViewModel3" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".views.GameDisplayActivity2"
         android:background="#0a4a18"
-        >
+        tools:context=".views.GameDisplayActivity2">
 
         <TextView
             android:id="@+id/textView3"
@@ -85,8 +86,7 @@
             app:layout_constraintHorizontal_bias="0.044"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            />
+            app:layout_constraintVertical_bias="0.0" />
 
 
         <GridLayout
@@ -100,15 +100,27 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            ></GridLayout>
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="50dp"
+                android:layout_height="46dp"
+                android:layout_rowSpan="1"
+                android:layout_columnSpan="1"
+                android:layout_gravity="fill"
+                android:visibility="visible"
+                app:drawableImage="@{viewModel.drawableImage}" />
+
+        </GridLayout>
+
 
         <Button
             android:id="@+id/exitButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="End Game"
             android:onClick="@{(view) -> viewModel.onButtonClick()}"
+            android:text="End Game"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.95"
@@ -152,11 +164,11 @@
 
         <Button
             android:id="@+id/leftButton"
-            android:background="@drawable/button_translucent_border"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="0dp"
+            android:background="@drawable/button_translucent_border"
             android:padding="0dp"
             android:text="L"
             app:layout_constraintBottom_toBottomOf="parent"
