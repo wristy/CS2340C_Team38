@@ -9,6 +9,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.example.cs2340c_team38.model.Leaderboard;
+import com.example.cs2340c_team38.model.ScoreModel;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -79,6 +80,29 @@ public class LeaderboardTest {
             // Assert that only one unique instance of Leaderboard exists
             assertEquals(1, instances.size());
         }
+        @Test
+        public void addScoreTest2() {
+            leaderboard.addScore("Ellen",100);
+            leaderboard.addScore("Jacques", 200);
+            leaderboard.addScore("Bob", 400);
+            Leaderboard.ScoreEntry mostRecent = leaderboard.getMostRecent();
+            assertEquals("Bob", mostRecent.getPlayerName());
+            assertEquals(400, mostRecent.getScore());
+        }
+
+        @Test
+        public void testAddScoreModelToLeaderBoard() {
+            leaderboard.clearAll();
+            ScoreModel scoreModel = new ScoreModel();
+            scoreModel.setScore(75);
+            leaderboard.addScore(scoreModel.getClass().getSimpleName(), scoreModel.getScore());
+            List<Leaderboard.ScoreEntry> topScores = leaderboard.getTopScores(3);
+            assertEquals(1, topScores.size());
+            assertEquals("ScoreModel", topScores.get(0).getPlayerName());
+            assertEquals(75, topScores.get(0).getScore());
+
+        }
+
     }
 
 

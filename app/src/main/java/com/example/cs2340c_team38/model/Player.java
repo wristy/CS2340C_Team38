@@ -85,4 +85,8 @@ public class Player implements Observable {
             observer.update(x, y);
         }
     }
+
+    public List<Observer> getObservers() {
+        return observers;
+    }
 }
