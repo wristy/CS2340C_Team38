@@ -1,14 +1,7 @@
 package com.example.cs2340c_team38.model;
 
-public interface Enemy extends Observable {
+public interface Enemy extends Observer {
 
 
-    @Override
-    void addObserver(Observer o);
-
-    @Override
-    void removeObserver(Observer o);
-
-    @Override
-    void notifyObservers();
+    void onCollisionWithPlayer(Player player);
 }
