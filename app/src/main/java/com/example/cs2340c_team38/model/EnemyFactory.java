@@ -7,6 +7,12 @@ public class EnemyFactory {
         }
         if (enemy.equals("Slime")) {
             return new SlimeEnemy();
+        } else if (enemy.equals("Pony")) {
+            return new PonyEnemy();
+        } else if (enemy.equals("Wizard")) {
+            return new WizardEnemy();
+        } else if (enemy.equals("Alien")) {
+            return new AlienEnemy();
         } else {
             throw new IllegalAccessException("Unknown enemy " + enemy);
         }
