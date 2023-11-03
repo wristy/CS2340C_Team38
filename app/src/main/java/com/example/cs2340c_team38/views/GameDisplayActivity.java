@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cs2340c_team38.R;
 import com.example.cs2340c_team38.databinding.ActivityGameDisplayBinding;
+import com.example.cs2340c_team38.model.Enemy;
+import com.example.cs2340c_team38.model.EnemyFactory;
 import com.example.cs2340c_team38.model.MoveDown;
 import com.example.cs2340c_team38.model.MoveLeft;
 import com.example.cs2340c_team38.model.MoveRight;
@@ -19,6 +21,7 @@ import com.example.cs2340c_team38.model.TileType;
 import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +36,22 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
     private int difficulty;
     private int characterSpriteId;
     private int[] currScore;
+
+    // Add as member variables in the GameDisplayActivity class
+    private Enemy slime1;
+    private Enemy slime2;
+    private Enemy slime3;
+
+    private Handler enemyMoveHandler = new Handler();
+    private Runnable enemyMoveRunnable;
+
+    // Patrol directions for the slimes (true for right, false for left)
+    private boolean slime1Direction = true;
+    private boolean slime2Direction = true;
+    private boolean slime3Direction = true;
+
+    private final int SLIME_START_X = 4; // Starting X position for the Slime
+    private final int SLIME_START_Y = 2; // Starting Y position for the Slime
 
     private final TileType[][] tileMap = {{TileType.GRASS, TileType.GRASS, TileType.GRASS,
             TileType.GRASS, TileType.WALL, TileType.EXIT, TileType.EXIT, TileType.WALL,
@@ -131,19 +150,10 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         };
 
         h.postDelayed(r, 1000);
-        viewModel.getContinueEvent().observe(this, message -> {
-            Intent intent = new Intent(GameDisplayActivity.this, GameDisplayActivity2.class);
-            intent.putExtra("PLAYER_NAME", viewModel.getPlayerName());
-            intent.putExtra("DIFFICULTY", difficulty);
-            intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
-            intent.putExtra("currentScore", currScore[0]);
-            startActivity(intent);
-        });
 
+        // Movements for player
 
-        // Movements
-
-        int startY = 18;
+        int startY = 18; // player starting
         int startX = 5;
 
         GridLayout gridLayout = findViewById(R.id.gameGrid);
@@ -198,22 +208,32 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
             player.move(tileMap);
         });
 
+        // Enemy creation and setting
+
+        setupEnemies();
+
+        // Initialize the enemy patrol movement
+        startEnemyPatrol();
+
+
     }
 
-    @Override
-    public void update(int x, int y) {
-        moveViewToPosition(findViewById(R.id.imageView), y, x);
-        // Check if the player is on the EXIT tile
-        if (tileMap[y][x] == TileType.EXIT) {
-            // Launch the next activity
-            Intent intent = new Intent(GameDisplayActivity.this, GameDisplayActivity2.class);
-
-            // Add extras to the intent using instance variables
-            intent.putExtra("PLAYER_NAME", playerName);
-            intent.putExtra("DIFFICULTY", difficulty);
-            intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
-            intent.putExtra("currentScore", currScore[0]);
-            startActivity(intent);
+    public void update(String type, int x, int y) {
+        if (type.equals("Player")) {
+            moveViewToPosition(findViewById(R.id.imageView), y, x);
+            // Check if the player is on the EXIT tile
+            if (tileMap[y][x] == TileType.EXIT) {
+                Intent intent = new Intent(GameDisplayActivity.this, GameDisplayActivity2.class);
+                intent.putExtra("PLAYER_NAME", playerName);
+                intent.putExtra("DIFFICULTY", difficulty);
+                intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
+                intent.putExtra("currentScore", currScore[0]);
+                startActivity(intent);
+            }
+        } else if (type.equals("Slime1")) {
+            moveViewToPosition(findViewById(R.id.slime1), y, x); // Assumes you have IDs for each slime
+        } else if (type.equals("Slime2")) {
+            moveViewToPosition(findViewById(R.id.slime2), y, x); // Assumes you have IDs for each slime
         }
     }
 
@@ -238,6 +258,63 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         // Request the parent GridLayout to re-layout its children
         view.getParent().requestLayout();
     }
+
+    private void setupEnemies() {
+        EnemyFactory enemyFactory = new EnemyFactory();
+        try {
+            // Instantiate your enemies
+            slime1 = enemyFactory.createEnemy("Slime");
+            slime2 = enemyFactory.createEnemy("Alien");
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Set initial positions for the enemies
+        slime1.setPosition(0, 3, tileMap);
+        slime2.setPosition(1, 5, tileMap);
+
+        // Add this class as an observer to the enemies
+        slime1.addObserver(this);
+        slime2.addObserver(this);
+    }
+
+
+    private void startEnemyPatrol() {
+        enemyMoveRunnable = new Runnable() {
+            @Override
+            public void run() {
+                patrol(slime1, 1, 6, slime1Direction); // Assume patrol between columns 2 and 6
+                patrol(slime2, 1, 9, slime2Direction); // Assume patrol between columns 5 and 9
+
+                // Schedule the next run
+                enemyMoveHandler.postDelayed(this, 1000); // move every second
+            }
+        };
+        enemyMoveHandler.postDelayed(enemyMoveRunnable, 1000);
+    }
+
+    private void patrol(Enemy slime, int startColumn, int endColumn, boolean direction) {
+        // Check the current position and move the slime accordingly
+        int currentColumn = slime.getX();
+        if (direction && currentColumn < endColumn) {
+            slime.setPosition(currentColumn + 1, slime.getY(), tileMap);
+        } else if (!direction && currentColumn > startColumn) {
+            slime.setPosition(currentColumn - 1, slime.getY(), tileMap);
+        } else {
+            // Change direction if we've hit the end or start
+            if (slime == slime1) slime1Direction = !slime1Direction;
+            if (slime == slime2) slime2Direction = !slime2Direction;
+            patrol(slime, startColumn, endColumn, !direction);
+        }
+
+        if (slime == slime1) {
+            update("Slime1", slime.getX(), slime.getY());
+        } else if (slime == slime2) {
+            update("Slime2", slime.getX(), slime.getY());
+        }
+    }
+
+
 
 
 }

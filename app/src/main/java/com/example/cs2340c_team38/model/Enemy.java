@@ -2,13 +2,9 @@ package com.example.cs2340c_team38.model;
 
 public interface Enemy extends Observable {
 
+    void onCollisionWithPlayer(Player player);
+    void setPosition(int x, int y, TileType[][] tileMap);
 
-    @Override
-    void addObserver(Observer o);
-
-    @Override
-    void removeObserver(Observer o);
-
-    @Override
-    void notifyObservers();
+    int getX();
+    int getY();
 }

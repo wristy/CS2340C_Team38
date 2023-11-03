@@ -82,7 +82,7 @@ public class Player implements Observable {
     @Override
     public void notifyObservers() {
         for (Observer observer : observers) {
-            observer.update(x, y);
+            observer.update("Player", x, y);
         }
     }
 

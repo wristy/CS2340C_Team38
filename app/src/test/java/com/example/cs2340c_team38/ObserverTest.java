@@ -59,7 +59,7 @@ public class ObserverTest {
         private int updatedY;
 
         @Override
-        public void update(int x, int y) {
+        public void update(String Observalble, int x, int y) {
             updatedX = x;
             updatedY = y;
         }
