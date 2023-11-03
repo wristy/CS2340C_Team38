@@ -40,7 +40,6 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
     // Add as member variables in the GameDisplayActivity class
     private Enemy slime1;
     private Enemy slime2;
-    private Enemy slime3;
 
     private Handler enemyMoveHandler = new Handler();
     private Runnable enemyMoveRunnable;
@@ -48,10 +47,6 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
     // Patrol directions for the slimes (true for right, false for left)
     private boolean slime1Direction = true;
     private boolean slime2Direction = true;
-    private boolean slime3Direction = true;
-
-    private final int SLIME_START_X = 4; // Starting X position for the Slime
-    private final int SLIME_START_Y = 2; // Starting Y position for the Slime
 
     private final TileType[][] tileMap = {{TileType.GRASS, TileType.GRASS, TileType.GRASS,
             TileType.GRASS, TileType.WALL, TileType.EXIT, TileType.EXIT, TileType.WALL,
@@ -270,8 +265,8 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         }
 
         // Set initial positions for the enemies
-        slime1.setPosition(0, 3, tileMap);
-        slime2.setPosition(1, 5, tileMap);
+        slime1.setPosition(2, 3, tileMap);
+        slime2.setPosition(5, 11, tileMap);
 
         // Add this class as an observer to the enemies
         slime1.addObserver(this);
@@ -283,8 +278,8 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         enemyMoveRunnable = new Runnable() {
             @Override
             public void run() {
-                patrol(slime1, 1, 6, slime1Direction); // Assume patrol between columns 2 and 6
-                patrol(slime2, 1, 9, slime2Direction); // Assume patrol between columns 5 and 9
+                patrol(slime1, 1, 10, slime1Direction); // Assume patrol between columns 2 and 6
+                patrol(slime2, 3, 8, slime2Direction); // Assume patrol between columns 5 and 9
 
                 // Schedule the next run
                 enemyMoveHandler.postDelayed(this, 1000); // move every second
