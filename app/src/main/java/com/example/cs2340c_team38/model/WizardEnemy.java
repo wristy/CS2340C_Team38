@@ -14,10 +14,13 @@ public class WizardEnemy implements Enemy {
         return y;
     }
 
-    public void update(Object observable, int playerX, int playerY) {
-        if (this.x == playerX && this.y == playerY) {
-            onCollisionWithPlayer(Player.getPlayer());
+    public void update(Observable o, String observable, int playerX, int playerY) {
+        if (o instanceof Player) {
+            if (this.x == ((Player) o).getX() && this.y == ((Player) o).getY()) {
+                ((Player) o).reduceHealth();
+            }
         }
+
     }
 
     @Override

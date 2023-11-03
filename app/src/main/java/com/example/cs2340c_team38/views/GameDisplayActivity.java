@@ -123,7 +123,7 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         characterSpriteId = getIntent().getIntExtra("CHARACTER_SPRITE", -1);
 
         viewModel.setPlayerName(playerName);
-        viewModel.setDifficulty(difficulty);
+
         viewModel.setDrawableImage(characterSpriteId);
 
         viewModel.getEndEvent().observe(this, message -> {
@@ -173,6 +173,11 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
 
 
         Player player = Player.getPlayer();
+        setPlayerHealth(difficulty, player);
+        updateHealthText(player);
+
+
+
         player.addObserver(this);
         player.setPosition(startX, startY);
         player.setCurrentTile(tileMap[startY][startX]);
@@ -278,7 +283,7 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         enemyMoveRunnable = new Runnable() {
             @Override
             public void run() {
-                patrol(slime1, 1, 10, slime1Direction); // Assume patrol between columns 2 and 6
+                patrol(slime1, 2, 9, slime1Direction); // Assume patrol between columns 2 and 6
                 patrol(slime2, 3, 8, slime2Direction); // Assume patrol between columns 5 and 9
 
                 // Schedule the next run
@@ -292,9 +297,17 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         // Check the current position and move the slime accordingly
         int currentColumn = slime.getX();
         if (direction && currentColumn < endColumn) {
-            slime.setPosition(currentColumn + 1, slime.getY(), tileMap);
+            if (slime == slime1) {
+                slime.setPosition(currentColumn + 2, slime.getY(), tileMap);
+            } else {
+                slime.setPosition(currentColumn + 1, slime.getY(), tileMap);
+            }
         } else if (!direction && currentColumn > startColumn) {
-            slime.setPosition(currentColumn - 1, slime.getY(), tileMap);
+            if (slime == slime1) {
+                slime.setPosition(currentColumn - 2, slime.getY(), tileMap);
+            } else {
+                slime.setPosition(currentColumn - 1, slime.getY(), tileMap);
+            }
         } else {
             // Change direction if we've hit the end or start
             if (slime == slime1) slime1Direction = !slime1Direction;
@@ -307,6 +320,25 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         } else if (slime == slime2) {
             update("Slime2", slime.getX(), slime.getY());
         }
+    }
+
+    private void setPlayerHealth(int difficulty, Player player) {
+
+        if (difficulty == 0) {
+            player.setHealth(150);
+            player.setDamage(10);
+        } else if (difficulty == 1) {
+            player.setHealth(100);
+            player.setDamage(15);
+        } else if (difficulty == 2) {
+            player.setHealth(80);
+            player.setDamage(20);
+        }
+    }
+
+    private void updateHealthText(Player player) {
+        TextView health = findViewById(R.id.healthText);
+        health.setText(player.getHealth());
     }
 
 
