@@ -20,6 +20,7 @@ import com.example.cs2340c_team38.model.MoveDown;
 import com.example.cs2340c_team38.model.MoveLeft;
 import com.example.cs2340c_team38.model.MoveRight;
 import com.example.cs2340c_team38.model.MoveUp;
+import com.example.cs2340c_team38.model.Observable;
 import com.example.cs2340c_team38.model.Observer;
 import com.example.cs2340c_team38.model.Player;
 import com.example.cs2340c_team38.model.TileType;
@@ -199,7 +200,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
     }
 
     @Override
-    public void update(String observable, int x, int y) {
+    public void update(Observable o, String observable, int x, int y) {
         moveViewToPosition(findViewById(R.id.imageView), y, x);
         // Check if the player is on the EXIT tile
         if (tileMap[y][x] == TileType.EXIT) {

@@ -106,7 +106,7 @@ public class Player implements Observable {
     @Override
     public void notifyObservers() {
         for (Observer observer : observers) {
-            observer.update("Player", x, y);
+            observer.update(player, "Player", x, y);
         }
     }
 

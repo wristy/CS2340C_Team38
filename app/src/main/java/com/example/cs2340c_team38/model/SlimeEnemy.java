@@ -43,7 +43,7 @@ public class SlimeEnemy implements Enemy {
     @Override
     public void notifyObservers() {
         for (Observer observer : observers) {
-            observer.update("Slime", x, y);
+            observer.update(this, "Slime", x, y);
         }
     }
 

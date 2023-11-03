@@ -15,6 +15,7 @@ import com.example.cs2340c_team38.model.MoveDown;
 import com.example.cs2340c_team38.model.MoveLeft;
 import com.example.cs2340c_team38.model.MoveRight;
 import com.example.cs2340c_team38.model.MoveUp;
+import com.example.cs2340c_team38.model.Observable;
 import com.example.cs2340c_team38.model.Observer;
 import com.example.cs2340c_team38.model.Player;
 import com.example.cs2340c_team38.model.TileType;
@@ -123,7 +124,7 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         characterSpriteId = getIntent().getIntExtra("CHARACTER_SPRITE", -1);
 
         viewModel.setPlayerName(playerName);
-
+        viewModel.setDifficulty(difficulty);
         viewModel.setDrawableImage(characterSpriteId);
 
         viewModel.getEndEvent().observe(this, message -> {
@@ -218,7 +219,7 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
 
     }
 
-    public void update(String type, int x, int y) {
+    public void update(Observable o, String type, int x, int y) {
         if (type.equals("Player")) {
             moveViewToPosition(findViewById(R.id.imageView), y, x);
             // Check if the player is on the EXIT tile
@@ -316,9 +317,9 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         }
 
         if (slime == slime1) {
-            update("Slime1", slime.getX(), slime.getY());
+            update(slime, "Slime1", slime.getX(), slime.getY());
         } else if (slime == slime2) {
-            update("Slime2", slime.getX(), slime.getY());
+            update(slime,"Slime2", slime.getX(), slime.getY());
         }
     }
 
@@ -338,10 +339,14 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
 
     private void updateHealthText(Player player) {
         TextView health = findViewById(R.id.healthText);
-        health.setText(player.getHealth());
+        health.setText(String.valueOf(player.getHealth()));
     }
 
 
 
 
 }
+
+
+
+
