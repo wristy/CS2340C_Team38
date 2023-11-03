@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cs2340c_team38.R;
 import com.example.cs2340c_team38.databinding.ActivityGameDisplayBinding;
+import com.example.cs2340c_team38.model.Enemy;
+import com.example.cs2340c_team38.model.EnemyFactory;
 import com.example.cs2340c_team38.model.MoveDown;
 import com.example.cs2340c_team38.model.MoveLeft;
 import com.example.cs2340c_team38.model.MoveRight;
@@ -141,9 +143,9 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         });
 
 
-        // Movements
+        // Movements for player
 
-        int startY = 18;
+        int startY = 18; // player starting
         int startX = 5;
 
         GridLayout gridLayout = findViewById(R.id.gameGrid);
@@ -197,6 +199,16 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
             player.setMoveStrategy(new MoveRight());
             player.move(tileMap);
         });
+
+        EnemyFactory enemyFactory = new EnemyFactory();
+        Enemy alien = null;
+        try {
+            alien = enemyFactory.createEnemy("Alien");
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        Player.getPlayer().addObserver(alien);
+
 
     }
 
