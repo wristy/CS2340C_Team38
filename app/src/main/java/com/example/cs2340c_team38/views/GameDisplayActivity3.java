@@ -191,7 +191,7 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
     }
 
     @Override
-    public void update(int x, int y) {
+    public void update(String Observable, int x, int y) {
         moveViewToPosition(findViewById(R.id.imageView), y, x);
         // Check if the player is on the EXIT tile
         if (tileMap[y][x] == TileType.EXIT) {

@@ -89,21 +89,30 @@
             app:layout_constraintTop_toTopOf="parent"
             >
             <ImageView
-                android:id="@+id/enemy"
+                android:id="@+id/slime1"
                 android:layout_columnSpan="1"
                 android:layout_rowSpan="1"
-                android:layout_width="50dp"
-                android:layout_height="46dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_gravity="fill"
                 android:visibility="visible"
                 android:src="@drawable/slime_evil" />
+            <ImageView
+                android:id="@+id/slime2"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="fill"
+                android:visibility="visible"
+                android:src="@drawable/alien_evil" />
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_columnSpan="1"
                 android:layout_rowSpan="1"
-                android:layout_width="50dp"
-                android:layout_height="46dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_gravity="fill"
                 android:visibility="visible"
                 app:drawableImage="@{viewModel.drawableImage}" />
