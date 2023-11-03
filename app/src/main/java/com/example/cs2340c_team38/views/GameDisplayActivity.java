@@ -124,6 +124,7 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         characterSpriteId = getIntent().getIntExtra("CHARACTER_SPRITE", -1);
 
         viewModel.setPlayerName(playerName);
+
         viewModel.setDifficulty(difficulty);
         viewModel.setDrawableImage(characterSpriteId);
 
