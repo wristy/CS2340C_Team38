@@ -1,6 +1,7 @@
 package com.example.cs2340c_team38.model;
 
 public class WizardEnemy implements Enemy {
+    private Player player;
     private int x;
     private int y; // Position of the AlienEnemy
 
@@ -24,8 +25,10 @@ public class WizardEnemy implements Enemy {
     }
 
     @Override
-    public void onCollisionWithPlayer(Player player) {
-        // Implement what happens when an AlienEnemy collides with the player
+    public void onCollisionWithPlayer() {
+        if (this.x == player.getX() && this.y == player.getY()) {
+            player.reduceHealth();
+        }
     }
 
     @Override
@@ -33,18 +36,11 @@ public class WizardEnemy implements Enemy {
 
     }
 
-    @Override
-    public void addObserver(Observer o) {
-
+    public Player getPlayer() {
+        return player;
     }
 
-    @Override
-    public void removeObserver(Observer o) {
-
-    }
-
-    @Override
-    public void notifyObservers() {
-
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }
