@@ -123,8 +123,9 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         difficulty = getIntent().getIntExtra("DIFFICULTY", 3);
         characterSpriteId = getIntent().getIntExtra("CHARACTER_SPRITE", -1);
 
-        viewModel.setPlayerName(playerName);
 
+
+        viewModel.setPlayerName(playerName);
         viewModel.setDifficulty(difficulty);
         viewModel.setDrawableImage(characterSpriteId);
 
@@ -147,10 +148,19 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         };
 
         h.postDelayed(r, 1000);
+        viewModel.getContinueEvent().observe(this, message -> {
+            Intent intent = new Intent(GameDisplayActivity.this, GameDisplayActivity2.class);
+            intent.putExtra("PLAYER_NAME", viewModel.getPlayerName());
+            intent.putExtra("DIFFICULTY", difficulty);
+            intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
+            intent.putExtra("currentScore", currScore[0]);
+            startActivity(intent);
+        });
 
-        // Movements for player
 
-        int startY = 18; // player starting
+        // Movements
+
+        int startY = 18;
         int startX = 5;
 
         GridLayout gridLayout = findViewById(R.id.gameGrid);
@@ -175,15 +185,17 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
 
 
         Player player = Player.getPlayer();
-        setPlayerHealth(difficulty, player);
-        updateHealthText(player);
-
-
-
         player.addObserver(this);
+
         player.setPosition(startX, startY);
         player.setCurrentTile(tileMap[startY][startX]);
         moveViewToPosition(findViewById(R.id.imageView), startY, startX);
+
+        setupEnemies(player);
+        startEnemyPatrol(player);
+        setPlayerHealth(difficulty, player);
+
+
 
         Button upButton = findViewById(R.id.upButton);
         upButton.setOnClickListener(v -> {
@@ -209,16 +221,6 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
             player.setMoveStrategy(new MoveRight());
             player.move(tileMap);
         });
-
-        // Enemy creation and setting
-
-        setupEnemies(player);
-        player.addObserver(slime1);
-        player.addObserver(slime2);
-
-        // Initialize the enemy patrol movement
-        startEnemyPatrol(player);
-
 
     }
 
@@ -278,6 +280,8 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         slime2.setPosition(5, 11, tileMap);
         slime1.setPlayer(player);
         slime2.setPlayer(player);
+        player.addObserver(slime1);
+        player.addObserver(slime2);
 
     }
 
@@ -353,19 +357,16 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
     }
 
     private void launchGameOver() {
-        Intent intent = new Intent(GameDisplayActivity.this, GameDisplayActivity2.class);
+        Intent intent = new Intent(GameDisplayActivity.this, GameOverActivity.class);
         intent.putExtra("PLAYER_NAME", playerName);
         intent.putExtra("DIFFICULTY", difficulty);
         intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
-        intent.putExtra("currentScore", currScore[0]);
+        intent.putExtra("currentScore", 0);
         startActivity(intent);
+        finish();
     }
 
 
 
 
 }
-
-
-
-
