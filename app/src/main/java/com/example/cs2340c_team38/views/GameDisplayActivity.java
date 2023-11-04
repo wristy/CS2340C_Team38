@@ -352,6 +352,7 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         TextView health = findViewById(R.id.healthText);
         health.setText(String.valueOf(player.getHealth()));
         if (player.getHealth() <= 0) {
+            player.setHealth(100);
             launchGameOver();
         }
     }
@@ -361,7 +362,8 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         intent.putExtra("PLAYER_NAME", playerName);
         intent.putExtra("DIFFICULTY", difficulty);
         intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
-        intent.putExtra("currentScore", 0);
+        currScore[0] = 0;
+        intent.putExtra("currentScore", currScore[0]);
         startActivity(intent);
         finish();
     }

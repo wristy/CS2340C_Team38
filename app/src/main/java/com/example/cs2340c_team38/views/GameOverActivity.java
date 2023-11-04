@@ -20,10 +20,10 @@ public class GameOverActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_end);
+        setContentView(R.layout.activity_game_over);
         //populateHardCodedEntries();
-        int currScore = getIntent().getIntExtra("finalScore", 100);
-        String currName = getIntent().getStringExtra("currName");
+        int currScore = getIntent().getIntExtra("currScore", 0);
+        String currName = getIntent().getStringExtra("PLAYER_NAME");
         Leaderboard l = Leaderboard.getInstance();
         l.addScore(currName, currScore);
         displayLeaderboard();
