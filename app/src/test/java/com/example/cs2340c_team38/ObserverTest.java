@@ -1,5 +1,6 @@
 package com.example.cs2340c_team38;
 
+import com.example.cs2340c_team38.model.Observable;
 import com.example.cs2340c_team38.model.Observer;
 import com.example.cs2340c_team38.model.Player;
 import org.junit.Before;
@@ -59,7 +60,7 @@ public class ObserverTest {
         private int updatedY;
 
         @Override
-        public void update(int x, int y) {
+        public void update(Observable o, String Observalble, int x, int y) {
             updatedX = x;
             updatedY = y;
         }
