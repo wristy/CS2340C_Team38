@@ -346,7 +346,6 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
         intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
         currScore3[0] = 0;
         intent.putExtra("currentScore", currScore3[0]);
-        Player.getPlayer().setHealth(100);
         startActivity(intent);
         finish();
     }
