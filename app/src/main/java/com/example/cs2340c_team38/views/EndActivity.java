@@ -22,8 +22,8 @@ public class EndActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end);
         //populateHardCodedEntries();
-        int currScore = getIntent().getIntExtra("finalScore", 100);
-        String currName = getIntent().getStringExtra("currName");
+        int currScore = getIntent().getIntExtra("currentScore", 100);
+        String currName = getIntent().getStringExtra("PLAYER_NAME");
         Leaderboard l = Leaderboard.getInstance();
         l.addScore(currName, currScore);
         displayLeaderboard();
@@ -35,7 +35,7 @@ public class EndActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(EndActivity.this, MainActivity.class);
                 startActivity(intent);
-                finish(); // Optional: Close the EndActivity
+                finish();
             }
         });
 
