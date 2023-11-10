@@ -281,8 +281,8 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         enemyMoveRunnable = new Runnable() {
             @Override
             public void run() {
-                patrol(slime1, 2, 9, slime1Direction, player); // Assume patrol between columns 2 and 6
-                patrol(slime2, 3, 8, slime2Direction, player); // Assume patrol between columns 5 and 9
+                patrol(slime1, 1, 10, slime1Direction, player); // Assume patrol between columns 2 and 6
+                patrolVertical(slime2, 8, 15, slime2Direction, player); // Assume patrol between columns 5 and 9
 
 
                 // Schedule the next run
@@ -297,13 +297,13 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         int currentColumn = slime.getX();
         if (direction && currentColumn < endColumn) {
             if (slime == slime1) {
-                slime.setPosition(currentColumn + 2, slime.getY(), tileMap);
+                slime.setPosition(currentColumn + 1, slime.getY(), tileMap);
             } else {
                 slime.setPosition(currentColumn + 1, slime.getY(), tileMap);
             }
         } else if (!direction && currentColumn > startColumn) {
             if (slime == slime1) {
-                slime.setPosition(currentColumn - 2, slime.getY(), tileMap);
+                slime.setPosition(currentColumn - 1, slime.getY(), tileMap);
             } else {
                 slime.setPosition(currentColumn - 1, slime.getY(), tileMap);
             }
@@ -312,6 +312,39 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
             if (slime == slime1) slime1Direction = !slime1Direction;
             if (slime == slime2) slime2Direction = !slime2Direction;
             patrol(slime, startColumn, endColumn, !direction, player);
+        }
+
+        if (slime == slime1) {
+            update(null, "Slime1", slime.getX(), slime.getY());
+        } else if (slime == slime2) {
+            update(null,"Slime2", slime.getX(), slime.getY());
+        }
+
+        slime.onCollisionWithPlayer();
+        updateHealthText(player);
+
+    }
+
+    private void patrolVertical(Enemy slime, int startRow, int endRow, boolean direction, Player player) {
+        // Check the current position and move the slime accordingly
+        int currentRow = slime.getY();
+        if (direction && currentRow < endRow) {
+            if (slime == slime1) {
+                slime.setPosition(slime.getX(),currentRow + 1, tileMap);
+            } else {
+                slime.setPosition(slime.getX(),currentRow + 1, tileMap);
+            }
+        } else if (!direction && currentRow > startRow) {
+            if (slime == slime1) {
+                slime.setPosition(slime.getX(),currentRow - 1, tileMap);
+            } else {
+                slime.setPosition(slime.getX(),currentRow - 1, tileMap);
+            }
+        } else {
+            // Change direction if we've hit the end or start
+            if (slime == slime1) slime1Direction = !slime1Direction;
+            if (slime == slime2) slime2Direction = !slime2Direction;
+            patrolVertical(slime, startRow, endRow, !direction, player);
         }
 
         if (slime == slime1) {
