@@ -187,7 +187,6 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
 
         setupEnemies(player);
         startEnemyPatrol(player);
-        setPlayerHealth(difficulty, player);
 
         Button upButton = findViewById(R.id.upButton);
         upButton.setOnClickListener(v -> {
@@ -375,8 +374,8 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
     private void updateHealthText(Player player) {
         TextView health = findViewById(R.id.healthText);
         health.setText(String.valueOf(player.getHealth()));
-        if (player.getHealth() <= 0) {
-            player.setHealth(100);
+        if (player.getHealth() <= 0 && player.isAlive()) {
+            player.setAlive(false);
             launchGameOver();
         }
     }
