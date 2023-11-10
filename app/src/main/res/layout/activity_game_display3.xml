@@ -110,7 +110,7 @@
                 android:layout_height="35dp"
                 android:layout_gravity="fill"
                 android:visibility="visible"
-                android:src="@drawable/slime_evil" />
+                android:src="@drawable/wizard_evil" />
 
             <ImageView
                 android:id="@+id/slime2"
@@ -120,7 +120,7 @@
                 android:layout_height="35dp"
                 android:layout_gravity="fill"
                 android:visibility="visible"
-                android:src="@drawable/alien_evil" />
+                android:src="@drawable/pony_evil" />
 
             <ImageView
                 android:id="@+id/imageView"
