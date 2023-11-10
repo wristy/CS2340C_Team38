@@ -39,4 +39,9 @@ public class AlienEnemy implements Enemy {
     public void notifyObservers() {
 
     }
+
+    public void setPlayer(Player testPlayer) {
+    }
+
+
 }

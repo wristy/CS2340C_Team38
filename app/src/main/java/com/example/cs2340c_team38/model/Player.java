@@ -30,7 +30,7 @@ public class Player implements Observable {
      */
 
 
-    private Player() {
+    public Player() {
         this.x = 0;
         this.y = 0;
     }
@@ -88,5 +88,11 @@ public class Player implements Observable {
 
     public List<Observer> getObservers() {
         return observers;
+    }
+
+    public void setX(int i) {
+    }
+
+    public void setY(int i) {
     }
 }
