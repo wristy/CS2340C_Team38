@@ -115,4 +115,12 @@ public class Player implements Observable {
     public List<Observer> getObservers() {
         return observers;
     }
+
+
+    public boolean isAlive() { return isAlive; }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
+
 }
