@@ -59,7 +59,8 @@ public class ConfigViewModel extends ViewModel {
     public boolean isValidConfig(MutableLiveData<String> playerName,
                                  MutableLiveData<Integer> difficulty,
                                  MutableLiveData<Integer> characterSprite) {
-        return  playerName.getValue().trim().length() != 0
+        return  playerName.getValue() != null
+                && playerName.getValue().trim().length() != 0
                 && !TextUtils.isEmpty(playerName.getValue())
                 && difficulty.getValue() != null
                 && characterSprite.getValue() != null;

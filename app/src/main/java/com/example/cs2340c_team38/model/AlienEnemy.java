@@ -1,6 +1,7 @@
 package com.example.cs2340c_team38.model;
 
 public class AlienEnemy implements Enemy {
+    private Player player;
 
     private int x;
 
@@ -16,8 +17,10 @@ public class AlienEnemy implements Enemy {
 
 
     @Override
-    public void onCollisionWithPlayer(Player player) {
-        // Implement what happens when an AlienEnemy collides with the player
+    public void onCollisionWithPlayer() {
+        if (this.x == player.getX() && this.y == player.getY()) {
+            player.reduceHealth();
+        }
     }
 
     public void setPosition(int x, int y, TileType[][] tileMap) {
@@ -25,19 +28,19 @@ public class AlienEnemy implements Enemy {
         this.y = y;
     }
 
-    @Override
-    public void addObserver(Observer o) {
-
+    public void update(Observable o, String observable, int playerX, int playerY) {
+        if (o instanceof Player) {
+            if (this.x == ((Player) o).getX() && this.y == ((Player) o).getY()) {
+                ((Player) o).reduceHealth();            }
+        }
     }
 
-    @Override
-    public void removeObserver(Observer o) {
-
+    public Player getPlayer() {
+        return player;
     }
 
-    @Override
-    public void notifyObservers() {
-
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public void setPlayer(Player testPlayer) {

@@ -7,6 +7,32 @@ public class Player implements Observable {
 
     private int x;
     private int y; // Player's position on the tile map
+
+    private boolean isAlive = true;
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    private int damage;
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void reduceHealth() {
+        health -= damage;
+    }
+
+    private int health;
     private TileType currentTile;
     private MoveStrategy moveStrategy;
 
@@ -82,17 +108,11 @@ public class Player implements Observable {
     @Override
     public void notifyObservers() {
         for (Observer observer : observers) {
-            observer.update("Player", x, y);
+            observer.update(player, "Player", x, y);
         }
     }
 
     public List<Observer> getObservers() {
         return observers;
-    }
-
-    public void setX(int i) {
-    }
-
-    public void setY(int i) {
     }
 }

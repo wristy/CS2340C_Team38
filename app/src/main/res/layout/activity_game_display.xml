@@ -31,11 +31,10 @@
             app:layout_constraintVertical_bias="0.008" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/healthText"
             android:layout_width="30dp"
             android:layout_height="25dp"
             android:fontFamily="sans-serif-smallcaps"
-            android:text="@{viewModel.healthText}"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"

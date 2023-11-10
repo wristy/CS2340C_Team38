@@ -15,6 +15,7 @@ import com.example.cs2340c_team38.model.MoveDown;
 import com.example.cs2340c_team38.model.MoveLeft;
 import com.example.cs2340c_team38.model.MoveRight;
 import com.example.cs2340c_team38.model.MoveUp;
+import com.example.cs2340c_team38.model.Observable;
 import com.example.cs2340c_team38.model.Observer;
 import com.example.cs2340c_team38.model.Player;
 import com.example.cs2340c_team38.model.TileType;
@@ -40,7 +41,6 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
     // Add as member variables in the GameDisplayActivity class
     private Enemy slime1;
     private Enemy slime2;
-    private Enemy slime3;
 
     private Handler enemyMoveHandler = new Handler();
     private Runnable enemyMoveRunnable;
@@ -48,10 +48,6 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
     // Patrol directions for the slimes (true for right, false for left)
     private boolean slime1Direction = true;
     private boolean slime2Direction = true;
-    private boolean slime3Direction = true;
-
-    private final int SLIME_START_X = 4; // Starting X position for the Slime
-    private final int SLIME_START_Y = 2; // Starting Y position for the Slime
 
     private final TileType[][] tileMap = {{TileType.GRASS, TileType.GRASS, TileType.GRASS,
             TileType.GRASS, TileType.WALL, TileType.EXIT, TileType.EXIT, TileType.WALL,
@@ -127,6 +123,8 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         difficulty = getIntent().getIntExtra("DIFFICULTY", 3);
         characterSpriteId = getIntent().getIntExtra("CHARACTER_SPRITE", -1);
 
+
+
         viewModel.setPlayerName(playerName);
         viewModel.setDifficulty(difficulty);
         viewModel.setDrawableImage(characterSpriteId);
@@ -150,10 +148,19 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         };
 
         h.postDelayed(r, 1000);
+        viewModel.getContinueEvent().observe(this, message -> {
+            Intent intent = new Intent(GameDisplayActivity.this, GameDisplayActivity2.class);
+            intent.putExtra("PLAYER_NAME", viewModel.getPlayerName());
+            intent.putExtra("DIFFICULTY", difficulty);
+            intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
+            intent.putExtra("currentScore", currScore[0]);
+            startActivity(intent);
+        });
 
-        // Movements for player
 
-        int startY = 18; // player starting
+        // Movements
+
+        int startY = 18;
         int startX = 5;
 
         GridLayout gridLayout = findViewById(R.id.gameGrid);
@@ -179,9 +186,16 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
 
         Player player = Player.getPlayer();
         player.addObserver(this);
+
         player.setPosition(startX, startY);
         player.setCurrentTile(tileMap[startY][startX]);
         moveViewToPosition(findViewById(R.id.imageView), startY, startX);
+
+        setupEnemies(player);
+        startEnemyPatrol(player);
+        setPlayerHealth(difficulty, player);
+
+
 
         Button upButton = findViewById(R.id.upButton);
         upButton.setOnClickListener(v -> {
@@ -208,17 +222,9 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
             player.move(tileMap);
         });
 
-        // Enemy creation and setting
-
-        setupEnemies();
-
-        // Initialize the enemy patrol movement
-        startEnemyPatrol();
-
-
     }
 
-    public void update(String type, int x, int y) {
+    public void update(Observable o, String type, int x, int y) {
         if (type.equals("Player")) {
             moveViewToPosition(findViewById(R.id.imageView), y, x);
             // Check if the player is on the EXIT tile
@@ -231,9 +237,9 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
                 startActivity(intent);
             }
         } else if (type.equals("Slime1")) {
-            moveViewToPosition(findViewById(R.id.slime1), y, x); // Assumes you have IDs for each slime
+            moveViewToPosition(findViewById(R.id.slime1), y, x);
         } else if (type.equals("Slime2")) {
-            moveViewToPosition(findViewById(R.id.slime2), y, x); // Assumes you have IDs for each slime
+            moveViewToPosition(findViewById(R.id.slime2), y, x);
         }
     }
 
@@ -259,7 +265,7 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         view.getParent().requestLayout();
     }
 
-    private void setupEnemies() {
+    private void setupEnemies(Player player) {
         EnemyFactory enemyFactory = new EnemyFactory();
         try {
             // Instantiate your enemies
@@ -270,21 +276,23 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         }
 
         // Set initial positions for the enemies
-        slime1.setPosition(0, 3, tileMap);
-        slime2.setPosition(1, 5, tileMap);
+        slime1.setPosition(2, 3, tileMap);
+        slime2.setPosition(5, 11, tileMap);
+        slime1.setPlayer(player);
+        slime2.setPlayer(player);
+        player.addObserver(slime1);
+        player.addObserver(slime2);
 
-        // Add this class as an observer to the enemies
-        slime1.addObserver(this);
-        slime2.addObserver(this);
     }
 
 
-    private void startEnemyPatrol() {
+    private void startEnemyPatrol(Player player) {
         enemyMoveRunnable = new Runnable() {
             @Override
             public void run() {
-                patrol(slime1, 1, 6, slime1Direction); // Assume patrol between columns 2 and 6
-                patrol(slime2, 1, 9, slime2Direction); // Assume patrol between columns 5 and 9
+                patrol(slime1, 2, 9, slime1Direction, player); // Assume patrol between columns 2 and 6
+                patrol(slime2, 3, 8, slime2Direction, player); // Assume patrol between columns 5 and 9
+
 
                 // Schedule the next run
                 enemyMoveHandler.postDelayed(this, 1000); // move every second
@@ -293,25 +301,71 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         enemyMoveHandler.postDelayed(enemyMoveRunnable, 1000);
     }
 
-    private void patrol(Enemy slime, int startColumn, int endColumn, boolean direction) {
+    private void patrol(Enemy slime, int startColumn, int endColumn, boolean direction, Player player) {
         // Check the current position and move the slime accordingly
         int currentColumn = slime.getX();
         if (direction && currentColumn < endColumn) {
-            slime.setPosition(currentColumn + 1, slime.getY(), tileMap);
+            if (slime == slime1) {
+                slime.setPosition(currentColumn + 2, slime.getY(), tileMap);
+            } else {
+                slime.setPosition(currentColumn + 1, slime.getY(), tileMap);
+            }
         } else if (!direction && currentColumn > startColumn) {
-            slime.setPosition(currentColumn - 1, slime.getY(), tileMap);
+            if (slime == slime1) {
+                slime.setPosition(currentColumn - 2, slime.getY(), tileMap);
+            } else {
+                slime.setPosition(currentColumn - 1, slime.getY(), tileMap);
+            }
         } else {
             // Change direction if we've hit the end or start
             if (slime == slime1) slime1Direction = !slime1Direction;
             if (slime == slime2) slime2Direction = !slime2Direction;
-            patrol(slime, startColumn, endColumn, !direction);
+            patrol(slime, startColumn, endColumn, !direction, player);
         }
 
         if (slime == slime1) {
-            update("Slime1", slime.getX(), slime.getY());
+            update(null, "Slime1", slime.getX(), slime.getY());
         } else if (slime == slime2) {
-            update("Slime2", slime.getX(), slime.getY());
+            update(null,"Slime2", slime.getX(), slime.getY());
         }
+
+        slime.onCollisionWithPlayer();
+        updateHealthText(player);
+
+    }
+
+    private void setPlayerHealth(int difficulty, Player player) {
+
+        if (difficulty == 0) {
+            player.setHealth(150);
+            player.setDamage(10);
+        } else if (difficulty == 1) {
+            player.setHealth(100);
+            player.setDamage(15);
+        } else if (difficulty == 2) {
+            player.setHealth(80);
+            player.setDamage(20);
+        }
+    }
+
+    private void updateHealthText(Player player) {
+        TextView health = findViewById(R.id.healthText);
+        health.setText(String.valueOf(player.getHealth()));
+        if (player.getHealth() <= 0 && player.isAlive()) {
+            player.setAlive(false);
+            launchGameOver();
+        }
+    }
+
+    private void launchGameOver() {
+        Intent intent = new Intent(GameDisplayActivity.this, GameOverActivity.class);
+        intent.putExtra("PLAYER_NAME", playerName);
+        intent.putExtra("DIFFICULTY", difficulty);
+        intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
+        currScore[0] = 0;
+        intent.putExtra("currentScore", currScore[0]);
+        startActivity(intent);
+        finish();
     }
 
 

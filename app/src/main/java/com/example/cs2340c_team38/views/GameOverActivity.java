@@ -15,14 +15,14 @@ import com.example.cs2340c_team38.model.Leaderboard;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class EndActivity extends AppCompatActivity {
+public class GameOverActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_end);
+        setContentView(R.layout.activity_game_over);
         //populateHardCodedEntries();
-        int currScore = getIntent().getIntExtra("currentScore", 100);
+        int currScore = getIntent().getIntExtra("currScore", 0);
         String currName = getIntent().getStringExtra("PLAYER_NAME");
         Leaderboard l = Leaderboard.getInstance();
         l.addScore(currName, currScore);
@@ -33,9 +33,9 @@ public class EndActivity extends AppCompatActivity {
         buttonRestart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(EndActivity.this, MainActivity.class);
+                Intent intent = new Intent(GameOverActivity.this, MainActivity.class);
                 startActivity(intent);
-                finish();
+                finish(); // Optional: Close the EndActivity
             }
         });
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SlimeEnemy implements Enemy {
+    private Player player;
     private int x;
     private int y;
 
@@ -19,35 +20,35 @@ public class SlimeEnemy implements Enemy {
 
 
     @Override
-    public void onCollisionWithPlayer(Player player) {
-        // Implement what happens when an AlienEnemy collides with the player
+    public void onCollisionWithPlayer() {
+        if (this.x == player.getX() && this.y == player.getY()) {
+            player.reduceHealth();
+        }
     }
 
     public void setPosition(int x, int y, TileType[][] tileMap) {
         this.x = x;
         this.y = y;
-        notifyObservers();
     }
 
-
-    @Override
-    public void addObserver(Observer o) {
-        observers.add(o);
-    }
-
-    @Override
-    public void removeObserver(Observer o) {
-        observers.remove(o);
-    }
-
-    @Override
-    public void notifyObservers() {
-        for (Observer observer : observers) {
-            observer.update("Slime", x, y);
+    public void update(Observable o, String observable, int playerX, int playerY) {
+        if (o instanceof Player) {
+            if (this.x == ((Player) o).getX() && this.y == ((Player) o).getY()) {
+                ((Player) o).reduceHealth();
+            }
         }
     }
 
+
     public List<Observer> getObservers() {
         return observers;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }
