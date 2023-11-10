@@ -258,8 +258,8 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
         }
 
         // Set initial positions for the enemies
-        slime1.setPosition(2, 3, tileMap);
-        slime2.setPosition(5, 11, tileMap);
+        slime1.setPosition(3, 1, tileMap);
+        slime2.setPosition(0, 9, tileMap);
         slime1.setPlayer(player);
         slime2.setPlayer(player);
         player.addObserver(slime1);
@@ -272,8 +272,8 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
         enemyMoveRunnable = new Runnable() {
             @Override
             public void run() {
-                patrol(slime1, 2, 9, slime1Direction, player); // Assume patrol between columns 2 and 6
-                patrol(slime2, 3, 8, slime2Direction, player); // Assume patrol between columns 5 and 9
+                patrol(slime1, 3, 8, slime1Direction, player); // Assume patrol between columns 2 and 6
+                patrol(slime2, 3, 10, slime2Direction, player); // Assume patrol between columns 5 and 9
 
 
                 // Schedule the next run
@@ -288,15 +288,15 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
         int currentColumn = slime.getX();
         if (direction && currentColumn < endColumn) {
             if (slime == slime1) {
-                slime.setPosition(currentColumn + 2, slime.getY(), tileMap);
-            } else {
                 slime.setPosition(currentColumn + 1, slime.getY(), tileMap);
+            } else {
+                slime.setPosition(currentColumn + 2, slime.getY(), tileMap);
             }
         } else if (!direction && currentColumn > startColumn) {
             if (slime == slime1) {
-                slime.setPosition(currentColumn - 2, slime.getY(), tileMap);
-            } else {
                 slime.setPosition(currentColumn - 1, slime.getY(), tileMap);
+            } else {
+                slime.setPosition(currentColumn - 2, slime.getY(), tileMap);
             }
         } else {
             // Change direction if we've hit the end or start
