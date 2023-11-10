@@ -42,4 +42,9 @@ public class AlienEnemy implements Enemy {
     public void setPlayer(Player player) {
         this.player = player;
     }
+
+    public void setPlayer(Player testPlayer) {
+    }
+
+
 }
