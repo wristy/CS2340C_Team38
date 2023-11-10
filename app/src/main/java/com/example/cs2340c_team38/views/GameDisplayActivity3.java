@@ -179,7 +179,6 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
 
         setupEnemies(player);
         startEnemyPatrol(player);
-        setPlayerHealth(difficulty, player);
 
 
         Button upButton = findViewById(R.id.upButton);
@@ -334,8 +333,8 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
     private void updateHealthText(Player player) {
         TextView health = findViewById(R.id.healthText);
         health.setText(String.valueOf(player.getHealth()));
-        if (player.getHealth() <= 0) {
-            player.setHealth(100);
+        if (player.getHealth() <= 0 && player.isAlive()) {
+            player.setAlive(false);
             launchGameOver();
         }
     }
@@ -347,6 +346,7 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
         intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
         currScore3[0] = 0;
         intent.putExtra("currentScore", currScore3[0]);
+        Player.getPlayer().setHealth(100);
         startActivity(intent);
         finish();
     }
