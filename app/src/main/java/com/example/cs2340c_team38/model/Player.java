@@ -123,4 +123,5 @@ public class Player implements Observable {
     public void setAlive(boolean alive) {
         isAlive = alive;
     }
+
 }
