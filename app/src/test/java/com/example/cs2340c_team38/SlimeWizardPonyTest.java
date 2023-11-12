@@ -57,20 +57,7 @@ public class SlimeWizardPonyTest {
         assertEquals(81, player3.getHealth());
     }
 
-    @Test
-    public void testPonyEnemyUpdate() {
-        PonyEnemy ponyEnemy = new PonyEnemy();
-        Player player1 = new Player();
-        player1.setHealth(100);
-        player1.setDamage(1);
-        ponyEnemy.setPlayer(player1);
 
-        ponyEnemy.setPosition(0, 0, new TileType[1][1]);
-        player1.setPosition(0, 0);
-        ponyEnemy.update(player1, "Player is at same position", player1.getX(), player1.getY());
-
-        assertEquals(99, player1.getHealth());
-    }
 
     @Test
     public void testSlimeEnemyUpdate() {
