@@ -43,8 +43,5 @@ public class AlienEnemy implements Enemy {
         this.player = player;
     }
 
-    public void setPlayer(Player testPlayer) {
-    }
-
 
 }
