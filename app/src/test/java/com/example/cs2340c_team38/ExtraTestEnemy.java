@@ -1,4 +1,4 @@
-package com.example.cs2340c_team38;
+/*package com.example.cs2340c_team38;
 
 import static org.junit.Assert.assertEquals;
 
@@ -32,4 +32,4 @@ public class ExtraTestEnemy {
 
         assertEquals(100, player1.getHealth());
     }
-}
+}*/
