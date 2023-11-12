@@ -25,9 +25,9 @@ public class ExtraTestEnemy {
         ponyEnemy.setPosition(1, 1, new TileType[3][3]);
         wizardEnemy.setPosition(2, 2, new TileType[3][3]);
         slimeEnemy.setPosition(3, 3, new TileType[3][3]);
-        ponyEnemy.update(player1, "Player is at same position with same health", player1.getX(), player1.getY());
-        wizardEnemy.update(player1, "Player is at same position with same health", player1.getX(), player1.getY());
-        slimeEnemy.update(player1, "Player is at same position with same health", player1.getX(), player1.getY());
+        ponyEnemy.update(player1, "Player has same health", player1.getX(), player1.getY());
+        wizardEnemy.update(player1, "Player has same health", player1.getX(), player1.getY());
+        slimeEnemy.update(player1, "Player has same health", player1.getX(), player1.getY());
 
 
         assertEquals(100, player1.getHealth());
