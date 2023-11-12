@@ -105,11 +105,6 @@ public class SlimeWizardPonyTest {
 
     }
 
-    @Test
-    public void testEnemyWithDifferentPositionThanPlayer() {
-
-    }
-
 
 
 }
