@@ -1,4 +1,4 @@
-/*package com.example.cs2340c_team38;
+package com.example.cs2340c_team38;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,7 +10,7 @@ import com.example.cs2340c_team38.model.WizardEnemy;
 
 import org.junit.Test;
 
-public class ExtraTestEnemy {
+/*public class ExtraTestEnemy {
     @Test
     public void testPonyEnemyUpdate() {
         PonyEnemy ponyEnemy = new PonyEnemy();
