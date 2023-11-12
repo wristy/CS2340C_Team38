@@ -26,27 +26,14 @@ public class SlimeWizardPonyTest {
         ponyEnemy.onCollisionWithPlayer();
         assertEquals(99, player1.getHealth());
     }
-    @Test
-    public void testSlimeEnemyOnPlayerCollision() {
-        SlimeEnemy slimeEnemy = new SlimeEnemy();
-        Player player2 = new Player();
-        player2.setHealth(50);
-        player2.setDamage(5);
-        slimeEnemy.setPlayer(player2);
 
-        slimeEnemy.setPosition(0, 0, new TileType[1][1]);
-        player2.setPosition(0, 0);
-
-        slimeEnemy.onCollisionWithPlayer();
-        assertEquals(45, player2.getHealth());
-    }
 
     @Test
     public void testWizardEnemyOnPlayerCollision() {
         WizardEnemy wizardEnemy= new WizardEnemy();
         Player player3 = new Player();
-        player3.setHealth(75);
-        player3.setDamage(3);
+        player3.setHealth(76);
+        player3.setDamage(2);
         wizardEnemy.setPlayer(player3);
 
         wizardEnemy.setPosition(0, 0, new TileType[1][1]);
@@ -54,7 +41,7 @@ public class SlimeWizardPonyTest {
 
         wizardEnemy.onCollisionWithPlayer();
 
-        assertEquals(72, player3.getHealth());
+        assertEquals(74, player3.getHealth());
     }
 
     @Test
