@@ -45,8 +45,8 @@ public class SlimeWizardPonyTest {
     public void testWizardEnemyOnPlayerCollision() {
         WizardEnemy wizardEnemy= new WizardEnemy();
         Player player3 = new Player();
-        player3.setHealth(76);
-        player3.setDamage(2);
+        player3.setHealth(90);
+        player3.setDamage(9);
         wizardEnemy.setPlayer(player3);
 
         wizardEnemy.setPosition(0, 0, new TileType[1][1]);
@@ -54,7 +54,7 @@ public class SlimeWizardPonyTest {
 
         wizardEnemy.onCollisionWithPlayer();
 
-        assertEquals(74, player3.getHealth());
+        assertEquals(81, player3.getHealth());
     }
 
     @Test
