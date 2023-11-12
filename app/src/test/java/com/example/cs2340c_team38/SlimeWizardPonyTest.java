@@ -57,14 +57,27 @@ public class SlimeWizardPonyTest {
         assertEquals(81, player3.getHealth());
     }
 
+    @Test
+    public void testPonyEnemyUpdate() {
+        PonyEnemy ponyEnemy = new PonyEnemy();
+        Player player1 = new Player();
+        player1.setHealth(100);
+        player1.setDamage(1);
+        ponyEnemy.setPlayer(player1);
 
+        ponyEnemy.setPosition(0, 0, new TileType[1][1]);
+        player1.setPosition(0, 0);
+        ponyEnemy.update(player1, "Player is at same position", player1.getX(), player1.getY());
+
+        assertEquals(99, player1.getHealth());
+    }
 
     @Test
     public void testSlimeEnemyUpdate() {
         SlimeEnemy slimeEnemy = new SlimeEnemy();
         Player player2 = new Player();
-        player2.setHealth(50);
-        player2.setDamage(5);
+        player2.setHealth(80);
+        player2.setDamage(3);
         slimeEnemy.setPlayer(player2);
 
         slimeEnemy.setPosition(0, 0, new TileType[1][1]);
@@ -72,7 +85,7 @@ public class SlimeWizardPonyTest {
 
         slimeEnemy.update(player2, "Player is at same position", player2.getX(), player2.getY());
 
-        assertEquals(45, player2.getHealth());
+        assertEquals(77, player2.getHealth());
     }
 
     @Test
@@ -89,11 +102,6 @@ public class SlimeWizardPonyTest {
         wizardEnemy.update(player3, "Player is at same position", player3.getX(), player3.getY());
 
         assertEquals(70, player3.getHealth());
-
-    }
-
-    @Test
-    public void testEnemyWithDifferentPositionThanPlayer() {
 
     }
 
