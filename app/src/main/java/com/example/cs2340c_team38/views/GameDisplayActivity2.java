@@ -143,6 +143,10 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         h.postDelayed(r, 1000);
         viewModel.getEndEvent().observe(this, message -> {
             Intent intent = new Intent(GameDisplayActivity2.this, EndActivity.class);
+            finish();
+            Player.getPlayer().removeObserver(this); // Unregister the activity when it's destroyed
+            Player.getPlayer().removeObserver(slime1);
+            Player.getPlayer().removeObserver(slime2);
             startActivity(intent);
         });
 
@@ -152,6 +156,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
             intent.putExtra("DIFFICULTY", difficulty);
             intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
             intent.putExtra("currentScore", currScore2[0]);
+            finish();
             startActivity(intent);
         });
 
@@ -224,6 +229,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
                 intent.putExtra("DIFFICULTY", difficulty);
                 intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
                 intent.putExtra("currentScore", currScore2[0]);
+                finish();
                 startActivity(intent);
             }
         } else if (type.equals("Slime1")) {
@@ -237,6 +243,8 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
     protected void onDestroy() {
         super.onDestroy();
         Player.getPlayer().removeObserver(this); // Unregister the activity when it's destroyed
+        Player.getPlayer().removeObserver(slime1);
+        Player.getPlayer().removeObserver(slime2);
     }
 
 
@@ -387,8 +395,12 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
         currScore2[0] = 0;
         intent.putExtra("currentScore", currScore2[0]);
-        startActivity(intent);
+        Player.getPlayer().removeObserver(this); // Unregister the activity when it's destroyed
+        Player.getPlayer().removeObserver(slime1);
+        Player.getPlayer().removeObserver(slime2);
         finish();
+        startActivity(intent);
+
     }
 
 }
