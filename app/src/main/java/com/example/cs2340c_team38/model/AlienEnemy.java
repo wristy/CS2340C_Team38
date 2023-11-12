@@ -43,5 +43,4 @@ public class AlienEnemy implements Enemy {
         this.player = player;
     }
 
-
 }

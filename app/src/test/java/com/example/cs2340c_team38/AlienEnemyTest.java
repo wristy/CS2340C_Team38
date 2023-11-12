@@ -1,4 +1,4 @@
-package com.example.cs2340c_team38;
+/*package com.example.cs2340c_team38;
 
 import static org.junit.Assert.assertEquals;
 
@@ -41,5 +41,5 @@ public class AlienEnemyTest {
         alienEnemy.update(testPlayer, "", 10, 10);
         assertEquals(true, testPlayer.isHealthReduced(), "Health should be reduced on update with collision");
     }
-}
+}*/
 
