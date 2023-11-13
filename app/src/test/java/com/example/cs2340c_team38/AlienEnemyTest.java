@@ -1,4 +1,4 @@
-/*package com.example.cs2340c_team38;
+package com.example.cs2340c_team38;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,10 +10,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.Test;
 
 public class AlienEnemyTest {
+
 private AlienEnemy alienEnemy;
 private Player testPlayer;
 @Before
-    public void setUp() {
+public void setUp() {
     testPlayer = Player.getPlayer();
     testPlayer.setHealth(10); // Set a known health value
     testPlayer.setDamage(1); // Set a known damage value
@@ -53,5 +54,5 @@ public void testUpdateWithoutCollision() {
     alienEnemy.update(testPlayer, "PlayerMoved", 3, 7);
     assertEquals(initialHealth, testPlayer.getHealth());
     }
-}*/
+}
 
