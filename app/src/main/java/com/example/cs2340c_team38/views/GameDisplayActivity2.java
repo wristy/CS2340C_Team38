@@ -3,7 +3,6 @@ package com.example.cs2340c_team38.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -147,6 +146,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
             Player.getPlayer().removeObserver(this); // Unregister the activity when it's destroyed
             Player.getPlayer().removeObserver(slime1);
             Player.getPlayer().removeObserver(slime2);
+            enemyMoveHandler.removeCallbacksAndMessages(null);
             startActivity(intent);
         });
 
@@ -156,6 +156,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
             intent.putExtra("DIFFICULTY", difficulty);
             intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
             intent.putExtra("currentScore", currScore2[0]);
+            enemyMoveHandler.removeCallbacksAndMessages(null);
             finish();
             startActivity(intent);
         });
@@ -230,6 +231,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
                 intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
                 intent.putExtra("currentScore", currScore2[0]);
                 finish();
+                enemyMoveHandler.removeCallbacksAndMessages(null);
                 startActivity(intent);
             }
         } else if (type.equals("Slime1")) {
@@ -288,8 +290,8 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         enemyMoveRunnable = new Runnable() {
             @Override
             public void run() {
-                patrol(slime1, 1, 10, slime1Direction, player); // Assume patrol between columns 2 and 6
-                patrolVertical(slime2, 8, 15, slime2Direction, player); // Assume patrol between columns 5 and 9
+                patrol(slime1, 1, 10, slime1Direction, player);
+                patrolVertical(slime2, 8, 15, slime2Direction, player);
 
 
                 // Schedule the next run
@@ -299,7 +301,8 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         enemyMoveHandler.postDelayed(enemyMoveRunnable, 1000);
     }
 
-    private void patrol(Enemy slime, int startColumn, int endColumn, boolean direction, Player player) {
+    private void patrol(Enemy slime, int startColumn, int endColumn,
+                        boolean direction, Player player) {
         // Check the current position and move the slime accordingly
         int currentColumn = slime.getX();
         if (direction && currentColumn < endColumn) {
@@ -316,15 +319,19 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
             }
         } else {
             // Change direction if we've hit the end or start
-            if (slime == slime1) slime1Direction = !slime1Direction;
-            if (slime == slime2) slime2Direction = !slime2Direction;
+            if (slime == slime1) {
+                slime1Direction = !slime1Direction;
+            }
+            if (slime == slime2) {
+                slime2Direction = !slime2Direction;
+            }
             patrol(slime, startColumn, endColumn, !direction, player);
         }
 
         if (slime == slime1) {
             update(null, "Slime1", slime.getX(), slime.getY());
         } else if (slime == slime2) {
-            update(null,"Slime2", slime.getX(), slime.getY());
+            update(null, "Slime2", slime.getX(), slime.getY());
         }
 
         slime.onCollisionWithPlayer();
@@ -332,32 +339,37 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
 
     }
 
-    private void patrolVertical(Enemy slime, int startRow, int endRow, boolean direction, Player player) {
+    private void patrolVertical(Enemy slime, int startRow, int endRow,
+                                boolean direction, Player player) {
         // Check the current position and move the slime accordingly
         int currentRow = slime.getY();
         if (direction && currentRow < endRow) {
             if (slime == slime1) {
-                slime.setPosition(slime.getX(),currentRow + 1, tileMap);
+                slime.setPosition(slime.getX(), currentRow + 1, tileMap);
             } else {
-                slime.setPosition(slime.getX(),currentRow + 1, tileMap);
+                slime.setPosition(slime.getX(), currentRow + 1, tileMap);
             }
         } else if (!direction && currentRow > startRow) {
             if (slime == slime1) {
-                slime.setPosition(slime.getX(),currentRow - 1, tileMap);
+                slime.setPosition(slime.getX(), currentRow - 1, tileMap);
             } else {
-                slime.setPosition(slime.getX(),currentRow - 1, tileMap);
+                slime.setPosition(slime.getX(), currentRow - 1, tileMap);
             }
         } else {
             // Change direction if we've hit the end or start
-            if (slime == slime1) slime1Direction = !slime1Direction;
-            if (slime == slime2) slime2Direction = !slime2Direction;
+            if (slime == slime1) {
+                slime1Direction = !slime1Direction;
+            }
+            if (slime == slime2) {
+                slime2Direction = !slime2Direction;
+            }
             patrolVertical(slime, startRow, endRow, !direction, player);
         }
 
         if (slime == slime1) {
             update(null, "Slime1", slime.getX(), slime.getY());
         } else if (slime == slime2) {
-            update(null,"Slime2", slime.getX(), slime.getY());
+            update(null, "Slime2", slime.getX(), slime.getY());
         }
 
         slime.onCollisionWithPlayer();
@@ -398,6 +410,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         Player.getPlayer().removeObserver(this); // Unregister the activity when it's destroyed
         Player.getPlayer().removeObserver(slime1);
         Player.getPlayer().removeObserver(slime2);
+        enemyMoveHandler.removeCallbacksAndMessages(null);
         finish();
         startActivity(intent);
 

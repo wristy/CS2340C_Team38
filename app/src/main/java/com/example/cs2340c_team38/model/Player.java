@@ -117,7 +117,9 @@ public class Player implements Observable {
     }
 
 
-    public boolean isAlive() { return isAlive; }
+    public boolean isAlive() {
+        return isAlive;
+    }
 
     public void setAlive(boolean alive) {
         isAlive = alive;
