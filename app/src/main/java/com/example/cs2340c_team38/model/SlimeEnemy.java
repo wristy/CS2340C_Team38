@@ -16,13 +16,12 @@ public class SlimeEnemy implements Enemy {
         return y;
     }
 
-    private final List<Observer> observers = new ArrayList<>();
 
 
     @Override
     public void onCollisionWithPlayer() {
-        if (this.x == player.getX() && this.y == player.getY()) {
-            player.reduceHealth();
+        if (this.x == Player.getPlayer().getX() && this.y == Player.getPlayer().getY()) {
+            Player.getPlayer().reduceHealth();
         }
     }
 
@@ -40,9 +39,6 @@ public class SlimeEnemy implements Enemy {
     }
 
 
-    public List<Observer> getObservers() {
-        return observers;
-    }
 
     public Player getPlayer() {
         return player;
