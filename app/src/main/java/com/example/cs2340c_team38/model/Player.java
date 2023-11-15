@@ -8,6 +8,8 @@ public class Player implements Observable {
     private int x;
     private int y; // Player's position on the tile map
 
+    private boolean isAlive = true;
+
     public int getDamage() {
         return damage;
     }
@@ -54,7 +56,7 @@ public class Player implements Observable {
      */
 
 
-    private Player() {
+    public Player() {
         this.x = 0;
         this.y = 0;
     }
@@ -113,4 +115,12 @@ public class Player implements Observable {
     public List<Observer> getObservers() {
         return observers;
     }
+
+
+    public boolean isAlive() { return isAlive; }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
+
 }

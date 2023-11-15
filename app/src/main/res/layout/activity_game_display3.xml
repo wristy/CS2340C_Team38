@@ -32,11 +32,10 @@
             app:layout_constraintVertical_bias="0.008" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/healthText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-smallcaps"
-            android:text="@{viewModel.healthText}"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -89,6 +88,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
 
+
         <GridLayout
             android:id="@+id/gameGrid"
             android:layout_width="0dp"
@@ -103,9 +103,29 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:id="@+id/slime1"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="fill"
+                android:visibility="visible"
+                android:src="@drawable/wizard_evil" />
+
+            <ImageView
+                android:id="@+id/slime2"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="fill"
+                android:visibility="visible"
+                android:src="@drawable/pony_evil" />
+
+            <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="50dp"
-                android:layout_height="46dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_rowSpan="1"
                 android:layout_columnSpan="1"
                 android:layout_gravity="fill"
