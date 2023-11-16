@@ -13,7 +13,7 @@ public class AlienEnemy implements Enemy {
         return y;
     }
 
-    private int y; // Position of the AlienEnemy
+    private int y;
 
 
     @Override
