@@ -6,7 +6,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Player implements Observable {
 
     private int x;
-    private int y; // Player's position on the tile map
+    private int y;
 
     private boolean isAlive = true;
 
@@ -50,8 +50,8 @@ public class Player implements Observable {
     private static volatile Player player;
 
     /*
-     * @param x x-coordinate of player (default 0.0)
-     * @param y y-coordinate of player (default 0.0)
+     * @param x x-coordinate of player
+     * @param y y-coordinate of player
      */
     public Player() {
         this.x = 0;

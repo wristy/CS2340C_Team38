@@ -143,7 +143,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         viewModel.getEndEvent().observe(this, message -> {
             Intent intent = new Intent(GameDisplayActivity2.this, EndActivity.class);
             finish();
-            Player.getPlayer().removeObserver(this); // Unregister the activity when it's destroyed
+            Player.getPlayer().removeObserver(this);
             Player.getPlayer().removeObserver(slime1);
             Player.getPlayer().removeObserver(slime2);
             enemyMoveHandler.removeCallbacksAndMessages(null);
@@ -161,8 +161,6 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
             startActivity(intent);
         });
 
-        // Movements
-
         int startY = 18;
         int startX = 5;
 
@@ -176,6 +174,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
             params.width = 0;
             gridLayout.addView(new Space(this), params);
         }
+
         for (int y = 0; y < gridLayout.getRowCount(); y++) {
             GridLayout.LayoutParams params = new GridLayout.LayoutParams();
             params.rowSpec = GridLayout.spec(y, 1, 1);
@@ -223,7 +222,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
     public void update(Observable o, String type, int x, int y) {
         if (type.equals("Player")) {
             moveViewToPosition(findViewById(R.id.imageView), y, x);
-            // Check if the player is on the EXIT tile
+
             if (tileMap[y][x] == TileType.EXIT) {
                 Intent intent = new Intent(GameDisplayActivity2.this, GameDisplayActivity3.class);
                 intent.putExtra("PLAYER_NAME", playerName);
@@ -234,6 +233,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
                 enemyMoveHandler.removeCallbacksAndMessages(null);
                 startActivity(intent);
             }
+
         } else if (type.equals("Slime1")) {
             moveViewToPosition(findViewById(R.id.slime1), y, x);
         } else if (type.equals("Slime2")) {
@@ -260,7 +260,6 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         // Apply the updated layout parameters
         view.setLayoutParams(params);
 
-        // Request the parent GridLayout to re-layout its children
         view.getParent().requestLayout();
     }
 
