@@ -48,15 +48,6 @@ public class EndActivity extends AppCompatActivity {
         leaderboardListView.setAdapter(adapter);
     }
 
-    private void populateHardCodedEntries() {
-        Leaderboard leaderboard = Leaderboard.getInstance();
-        leaderboard.addScore("Alice", 5000);
-        leaderboard.addScore("Bob", 4500);
-        leaderboard.addScore("Charlie", 4900);
-        leaderboard.addScore("Dave", 5100);
-        leaderboard.addScore("Eve", 4800);
-    }
-
     private void displayRecentAttempt() {
         Leaderboard leaderboard = Leaderboard.getInstance();
         Leaderboard.ScoreEntry recentEntry = leaderboard.getMostRecent();
