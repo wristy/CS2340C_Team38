@@ -99,7 +99,7 @@ public class PonyWizardSlimeTest {
     @Test
     public void testWizardEnemyUpdate() {
         WizardEnemy wizardEnemy= new WizardEnemy();
-        Player player3 = new Player();
+        Player player3 = Player.getPlayer();
         player3.setHealth(75);
         player3.setDamage(4);
         wizardEnemy.setPlayer(player3);
