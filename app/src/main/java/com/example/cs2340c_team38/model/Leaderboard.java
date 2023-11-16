@@ -1,6 +1,5 @@
 package com.example.cs2340c_team38.model;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -64,10 +63,6 @@ public class Leaderboard {
 
         public Date getDateTime() {
             return dateTime;
-        }
-
-        public void setDateTime(Date dateTime) {
-            this.dateTime = dateTime;
         }
 
         private Date dateTime;

@@ -29,7 +29,7 @@ public class PonyWizardSlimeTest {
     @Test
     public void testSlimeEnemyOnPlayerCollision() {
         SlimeEnemy slimeEnemy = new SlimeEnemy();
-        Player player2 = new Player();
+        Player player2 = Player.getPlayer();
         player2.setHealth(80);
         player2.setDamage(3);
         slimeEnemy.setPlayer(player2);
@@ -80,7 +80,6 @@ public class PonyWizardSlimeTest {
 
         player2.setDamage(3);
 
-        player2.setDamage(5);
 
         slimeEnemy.setPlayer(player2);
 
@@ -89,10 +88,7 @@ public class PonyWizardSlimeTest {
 
         slimeEnemy.update(player2, "Player is at same position", player2.getX(), player2.getY());
 
-
         assertEquals(77, player2.getHealth());
-
-        assertEquals(75, player2.getHealth());
 
     }
 
