@@ -80,7 +80,7 @@ public class PonyWizardSlimeTest {
 
         player2.setDamage(3);
 
-        player2.setDamage(5);
+
 
         slimeEnemy.setPlayer(player2);
 
@@ -91,8 +91,6 @@ public class PonyWizardSlimeTest {
 
 
         assertEquals(77, player2.getHealth());
-
-        assertEquals(75, player2.getHealth());
 
     }
 
