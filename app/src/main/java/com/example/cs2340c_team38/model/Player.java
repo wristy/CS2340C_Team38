@@ -52,10 +52,7 @@ public class Player implements Observable {
     /*
      * @param x x-coordinate of player (default 0.0)
      * @param y y-coordinate of player (default 0.0)
-     * @param movementSpeed movement speed of player (default 5.0)
      */
-
-
     public Player() {
         this.x = 0;
         this.y = 0;
@@ -65,7 +62,6 @@ public class Player implements Observable {
      * Constructor for Player
      * @return the instance of the player
      */
-
     public static Player getPlayer() {
         if (player == null) {
             synchronized (Player.class) {

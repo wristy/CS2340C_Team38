@@ -332,20 +332,6 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
 
     }
 
-    private void setPlayerHealth(int difficulty, Player player) {
-
-        if (difficulty == 0) {
-            player.setHealth(150);
-            player.setDamage(10);
-        } else if (difficulty == 1) {
-            player.setHealth(100);
-            player.setDamage(15);
-        } else if (difficulty == 2) {
-            player.setHealth(80);
-            player.setDamage(20);
-        }
-    }
-
     private void updateHealthText(Player player) {
         TextView health = findViewById(R.id.healthText);
         health.setText(String.valueOf(player.getHealth()));
