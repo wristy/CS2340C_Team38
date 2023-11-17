@@ -1,6 +1,5 @@
 package com.example.cs2340c_team38.model;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
