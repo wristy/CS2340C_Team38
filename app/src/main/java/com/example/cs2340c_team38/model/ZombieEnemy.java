@@ -24,6 +24,9 @@ public class ZombieEnemy implements Enemy {
     }
 
     public void onCollisionWithPlayer() {
+        if (this.x == player.getX() && this.y == player.getY()) {
+            player.reduceHealth();
+        }
 
     }
     public void setPosition(int x, int y, TileType[][] tileMap) {
