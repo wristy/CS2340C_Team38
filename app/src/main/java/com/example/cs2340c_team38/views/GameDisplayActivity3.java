@@ -92,6 +92,67 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
         {TileType.GRASS, TileType.GRASS, TileType.WALL, TileType.WALL,
             TileType.WALL, TileType.ENTRANCE, TileType.ENTRANCE, TileType.WALL,
             TileType.WALL, TileType.WALL, TileType.GRASS, TileType.GRASS}};
+
+    private final TileType[][] tileMap2 = {{TileType.FLOOR, TileType.LAVA, TileType.GRASS,
+            TileType.WALL, TileType.WALL, TileType.EXIT, TileType.EXIT, TileType.WALL,
+            TileType.WALL, TileType.GRASS, TileType.GRASS, TileType.FLOOR},
+            {TileType.GRASS, TileType.WALL, TileType.GRASS, TileType.FLOOR, TileType.FLOOR,
+                    TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
+                    TileType.WALL, TileType.WALL, TileType.GRASS},
+            {TileType.WALL, TileType.LAVA, TileType.FLOOR, TileType.FLOOR,
+                    TileType.GRASS, TileType.WALL, TileType.WALL, TileType.WALL,
+                    TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL},
+            {TileType.WALL, TileType.LAVA, TileType.FLOOR, TileType.FLOOR,
+                    TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.FLOOR,
+                    TileType.FLOOR, TileType.FLOOR, TileType.LAVA, TileType.WALL},
+            {TileType.WALL, TileType.WALL, TileType.WALL, TileType.WALL,
+                    TileType.FLOOR, TileType.FLOOR, TileType.LAVA, TileType.FLOOR,
+                    TileType.WALL, TileType.WALL, TileType.WALL, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.LAVA, TileType.WALL,
+                    TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL,
+                    TileType.WALL, TileType.LAVA, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
+                    TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
+                    TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL,
+                    TileType.LAVA, TileType.LAVA, TileType.GRASS, TileType.LAVA,
+                    TileType.WALL, TileType.FLOOR, TileType.LAVA, TileType.WALL},
+            {TileType.WALL, TileType.LAVA, TileType.FLOOR, TileType.WALL,
+                    TileType.WALL, TileType.WALL, TileType.WALL, TileType.WALL,
+                    TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
+                    TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
+                    TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.LAVA, TileType.FLOOR,
+                    TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.FLOOR,
+                    TileType.FLOOR, TileType.LAVA, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.WALL, TileType.WALL, TileType.FLOOR,
+                    TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.FLOOR,
+                    TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL},
+            {TileType.WALL, TileType.WALL, TileType.FLOOR, TileType.FLOOR,
+                    TileType.LAVA, TileType.WALL, TileType.WALL, TileType.LAVA,
+                    TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.LAVA,
+                    TileType.LAVA, TileType.WALL, TileType.WALL, TileType.LAVA,
+                    TileType.LAVA, TileType.FLOOR, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.WALL, TileType.WALL,
+                    TileType.WALL, TileType.WALL, TileType.WALL, TileType.WALL,
+                    TileType.WALL, TileType.WALL, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL,
+                    TileType.GRASS, TileType.GRASS, TileType.LAVA, TileType.GRASS,
+                    TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL,
+                    TileType.WALL, TileType.WALL, TileType.WALL, TileType.WALL,
+                    TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.WALL},
+            {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
+                    TileType.FLOOR, TileType.LAVA, TileType.LAVA, TileType.FLOOR,
+                    TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.WALL},
+            {TileType.GRASS, TileType.WALL, TileType.WALL, TileType.FLOOR,
+                    TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
+                    TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.LAVA},
+            {TileType.LAVA, TileType.GRASS, TileType.WALL, TileType.WALL,
+                    TileType.WALL, TileType.ENTRANCE, TileType.ENTRANCE, TileType.WALL,
+                    TileType.WALL, TileType.WALL, TileType.GRASS, TileType.WALL}};
     private String playerName;
     private int difficulty;
     private int characterSpriteId;
@@ -178,7 +239,7 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
         Player player = Player.getPlayer();
         player.addObserver(this);
         player.setPosition(startX, startY);
-        player.setCurrentTile(tileMap[startY][startX]);
+        player.setCurrentTile(tileMap2[startY][startX]);
         moveViewToPosition(findViewById(R.id.imageView), startY, startX);
 
         setupEnemies(player);
@@ -188,25 +249,25 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
         Button upButton = findViewById(R.id.upButton);
         upButton.setOnClickListener(v -> {
             player.setMoveStrategy(new MoveUp());
-            player.move(tileMap);
+            player.move(tileMap2);
         });
 
         Button downButton = findViewById(R.id.downButton);
         downButton.setOnClickListener(v -> {
             player.setMoveStrategy(new MoveDown());
-            player.move(tileMap);
+            player.move(tileMap2);
         });
 
         Button leftButton = findViewById(R.id.leftButton);
         leftButton.setOnClickListener(v -> {
             player.setMoveStrategy(new MoveLeft());
-            player.move(tileMap);
+            player.move(tileMap2);
         });
 
         Button rightButton = findViewById(R.id.rightButton);
         rightButton.setOnClickListener(v -> {
             player.setMoveStrategy(new MoveRight());
-            player.move(tileMap);
+            player.move(tileMap2);
         });
     }
 
@@ -215,7 +276,7 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
         if (type.equals("Player")) {
             moveViewToPosition(findViewById(R.id.imageView), y, x);
             // Check if the player is on the EXIT tile
-            if (tileMap[y][x] == TileType.EXIT) {
+            if (tileMap2[y][x] == TileType.EXIT) {
                 Intent intent = new Intent(GameDisplayActivity3.this, EndActivity.class);
                 intent.putExtra("PLAYER_NAME", playerName);
                 intent.putExtra("DIFFICULTY", difficulty);
@@ -268,8 +329,8 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
         }
 
         // Set initial positions for the enemies
-        slime1.setPosition(3, 1, tileMap);
-        slime2.setPosition(0, 9, tileMap);
+        slime1.setPosition(3, 1, tileMap2);
+        slime2.setPosition(0, 9, tileMap2);
         slime1.setPlayer(player);
         slime2.setPlayer(player);
         player.addObserver(slime1);
@@ -298,15 +359,15 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
         int currentColumn = slime.getX();
         if (direction && currentColumn < endColumn) {
             if (slime == slime1) {
-                slime.setPosition(currentColumn + 1, slime.getY(), tileMap);
+                slime.setPosition(currentColumn + 1, slime.getY(), tileMap2);
             } else {
-                slime.setPosition(currentColumn + 2, slime.getY(), tileMap);
+                slime.setPosition(currentColumn + 2, slime.getY(), tileMap2);
             }
         } else if (!direction && currentColumn > startColumn) {
             if (slime == slime1) {
-                slime.setPosition(currentColumn - 1, slime.getY(), tileMap);
+                slime.setPosition(currentColumn - 1, slime.getY(), tileMap2);
             } else {
-                slime.setPosition(currentColumn - 2, slime.getY(), tileMap);
+                slime.setPosition(currentColumn - 2, slime.getY(), tileMap2);
             }
         } else {
             // Change direction if we've hit the end or start
