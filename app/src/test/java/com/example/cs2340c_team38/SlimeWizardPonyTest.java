@@ -29,7 +29,7 @@ public class SlimeWizardPonyTest {
     @Test
     public void testSlimeEnemyOnPlayerCollision() {
         SlimeEnemy slimeEnemy = new SlimeEnemy();
-        Player player2 = new Player();
+        Player player2 = Player.getPlayer();
         player2.setHealth(80);
         player2.setDamage(3);
         slimeEnemy.setPlayer(player2);
