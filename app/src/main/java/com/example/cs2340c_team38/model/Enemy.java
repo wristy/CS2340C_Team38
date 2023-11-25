@@ -11,3 +11,5 @@ public interface Enemy extends Observer {
     int getY();
 }
 
+
+
