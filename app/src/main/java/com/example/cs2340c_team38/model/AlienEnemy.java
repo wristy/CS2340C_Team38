@@ -31,7 +31,8 @@ public class AlienEnemy implements Enemy {
     public void update(Observable o, String observable, int playerX, int playerY) {
         if (o instanceof Player) {
             if (this.x == ((Player) o).getX() && this.y == ((Player) o).getY()) {
-                ((Player) o).reduceHealth();            }
+                ((Player) o).reduceHealth();
+            }
         }
     }
 
@@ -42,5 +43,7 @@ public class AlienEnemy implements Enemy {
     public void setPlayer(Player player) {
         this.player = player;
     }
+
+
 
 }

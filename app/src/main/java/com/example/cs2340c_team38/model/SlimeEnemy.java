@@ -1,8 +1,5 @@
 package com.example.cs2340c_team38.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SlimeEnemy implements Enemy {
     private Player player;
     private int x;

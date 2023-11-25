@@ -158,6 +158,7 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
             Player.getPlayer().removeObserver(slime1);
             Player.getPlayer().removeObserver(alien1);
             finish();
+            enemyMoveHandler.removeCallbacksAndMessages(null);
             startActivity(intent);
         });
 
@@ -298,8 +299,8 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         enemyMoveRunnable = new Runnable() {
             @Override
             public void run() {
-                patrol(slime1, 2, 9, slime1Direction, player); // Assume patrol between columns 2 and 6
-                patrol(alien1, 3, 8, slime2Direction, player); // Assume patrol between columns 5 and 9
+                patrol(slime1, 2, 9, slime1Direction, player);
+                patrol(alien1, 3, 8, slime2Direction, player);
 
 
                 // Schedule the next run
@@ -309,7 +310,8 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         enemyMoveHandler.postDelayed(enemyMoveRunnable, 1000);
     }
 
-    private void patrol(Enemy slime, int startColumn, int endColumn, boolean direction, Player player) {
+    private void patrol(Enemy slime, int startColumn, int endColumn,
+                        boolean direction, Player player) {
         // Check the current position and move the slime accordingly
         int currentColumn = slime.getX();
         if (direction && currentColumn < endColumn) {
@@ -326,15 +328,19 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
             }
         } else {
             // Change direction if we've hit the end or start
-            if (slime == slime1) slime1Direction = !slime1Direction;
-            if (slime == alien1) slime2Direction = !slime2Direction;
+            if (slime == slime1) {
+                slime1Direction = !slime1Direction;
+            }
+            if (slime == alien1) {
+                slime2Direction = !slime2Direction;
+            }
             patrol(slime, startColumn, endColumn, !direction, player);
         }
 
         if (slime == slime1) {
             update(null, "Slime1", slime.getX(), slime.getY());
         } else if (slime == alien1) {
-            update(null,"Slime2", slime.getX(), slime.getY());
+            update(null, "Slime2", slime.getX(), slime.getY());
         }
 
         slime.onCollisionWithPlayer();
@@ -375,6 +381,7 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         Player.getPlayer().removeObserver(this); // Unregister the activity when it's destroyed
         Player.getPlayer().removeObserver(slime1);
         Player.getPlayer().removeObserver(alien1);
+        enemyMoveHandler.removeCallbacksAndMessages(null);
         finish();
         startActivity(intent);
 

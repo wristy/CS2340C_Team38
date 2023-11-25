@@ -11,11 +11,11 @@ import com.example.cs2340c_team38.model.SlimeEnemy;
 import com.example.cs2340c_team38.model.TileType;
 import com.example.cs2340c_team38.model.WizardEnemy;
 
-public class SlimeWizardPonyTest {
+public class PonyWizardSlimeTest {
     @Test
     public void testPonyEnemyOnPlayerCollision() {
         PonyEnemy ponyEnemy = new PonyEnemy();
-        Player player1 = new Player();
+        Player player1 = Player.getPlayer();
         player1.setHealth(100);
         player1.setDamage(1);
         ponyEnemy.setPlayer(player1);
@@ -29,9 +29,11 @@ public class SlimeWizardPonyTest {
     @Test
     public void testSlimeEnemyOnPlayerCollision() {
         SlimeEnemy slimeEnemy = new SlimeEnemy();
-        Player player2 = new Player();
+        Player player2 = Player.getPlayer();
+
         player2.setHealth(80);
         player2.setDamage(3);
+
         slimeEnemy.setPlayer(player2);
 
         slimeEnemy.setPosition(0, 0, new TileType[1][1]);
@@ -44,7 +46,7 @@ public class SlimeWizardPonyTest {
     @Test
     public void testWizardEnemyOnPlayerCollision() {
         WizardEnemy wizardEnemy= new WizardEnemy();
-        Player player3 = new Player();
+        Player player3 = Player.getPlayer();
         player3.setHealth(90);
         player3.setDamage(9);
         wizardEnemy.setPlayer(player3);
@@ -75,9 +77,13 @@ public class SlimeWizardPonyTest {
     @Test
     public void testSlimeEnemyUpdate() {
         SlimeEnemy slimeEnemy = new SlimeEnemy();
-        Player player2 = new Player();
+        Player player2 = Player.getPlayer();
         player2.setHealth(80);
+
         player2.setDamage(3);
+
+
+
         slimeEnemy.setPlayer(player2);
 
         slimeEnemy.setPosition(0, 0, new TileType[1][1]);
@@ -85,15 +91,17 @@ public class SlimeWizardPonyTest {
 
         slimeEnemy.update(player2, "Player is at same position", player2.getX(), player2.getY());
 
+
         assertEquals(77, player2.getHealth());
+
     }
 
     @Test
     public void testWizardEnemyUpdate() {
         WizardEnemy wizardEnemy= new WizardEnemy();
-        Player player3 = new Player();
+        Player player3 = Player.getPlayer();
         player3.setHealth(75);
-        player3.setDamage(5);
+        player3.setDamage(4);
         wizardEnemy.setPlayer(player3);
 
         wizardEnemy.setPosition(0, 0, new TileType[1][1]);
@@ -101,11 +109,13 @@ public class SlimeWizardPonyTest {
 
         wizardEnemy.update(player3, "Player is at same position", player3.getX(), player3.getY());
 
-        assertEquals(70, player3.getHealth());
+        assertEquals(71, player3.getHealth());
 
     }
 
 
 
+
 }
+
 
