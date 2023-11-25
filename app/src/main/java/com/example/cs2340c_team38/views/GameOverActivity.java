@@ -21,7 +21,6 @@ public class GameOverActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_over);
-        //populateHardCodedEntries();
         int currScore = getIntent().getIntExtra("currScore", 0);
         String currName = getIntent().getStringExtra("PLAYER_NAME");
         Leaderboard l = Leaderboard.getInstance();
@@ -34,8 +33,9 @@ public class GameOverActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(GameOverActivity.this, MainActivity.class);
+                finish();
                 startActivity(intent);
-                finish(); // Optional: Close the EndActivity
+
             }
         });
 

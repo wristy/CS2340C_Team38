@@ -22,7 +22,6 @@ import com.example.cs2340c_team38.model.TileType;
 import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel;
 
 import android.os.Handler;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -40,7 +39,7 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
 
     // Add as member variables in the GameDisplayActivity class
     private Enemy slime1;
-    private Enemy slime2;
+    private Enemy alien1;
 
     private Handler enemyMoveHandler = new Handler();
     private Runnable enemyMoveRunnable;
@@ -131,6 +130,7 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
 
         viewModel.getEndEvent().observe(this, message -> {
             Intent intent = new Intent(GameDisplayActivity.this, EndActivity.class);
+            finish();
             startActivity(intent);
         });
         TextView scoreText = findViewById(R.id.textView6);
@@ -154,6 +154,11 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
             intent.putExtra("DIFFICULTY", difficulty);
             intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
             intent.putExtra("currentScore", currScore[0]);
+            Player.getPlayer().removeObserver(this); // Unregister the activity when it's destroyed
+            Player.getPlayer().removeObserver(slime1);
+            Player.getPlayer().removeObserver(alien1);
+            finish();
+            enemyMoveHandler.removeCallbacksAndMessages(null);
             startActivity(intent);
         });
 
@@ -185,6 +190,7 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
 
 
         Player player = Player.getPlayer();
+        player.setAlive(true);
         player.addObserver(this);
 
         player.setPosition(startX, startY);
@@ -234,6 +240,7 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
                 intent.putExtra("DIFFICULTY", difficulty);
                 intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
                 intent.putExtra("currentScore", currScore[0]);
+                finish();
                 startActivity(intent);
             }
         } else if (type.equals("Slime1")) {
@@ -247,6 +254,8 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
     protected void onDestroy() {
         super.onDestroy();
         Player.getPlayer().removeObserver(this); // Unregister the activity when it's destroyed
+        Player.getPlayer().removeObserver(slime1);
+        Player.getPlayer().removeObserver(alien1);
     }
 
 
@@ -270,18 +279,18 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         try {
             // Instantiate your enemies
             slime1 = enemyFactory.createEnemy("Slime");
-            slime2 = enemyFactory.createEnemy("Alien");
+            alien1 = enemyFactory.createEnemy("Alien");
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
 
         // Set initial positions for the enemies
         slime1.setPosition(2, 3, tileMap);
-        slime2.setPosition(5, 11, tileMap);
+        alien1.setPosition(5, 11, tileMap);
         slime1.setPlayer(player);
-        slime2.setPlayer(player);
+        alien1.setPlayer(player);
         player.addObserver(slime1);
-        player.addObserver(slime2);
+        player.addObserver(alien1);
 
     }
 
@@ -290,8 +299,8 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         enemyMoveRunnable = new Runnable() {
             @Override
             public void run() {
-                patrol(slime1, 2, 9, slime1Direction, player); // Assume patrol between columns 2 and 6
-                patrol(slime2, 3, 8, slime2Direction, player); // Assume patrol between columns 5 and 9
+                patrol(slime1, 2, 9, slime1Direction, player);
+                patrol(alien1, 3, 8, slime2Direction, player);
 
 
                 // Schedule the next run
@@ -301,7 +310,8 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         enemyMoveHandler.postDelayed(enemyMoveRunnable, 1000);
     }
 
-    private void patrol(Enemy slime, int startColumn, int endColumn, boolean direction, Player player) {
+    private void patrol(Enemy slime, int startColumn, int endColumn,
+                        boolean direction, Player player) {
         // Check the current position and move the slime accordingly
         int currentColumn = slime.getX();
         if (direction && currentColumn < endColumn) {
@@ -318,15 +328,19 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
             }
         } else {
             // Change direction if we've hit the end or start
-            if (slime == slime1) slime1Direction = !slime1Direction;
-            if (slime == slime2) slime2Direction = !slime2Direction;
+            if (slime == slime1) {
+                slime1Direction = !slime1Direction;
+            }
+            if (slime == alien1) {
+                slime2Direction = !slime2Direction;
+            }
             patrol(slime, startColumn, endColumn, !direction, player);
         }
 
         if (slime == slime1) {
             update(null, "Slime1", slime.getX(), slime.getY());
-        } else if (slime == slime2) {
-            update(null,"Slime2", slime.getX(), slime.getY());
+        } else if (slime == alien1) {
+            update(null, "Slime2", slime.getX(), slime.getY());
         }
 
         slime.onCollisionWithPlayer();
@@ -364,8 +378,13 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
         currScore[0] = 0;
         intent.putExtra("currentScore", currScore[0]);
-        startActivity(intent);
+        Player.getPlayer().removeObserver(this); // Unregister the activity when it's destroyed
+        Player.getPlayer().removeObserver(slime1);
+        Player.getPlayer().removeObserver(alien1);
+        enemyMoveHandler.removeCallbacksAndMessages(null);
         finish();
+        startActivity(intent);
+
     }
 
 

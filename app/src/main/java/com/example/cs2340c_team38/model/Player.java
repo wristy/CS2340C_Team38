@@ -1,7 +1,7 @@
 package com.example.cs2340c_team38.model;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Player implements Observable {
 
@@ -45,7 +45,7 @@ public class Player implements Observable {
         notifyObservers();
     }
 
-    private final List<Observer> observers = new ArrayList<>();
+    private final List<Observer> observers = new CopyOnWriteArrayList<>();
 
     private static volatile Player player;
 
@@ -54,8 +54,6 @@ public class Player implements Observable {
      * @param y y-coordinate of player (default 0.0)
      * @param movementSpeed movement speed of player (default 5.0)
      */
-
-
     public Player() {
         this.x = 0;
         this.y = 0;
@@ -65,7 +63,6 @@ public class Player implements Observable {
      * Constructor for Player
      * @return the instance of the player
      */
-
     public static Player getPlayer() {
         if (player == null) {
             synchronized (Player.class) {
@@ -115,4 +112,14 @@ public class Player implements Observable {
     public List<Observer> getObservers() {
         return observers;
     }
+
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
+
 }

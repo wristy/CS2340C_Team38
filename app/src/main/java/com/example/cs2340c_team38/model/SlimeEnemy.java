@@ -1,8 +1,5 @@
 package com.example.cs2340c_team38.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SlimeEnemy implements Enemy {
     private Player player;
     private int x;
@@ -16,13 +13,12 @@ public class SlimeEnemy implements Enemy {
         return y;
     }
 
-    private final List<Observer> observers = new ArrayList<>();
 
 
     @Override
     public void onCollisionWithPlayer() {
-        if (this.x == player.getX() && this.y == player.getY()) {
-            player.reduceHealth();
+        if (this.x == Player.getPlayer().getX() && this.y == Player.getPlayer().getY()) {
+            Player.getPlayer().reduceHealth();
         }
     }
 
@@ -40,9 +36,6 @@ public class SlimeEnemy implements Enemy {
     }
 
 
-    public List<Observer> getObservers() {
-        return observers;
-    }
 
     public Player getPlayer() {
         return player;
