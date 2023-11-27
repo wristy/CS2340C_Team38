@@ -21,7 +21,6 @@ public class EndActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end);
-        //populateHardCodedEntries();
         int currScore = getIntent().getIntExtra("currentScore", 100);
         String currName = getIntent().getStringExtra("PLAYER_NAME");
         Leaderboard l = Leaderboard.getInstance();
@@ -51,8 +50,6 @@ public class EndActivity extends AppCompatActivity {
 
     private void populateHardCodedEntries() {
         Leaderboard leaderboard = Leaderboard.getInstance();
-
-        // Adding 5 hard-coded entries
         leaderboard.addScore("Alice", 5000);
         leaderboard.addScore("Bob", 4500);
         leaderboard.addScore("Charlie", 4900);
