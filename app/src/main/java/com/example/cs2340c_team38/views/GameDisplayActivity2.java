@@ -244,14 +244,13 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Player.getPlayer().removeObserver(this); // Unregister the activity when it's destroyed
+        Player.getPlayer().removeObserver(this);
         Player.getPlayer().removeObserver(slime1);
         Player.getPlayer().removeObserver(slime2);
     }
 
 
     private void moveViewToPosition(View view, int newRow, int newColumn) {
-        // Get the current layout parameters of the view
         GridLayout.LayoutParams params = (GridLayout.LayoutParams) view.getLayoutParams();
 
         // Update the position
@@ -318,7 +317,6 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
                 slime.setPosition(currentColumn - 1, slime.getY(), tileMap);
             }
         } else {
-            // Change direction if we've hit the end or start
             if (slime == slime1) {
                 slime1Direction = !slime1Direction;
             }
@@ -374,21 +372,6 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
 
         slime.onCollisionWithPlayer();
         updateHealthText(player);
-
-    }
-
-    private void setPlayerHealth(int difficulty, Player player) {
-
-        if (difficulty == 0) {
-            player.setHealth(150);
-            player.setDamage(10);
-        } else if (difficulty == 1) {
-            player.setHealth(100);
-            player.setDamage(15);
-        } else if (difficulty == 2) {
-            player.setHealth(80);
-            player.setDamage(20);
-        }
     }
 
     private void updateHealthText(Player player) {
@@ -407,13 +390,11 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
         currScore2[0] = 0;
         intent.putExtra("currentScore", currScore2[0]);
-        Player.getPlayer().removeObserver(this); // Unregister the activity when it's destroyed
+        Player.getPlayer().removeObserver(this);
         Player.getPlayer().removeObserver(slime1);
         Player.getPlayer().removeObserver(slime2);
         enemyMoveHandler.removeCallbacksAndMessages(null);
         finish();
         startActivity(intent);
-
     }
-
 }
