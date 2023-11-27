@@ -65,10 +65,6 @@ public class Leaderboard {
             return dateTime;
         }
 
-        public void setDateTime(Date dateTime) {
-            this.dateTime = dateTime;
-        }
-
         private Date dateTime;
 
         public ScoreEntry(String playerName, int score) {
