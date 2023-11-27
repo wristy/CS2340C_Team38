@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cs2340c_team38.R;
 import com.example.cs2340c_team38.databinding.ActivityGameDisplay2Binding;
+import com.example.cs2340c_team38.model.AlienEnemy;
 import com.example.cs2340c_team38.model.Enemy;
 import com.example.cs2340c_team38.model.EnemyFactory;
 import com.example.cs2340c_team38.model.MoveDown;
@@ -25,6 +26,7 @@ import com.example.cs2340c_team38.model.MoveUp;
 import com.example.cs2340c_team38.model.Observable;
 import com.example.cs2340c_team38.model.Observer;
 import com.example.cs2340c_team38.model.Player;
+import com.example.cs2340c_team38.model.PonyEnemy;
 import com.example.cs2340c_team38.model.TileType;
 import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel2;
 
@@ -97,7 +99,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
     private int currScore;
     private int[] currScore2;
     private Enemy slime1;
-    private Enemy slime2;
+    private Enemy zombie1;
 
     private Handler enemyMoveHandler = new Handler();
     private Runnable enemyMoveRunnable;
@@ -145,6 +147,8 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
             finish();
             Player.getPlayer().removeObserver(this);
             Player.getPlayer().removeObserver(slime1);
+
+
             Player.getPlayer().removeObserver(slime2);
             enemyMoveHandler.removeCallbacksAndMessages(null);
             startActivity(intent);
@@ -246,7 +250,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         super.onDestroy();
         Player.getPlayer().removeObserver(this);
         Player.getPlayer().removeObserver(slime1);
-        Player.getPlayer().removeObserver(slime2);
+        Player.getPlayer().removeObserver(zombie1);
     }
 
 
@@ -268,18 +272,18 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         try {
             // Instantiate your enemies
             slime1 = enemyFactory.createEnemy("Slime");
-            slime2 = enemyFactory.createEnemy("Alien");
+            zombie1 = enemyFactory.createEnemy("Alien");
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
 
         // Set initial positions for the enemies
         slime1.setPosition(2, 3, tileMap);
-        slime2.setPosition(5, 11, tileMap);
+        zombie1.setPosition(5, 11, tileMap);
         slime1.setPlayer(player);
-        slime2.setPlayer(player);
+        zombie1.setPlayer(player);
         player.addObserver(slime1);
-        player.addObserver(slime2);
+        player.addObserver(zombie1);
 
     }
 
@@ -288,6 +292,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         enemyMoveRunnable = new Runnable() {
             @Override
             public void run() {
+
                 patrol(slime1, 1, 10, slime1Direction, player);
                 patrolVertical(slime2, 8, 15, slime2Direction, player);
 
@@ -299,6 +304,8 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         enemyMoveHandler.postDelayed(enemyMoveRunnable, 1000);
     }
 
+
+   
     private void patrol(Enemy slime, int startColumn, int endColumn,
                         boolean direction, Player player) {
         // Check the current position and move the slime accordingly
@@ -316,6 +323,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
                 slime.setPosition(currentColumn - 1, slime.getY(), tileMap);
             }
         } else {
+
             if (slime == slime1) {
                 slime1Direction = !slime1Direction;
             }
@@ -327,6 +335,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
 
         if (slime == slime1) {
             update(null, "Slime1", slime.getX(), slime.getY());
+
         } else if (slime == slime2) {
             update(null, "Slime2", slime.getX(), slime.getY());
         }
@@ -354,6 +363,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
             }
         } else {
             // Change direction if we've hit the end or start
+
             if (slime == slime1) {
                 slime1Direction = !slime1Direction;
             }
@@ -365,6 +375,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
 
         if (slime == slime1) {
             update(null, "Slime1", slime.getX(), slime.getY());
+
         } else if (slime == slime2) {
             update(null, "Slime2", slime.getX(), slime.getY());
         }
@@ -391,6 +402,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         intent.putExtra("currentScore", currScore2[0]);
         Player.getPlayer().removeObserver(this);
         Player.getPlayer().removeObserver(slime1);
+
         Player.getPlayer().removeObserver(slime2);
         enemyMoveHandler.removeCallbacksAndMessages(null);
         finish();
