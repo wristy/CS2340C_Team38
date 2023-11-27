@@ -1,9 +1,9 @@
 package com.example.cs2340c_team38.model;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Leaderboard {
     private static volatile Leaderboard leaderboard;
@@ -17,7 +17,7 @@ public class Leaderboard {
     private List<ScoreEntry> scores;
 
     private Leaderboard() {
-        this.scores = new ArrayList<>();
+        this.scores = new CopyOnWriteArrayList<>();
     }
 
     public static Leaderboard getInstance() {
@@ -63,10 +63,6 @@ public class Leaderboard {
 
         public Date getDateTime() {
             return dateTime;
-        }
-
-        public void setDateTime(Date dateTime) {
-            this.dateTime = dateTime;
         }
 
         private Date dateTime;

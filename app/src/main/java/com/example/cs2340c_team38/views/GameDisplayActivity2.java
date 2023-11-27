@@ -3,7 +3,6 @@ package com.example.cs2340c_team38.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -146,9 +145,12 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         viewModel.getEndEvent().observe(this, message -> {
             Intent intent = new Intent(GameDisplayActivity2.this, EndActivity.class);
             finish();
-            Player.getPlayer().removeObserver(this); // Unregister the activity when it's destroyed
+            Player.getPlayer().removeObserver(this);
             Player.getPlayer().removeObserver(slime1);
-            Player.getPlayer().removeObserver(zombie1);
+
+
+            Player.getPlayer().removeObserver(slime2);
+            enemyMoveHandler.removeCallbacksAndMessages(null);
             startActivity(intent);
         });
 
@@ -158,11 +160,10 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
             intent.putExtra("DIFFICULTY", difficulty);
             intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
             intent.putExtra("currentScore", currScore2[0]);
+            enemyMoveHandler.removeCallbacksAndMessages(null);
             finish();
             startActivity(intent);
         });
-
-        // Movements
 
         int startY = 18;
         int startX = 5;
@@ -177,6 +178,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
             params.width = 0;
             gridLayout.addView(new Space(this), params);
         }
+
         for (int y = 0; y < gridLayout.getRowCount(); y++) {
             GridLayout.LayoutParams params = new GridLayout.LayoutParams();
             params.rowSpec = GridLayout.spec(y, 1, 1);
@@ -224,7 +226,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
     public void update(Observable o, String type, int x, int y) {
         if (type.equals("Player")) {
             moveViewToPosition(findViewById(R.id.imageView), y, x);
-            // Check if the player is on the EXIT tile
+
             if (tileMap[y][x] == TileType.EXIT) {
                 Intent intent = new Intent(GameDisplayActivity2.this, GameDisplayActivity3.class);
                 intent.putExtra("PLAYER_NAME", playerName);
@@ -232,8 +234,10 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
                 intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
                 intent.putExtra("currentScore", currScore2[0]);
                 finish();
+                enemyMoveHandler.removeCallbacksAndMessages(null);
                 startActivity(intent);
             }
+
         } else if (type.equals("Slime1")) {
             moveViewToPosition(findViewById(R.id.slime1), y, x);
         } else if (type.equals("Slime2")) {
@@ -244,14 +248,13 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Player.getPlayer().removeObserver(this); // Unregister the activity when it's destroyed
+        Player.getPlayer().removeObserver(this);
         Player.getPlayer().removeObserver(slime1);
         Player.getPlayer().removeObserver(zombie1);
     }
 
 
     private void moveViewToPosition(View view, int newRow, int newColumn) {
-        // Get the current layout parameters of the view
         GridLayout.LayoutParams params = (GridLayout.LayoutParams) view.getLayoutParams();
 
         // Update the position
@@ -261,7 +264,6 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         // Apply the updated layout parameters
         view.setLayoutParams(params);
 
-        // Request the parent GridLayout to re-layout its children
         view.getParent().requestLayout();
     }
 
@@ -290,8 +292,9 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         enemyMoveRunnable = new Runnable() {
             @Override
             public void run() {
-                patrol(slime1, 1, 10, slime1Direction, player); // Assume patrol between columns 2 and 6
-                patrolVertical(zombie1, 8, 15, slime2Direction, player); // Assume patrol between columns 5 and 9
+
+                patrol(slime1, 1, 10, slime1Direction, player);
+                patrolVertical(slime2, 8, 15, slime2Direction, player);
 
 
                 // Schedule the next run
@@ -301,7 +304,10 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         enemyMoveHandler.postDelayed(enemyMoveRunnable, 1000);
     }
 
-    private void patrol(AlienEnemy slime, int startColumn, int endColumn, boolean direction, Player player) {
+
+   
+    private void patrol(Enemy slime, int startColumn, int endColumn,
+                        boolean direction, Player player) {
         // Check the current position and move the slime accordingly
         int currentColumn = slime.getX();
         if (direction && currentColumn < endColumn) {
@@ -317,16 +323,21 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
                 slime.setPosition(currentColumn - 1, slime.getY(), tileMap);
             }
         } else {
-            // Change direction if we've hit the end or start
-            if (slime == slime1) slime1Direction = !slime1Direction;
-            if (slime == zombie1) slime2Direction = !slime2Direction;
+
+            if (slime == slime1) {
+                slime1Direction = !slime1Direction;
+            }
+            if (slime == slime2) {
+                slime2Direction = !slime2Direction;
+            }
             patrol(slime, startColumn, endColumn, !direction, player);
         }
 
         if (slime == slime1) {
             update(null, "Slime1", slime.getX(), slime.getY());
-        } else if (slime == zombie1) {
-            update(null,"Slime2", slime.getX(), slime.getY());
+
+        } else if (slime == slime2) {
+            update(null, "Slime2", slime.getX(), slime.getY());
         }
 
         slime.onCollisionWithPlayer();
@@ -334,51 +345,43 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
 
     }
 
-    private void patrolVertical(PonyEnemy slime, int startRow, int endRow, boolean direction, Player player) {
+    private void patrolVertical(Enemy slime, int startRow, int endRow,
+                                boolean direction, Player player) {
         // Check the current position and move the slime accordingly
         int currentRow = slime.getY();
         if (direction && currentRow < endRow) {
             if (slime == slime1) {
-                slime.setPosition(slime.getX(),currentRow + 1, tileMap);
+                slime.setPosition(slime.getX(), currentRow + 1, tileMap);
             } else {
-                slime.setPosition(slime.getX(),currentRow + 1, tileMap);
+                slime.setPosition(slime.getX(), currentRow + 1, tileMap);
             }
         } else if (!direction && currentRow > startRow) {
             if (slime == slime1) {
-                slime.setPosition(slime.getX(),currentRow - 1, tileMap);
+                slime.setPosition(slime.getX(), currentRow - 1, tileMap);
             } else {
-                slime.setPosition(slime.getX(),currentRow - 1, tileMap);
+                slime.setPosition(slime.getX(), currentRow - 1, tileMap);
             }
         } else {
             // Change direction if we've hit the end or start
-            if (slime == slime1) slime1Direction = !slime1Direction;
-            if (slime == zombie1) slime2Direction = !slime2Direction;
+
+            if (slime == slime1) {
+                slime1Direction = !slime1Direction;
+            }
+            if (slime == slime2) {
+                slime2Direction = !slime2Direction;
+            }
             patrolVertical(slime, startRow, endRow, !direction, player);
         }
 
         if (slime == slime1) {
             update(null, "Slime1", slime.getX(), slime.getY());
-        } else if (slime == zombie1) {
-            update(null,"Slime2", slime.getX(), slime.getY());
+
+        } else if (slime == slime2) {
+            update(null, "Slime2", slime.getX(), slime.getY());
         }
 
         slime.onCollisionWithPlayer();
         updateHealthText(player);
-
-    }
-
-    private void setPlayerHealth(int difficulty, Player player) {
-
-        if (difficulty == 0) {
-            player.setHealth(150);
-            player.setDamage(10);
-        } else if (difficulty == 1) {
-            player.setHealth(100);
-            player.setDamage(15);
-        } else if (difficulty == 2) {
-            player.setHealth(80);
-            player.setDamage(20);
-        }
     }
 
     private void updateHealthText(Player player) {
@@ -397,12 +400,12 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
         currScore2[0] = 0;
         intent.putExtra("currentScore", currScore2[0]);
-        Player.getPlayer().removeObserver(this); // Unregister the activity when it's destroyed
+        Player.getPlayer().removeObserver(this);
         Player.getPlayer().removeObserver(slime1);
-        Player.getPlayer().removeObserver(zombie1);
+
+        Player.getPlayer().removeObserver(slime2);
+        enemyMoveHandler.removeCallbacksAndMessages(null);
         finish();
         startActivity(intent);
-
     }
-
 }
