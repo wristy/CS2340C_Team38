@@ -52,7 +52,6 @@ public class Player implements Observable {
     /*
      * @param x x-coordinate of player (default 0.0)
      * @param y y-coordinate of player (default 0.0)
-     * @param movementSpeed movement speed of player (default 5.0)
      */
     public Player() {
         this.x = 0;
