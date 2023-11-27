@@ -21,7 +21,6 @@ public class EndActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end);
-        //populateHardCodedEntries();
         int currScore = getIntent().getIntExtra("currentScore", 100);
         String currName = getIntent().getStringExtra("PLAYER_NAME");
         Leaderboard l = Leaderboard.getInstance();
@@ -47,17 +46,6 @@ public class EndActivity extends AppCompatActivity {
         ListView leaderboardListView = findViewById(R.id.list);
         LeaderboardAdapter adapter = new LeaderboardAdapter(this, topScores);
         leaderboardListView.setAdapter(adapter);
-    }
-
-    private void populateHardCodedEntries() {
-        Leaderboard leaderboard = Leaderboard.getInstance();
-
-        // Adding 5 hard-coded entries
-        leaderboard.addScore("Alice", 5000);
-        leaderboard.addScore("Bob", 4500);
-        leaderboard.addScore("Charlie", 4900);
-        leaderboard.addScore("Dave", 5100);
-        leaderboard.addScore("Eve", 4800);
     }
 
     private void displayRecentAttempt() {

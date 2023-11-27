@@ -17,11 +17,14 @@ public class ObserverTest {
     private TestObserver observer1;
     private TestObserver observer2;
 
+    private TestObserver observer3;
+
     @Before
     public void setUp() {
         player = Player.getPlayer();
         observer1 = new TestObserver();
         observer2 = new TestObserver();
+        observer3 = new TestObserver();
     }
 
     @Test
@@ -38,8 +41,13 @@ public class ObserverTest {
         player.addObserver(observer1);
         player.addObserver(observer2);
         player.removeObserver(observer1);
-        assertTrue(!player.getObservers().contains(observer1));
-        assertTrue(player.getObservers().contains(observer2));
+        player.addObserver(observer3);
+        player.removeObserver(observer2);
+        player.addObserver(observer2);
+        player.removeObserver(observer3);
+        player.addObserver(observer1);
+        assertTrue(!player.getObservers().contains(observer3));
+        assertTrue(player.getObservers().contains(observer1));
     }
 
     @Test
