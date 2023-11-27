@@ -32,7 +32,6 @@ public class PonyEnemy implements Enemy {
 
     @Override
     public void setPosition(int x, int y, TileType[][] tileMap) {
-
     }
 
     public Player getPlayer() {

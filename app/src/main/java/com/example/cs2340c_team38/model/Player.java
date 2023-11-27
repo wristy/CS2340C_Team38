@@ -50,8 +50,8 @@ public class Player implements Observable {
     private static volatile Player player;
 
     /*
-     * @param x x-coordinate of player (default 0.0)
-     * @param y y-coordinate of player (default 0.0)
+     * @param x x-coordinate of player
+     * @param y y-coordinate of player
      */
     public Player() {
         this.x = 0;
