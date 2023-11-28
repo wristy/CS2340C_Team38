@@ -107,6 +107,16 @@
                 android:src="@drawable/alien_evil" />
 
             <ImageView
+                android:id="@+id/powerUp"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="fill"
+                android:visibility="visible"
+                android:src="@drawable/elixir_1" />
+
+            <ImageView
                 android:id="@+id/imageView"
                 android:layout_columnSpan="1"
                 android:layout_rowSpan="1"

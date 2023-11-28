@@ -2,7 +2,7 @@ package com.example.cs2340c_team38.model;
 
 import android.service.quicksettings.Tile;
 
-public abstract class PlayerDecorator implements PowerUp {
+public abstract class PlayerDecorator implements PowerUp  {
     protected Player player;
 
     public PlayerDecorator(Player player) {
@@ -34,3 +34,4 @@ public abstract class PlayerDecorator implements PowerUp {
         player.setPoints(points);
     }
 }
+

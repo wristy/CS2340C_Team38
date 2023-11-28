@@ -3,7 +3,7 @@ package com.example.cs2340c_team38.model;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class Player implements Observable {
+public class Player extends PlayerDecorator implements Observable {
 
     private static volatile Player player;
     private final List<Observer> observers = new CopyOnWriteArrayList<>();
@@ -13,6 +13,7 @@ public class Player implements Observable {
 
     private boolean isAlive = true;
     private int damage;
+
     private int health;
     private TileType currentTile;
     private MoveStrategy moveStrategy;
@@ -22,6 +23,7 @@ public class Player implements Observable {
      * @param y y-coordinate of player
      */
     public Player() {
+        super(player);
         this.x = 0;
         this.y = 0;
     }

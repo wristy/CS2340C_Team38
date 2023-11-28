@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.Space;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -16,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cs2340c_team38.R;
 import com.example.cs2340c_team38.databinding.ActivityGameDisplay3Binding;
+import com.example.cs2340c_team38.model.DoublePointsDecorator;
 import com.example.cs2340c_team38.model.Enemy;
 import com.example.cs2340c_team38.model.EnemyFactory;
 import com.example.cs2340c_team38.model.MoveDown;
@@ -25,6 +27,8 @@ import com.example.cs2340c_team38.model.MoveUp;
 import com.example.cs2340c_team38.model.Observable;
 import com.example.cs2340c_team38.model.Observer;
 import com.example.cs2340c_team38.model.Player;
+import com.example.cs2340c_team38.model.PlayerDecorator;
+import com.example.cs2340c_team38.model.ReduceDamageDecorator;
 import com.example.cs2340c_team38.model.TileType;
 import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel3;
 
@@ -167,6 +171,10 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
     private boolean slime1Direction = true;
     private boolean slime2Direction = true;
     private GameDisplayViewModel3 viewModel;
+    private int powerUpX = 10;
+    private int powerUpY = 14;
+    private boolean powerUpAvailable = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,6 +219,12 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
             enemyMoveHandler.removeCallbacksAndMessages(null);
             startActivity(intent);
         });
+
+        // powerups
+
+        if (powerUpAvailable) {
+            moveViewToPosition(findViewById(R.id.powerUp), powerUpY, powerUpX);
+        }
 
         // Movements
 
@@ -273,6 +287,12 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
 
     @Override
     public void update(Observable o, String type, int x, int y) {
+
+        if (powerUpAvailable && x == powerUpX && y == powerUpY) {
+            applyDamagePowerUp();
+            removePowerUpFromScreen();
+        }
+
         if (type.equals("Player")) {
             moveViewToPosition(findViewById(R.id.imageView), y, x);
             // Check if the player is on the EXIT tile
@@ -415,5 +435,22 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
         enemyMoveHandler.removeCallbacksAndMessages(null);
         finish();
         startActivity(intent);
+    }
+
+    private void applyDamagePowerUp() {
+        Player player = Player.getPlayer();
+        PlayerDecorator decorator = new ReduceDamageDecorator(player, 2);
+        decorator.setDamage(player.getDamage());
+        powerUpAvailable = false;
+
+        CharSequence text = "Collected damage reduction powerup!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(this, text, duration);
+        toast.show();
+    }
+
+    private void removePowerUpFromScreen() {
+        findViewById(R.id.powerUp).setVisibility(View.INVISIBLE);
     }
 }

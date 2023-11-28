@@ -7,3 +7,4 @@ public interface PowerUp {
     void setHealth(int health);
     void setPoints(int points);
 }
+
