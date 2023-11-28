@@ -99,7 +99,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
     private int currScore;
     private int[] currScore2;
     private Enemy slime1;
-    private Enemy zombie1;
+    private Enemy slime2;
 
     private Handler enemyMoveHandler = new Handler();
     private Runnable enemyMoveRunnable;
@@ -250,7 +250,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         super.onDestroy();
         Player.getPlayer().removeObserver(this);
         Player.getPlayer().removeObserver(slime1);
-        Player.getPlayer().removeObserver(zombie1);
+        Player.getPlayer().removeObserver(slime2);
     }
 
 
@@ -272,18 +272,18 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         try {
             // Instantiate your enemies
             slime1 = enemyFactory.createEnemy("Slime");
-            zombie1 = enemyFactory.createEnemy("Alien");
+            slime2 = enemyFactory.createEnemy("Alien");
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
 
         // Set initial positions for the enemies
         slime1.setPosition(2, 3, tileMap);
-        zombie1.setPosition(5, 11, tileMap);
+        slime2.setPosition(5, 11, tileMap);
         slime1.setPlayer(player);
-        zombie1.setPlayer(player);
+        slime2.setPlayer(player);
         player.addObserver(slime1);
-        player.addObserver(zombie1);
+        player.addObserver(slime2);
 
     }
 
