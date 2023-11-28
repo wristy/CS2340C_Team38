@@ -5,6 +5,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import com.example.cs2340c_team38.R;
@@ -13,6 +14,7 @@ import com.example.cs2340c_team38.viewmodels.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
     private MainViewModel viewModel;
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
             android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(1);
         });
-
+        mediaPlayer = MediaPlayer.create(this, R.raw.planning);
+        mediaPlayer.start();
     }
 }
