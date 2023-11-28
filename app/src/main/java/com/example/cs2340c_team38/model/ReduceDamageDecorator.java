@@ -10,7 +10,7 @@ public class ReduceDamageDecorator extends PlayerDecorator {
 
     @Override
     public void setDamage(int damage) {
-        player.setDamage((int) (player.getDamage() * reduction));
+        player.setDamage((int) (player.getDamage() / reduction));
     }
 }
 

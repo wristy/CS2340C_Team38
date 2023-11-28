@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.Space;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -17,8 +18,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.cs2340c_team38.R;
 import com.example.cs2340c_team38.databinding.ActivityGameDisplay2Binding;
 import com.example.cs2340c_team38.model.AlienEnemy;
+import com.example.cs2340c_team38.model.DoublePointsDecorator;
 import com.example.cs2340c_team38.model.Enemy;
 import com.example.cs2340c_team38.model.EnemyFactory;
+import com.example.cs2340c_team38.model.HealthBoostDecorator;
 import com.example.cs2340c_team38.model.MoveDown;
 import com.example.cs2340c_team38.model.MoveLeft;
 import com.example.cs2340c_team38.model.MoveRight;
@@ -26,6 +29,7 @@ import com.example.cs2340c_team38.model.MoveUp;
 import com.example.cs2340c_team38.model.Observable;
 import com.example.cs2340c_team38.model.Observer;
 import com.example.cs2340c_team38.model.Player;
+import com.example.cs2340c_team38.model.PlayerDecorator;
 import com.example.cs2340c_team38.model.PonyEnemy;
 import com.example.cs2340c_team38.model.TileType;
 import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel2;
@@ -109,6 +113,10 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
     private boolean slime2Direction = true;
     private GameDisplayViewModel2 viewModel;
 
+    private int powerUpX = 6;
+    private int powerUpY = 6;
+    private boolean powerUpAvailable = true; // The power-up is available to be picked up
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,6 +172,12 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
             finish();
             startActivity(intent);
         });
+
+        // powerups
+
+        if (powerUpAvailable) {
+            moveViewToPosition(findViewById(R.id.powerUp), powerUpY, powerUpX);
+        }
 
         int startY = 18;
         int startX = 5;
@@ -224,6 +238,12 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
 
     @Override
     public void update(Observable o, String type, int x, int y) {
+
+        if (powerUpAvailable && x == powerUpX && y == powerUpY) {
+            applyScorePowerUp();
+            removePowerUpFromScreen();
+        }
+
         if (type.equals("Player")) {
             moveViewToPosition(findViewById(R.id.imageView), y, x);
 
@@ -407,5 +427,23 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         enemyMoveHandler.removeCallbacksAndMessages(null);
         finish();
         startActivity(intent);
+    }
+
+    private void applyScorePowerUp() {
+        Player player = Player.getPlayer();
+        PlayerDecorator decorator = new DoublePointsDecorator(player);
+        decorator.setPoints(currScore2[0] * 2);
+        currScore2[0] *= 2;
+        powerUpAvailable = false;
+
+        CharSequence text = "Collected score powerup!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(this, text, duration);
+        toast.show();
+    }
+
+    private void removePowerUpFromScreen() {
+        findViewById(R.id.powerUp).setVisibility(View.INVISIBLE);
     }
 }
