@@ -15,6 +15,16 @@ public class AlienEnemy implements Enemy {
 
     private int y;
 
+    private boolean isDead = false;
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void destroy() {
+        isDead = true;
+    }
+
 
     @Override
     public void onCollisionWithPlayer() {
@@ -30,7 +40,7 @@ public class AlienEnemy implements Enemy {
 
     public void update(Observable o, String observable, int playerX, int playerY) {
         if (o instanceof Player) {
-            if (this.x == ((Player) o).getX() && this.y == ((Player) o).getY()) {
+            if (!isDead && this.x == ((Player) o).getX() && this.y == ((Player) o).getY()) {
                 ((Player) o).reduceHealth();
             }
         }

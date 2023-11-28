@@ -9,6 +9,10 @@ public interface Enemy extends Observer {
 
     int getX();
     int getY();
+
+    void destroy();
+
+    boolean isDead();
 }
 
 

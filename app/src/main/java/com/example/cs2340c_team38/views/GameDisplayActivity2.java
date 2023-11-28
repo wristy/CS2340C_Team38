@@ -164,6 +164,8 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
 
         viewModel.getContinueEvent().observe(this, message -> {
             Intent intent = new Intent(GameDisplayActivity2.this, GameDisplayActivity3.class);
+            slime1.destroy();
+            slime2.destroy();
             intent.putExtra("PLAYER_NAME", viewModel.getPlayerName());
             intent.putExtra("DIFFICULTY", difficulty);
             intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
@@ -178,6 +180,14 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
         if (powerUpAvailable) {
             moveViewToPosition(findViewById(R.id.powerUp), powerUpY, powerUpX);
         }
+
+        // Attacks
+
+        Button attackButton = findViewById(R.id.attack); // Replace with your actual button ID
+        attackButton.setOnClickListener(v -> {
+            Player.getPlayer().performRadiusAttack(1); // Example: radius of 1 tile
+            update(Player.getPlayer(), "Attack", 0, 0);
+        });
 
         int startY = 18;
         int startX = 5;
@@ -243,12 +253,22 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
             applyScorePowerUp();
             removePowerUpFromScreen();
         }
+        
+        if (slime1 != null && slime1.isDead()) {
+            findViewById(R.id.slime1).setVisibility(View.INVISIBLE);
+        }
+
+        if (slime2 != null && slime2.isDead()) {
+            findViewById(R.id.slime2).setVisibility(View.INVISIBLE);
+        }
 
         if (type.equals("Player")) {
             moveViewToPosition(findViewById(R.id.imageView), y, x);
 
             if (tileMap[y][x] == TileType.EXIT) {
                 Intent intent = new Intent(GameDisplayActivity2.this, GameDisplayActivity3.class);
+                slime1.destroy();
+                slime2.destroy();
                 intent.putExtra("PLAYER_NAME", playerName);
                 intent.putExtra("DIFFICULTY", difficulty);
                 intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
@@ -260,6 +280,7 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
 
         } else if (type.equals("Slime1")) {
             moveViewToPosition(findViewById(R.id.slime1), y, x);
+
         } else if (type.equals("Slime2")) {
             moveViewToPosition(findViewById(R.id.slime2), y, x);
         }
@@ -415,6 +436,8 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
 
     private void launchGameOver() {
         Intent intent = new Intent(GameDisplayActivity2.this, GameOverActivity.class);
+        slime1.destroy();
+        slime2.destroy();
         intent.putExtra("PLAYER_NAME", playerName);
         intent.putExtra("DIFFICULTY", difficulty);
         intent.putExtra("CHARACTER_SPRITE", characterSpriteId);

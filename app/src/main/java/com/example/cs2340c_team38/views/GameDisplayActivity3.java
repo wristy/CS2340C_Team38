@@ -212,6 +212,8 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
             Intent intent = new Intent(GameDisplayActivity3.this, EndActivity.class);
             intent.putExtra("finalScore", currScore3[0]);
             intent.putExtra("currName", playerName);
+            slime1.destroy();
+            slime2.destroy();
             finish();
             Player.getPlayer().removeObserver(this); // Unregister the activity when it's destroyed
             Player.getPlayer().removeObserver(slime1);
@@ -225,6 +227,14 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
         if (powerUpAvailable) {
             moveViewToPosition(findViewById(R.id.powerUp), powerUpY, powerUpX);
         }
+
+        // Attacks
+
+        Button attackButton = findViewById(R.id.attack); // Replace with your actual button ID
+        attackButton.setOnClickListener(v -> {
+            Player.getPlayer().performRadiusAttack(1); // Example: radius of 1 tile
+            update(Player.getPlayer(), "Attack", 0, 0);
+        });
 
         // Movements
 
@@ -293,6 +303,15 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
             removePowerUpFromScreen();
         }
 
+
+        if (slime1 != null && slime1.isDead()) {
+            findViewById(R.id.slime1).setVisibility(View.INVISIBLE);
+        }
+
+        if (slime2 != null && slime2.isDead()) {
+            findViewById(R.id.slime2).setVisibility(View.INVISIBLE);
+        }
+
         if (type.equals("Player")) {
             moveViewToPosition(findViewById(R.id.imageView), y, x);
             // Check if the player is on the EXIT tile
@@ -302,6 +321,8 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
                 intent.putExtra("DIFFICULTY", difficulty);
                 intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
                 intent.putExtra("currentScore", currScore3[0]);
+                slime1.destroy();
+                slime2.destroy();
                 enemyMoveHandler.removeCallbacksAndMessages(null);
                 finish();
                 Player.getPlayer().removeObserver(this);
@@ -427,6 +448,8 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
         intent.putExtra("PLAYER_NAME", playerName);
         intent.putExtra("DIFFICULTY", difficulty);
         intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
+        slime1.destroy();
+        slime2.destroy();
         currScore3[0] = 0;
         intent.putExtra("currentScore", currScore3[0]);
         Player.getPlayer().removeObserver(this);

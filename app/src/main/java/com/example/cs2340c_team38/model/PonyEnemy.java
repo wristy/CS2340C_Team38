@@ -15,6 +15,16 @@ public class PonyEnemy implements Enemy {
         return y;
     }
 
+    private boolean isDead = false;
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void destroy() {
+        isDead = true;
+    }
+
 
     public void update(Observable o, String observable, int playerX, int playerY) {
         if (o instanceof Player) {

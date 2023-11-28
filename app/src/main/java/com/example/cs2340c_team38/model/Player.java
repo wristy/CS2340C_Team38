@@ -6,7 +6,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Player extends PlayerDecorator implements Observable {
 
     private static volatile Player player;
-    private final List<Observer> observers = new CopyOnWriteArrayList<>();
+    private final CopyOnWriteArrayList<Observer> observers = new CopyOnWriteArrayList<>();
     private int x;
     private int y;
     private int points;
@@ -126,6 +126,24 @@ public class Player extends PlayerDecorator implements Observable {
 
     public void setAlive(boolean alive) {
         isAlive = alive;
+    }
+
+    public void performRadiusAttack(int radius) {
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dy = -radius; dy <= radius; dy++) {
+                int attackX = this.x + dx;
+                int attackY = this.y + dy;
+
+                for (Observer o: observers) {
+                    if (o instanceof Enemy) {
+                        if (((Enemy) o).getX() == attackX && ((Enemy) o).getY() == attackY) {
+                            ((Enemy) o).destroy();
+                            observers.remove(o);
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }

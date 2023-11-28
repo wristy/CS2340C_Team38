@@ -15,9 +15,19 @@ public class ZombieEnemy implements Enemy {
         return y;
     }
 
+    private boolean isDead = false;
+
+    public void destroy() {
+        isDead = true;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
     public void update(Observable o, String observable, int playerX, int playerY) {
         if (o instanceof Player) {
-            if (this.x == ((Player) o).getX() && this.y == ((Player) o).getY()) {
+            if (!isDead && this.x == ((Player) o).getX() && this.y == ((Player) o).getY()) {
                 ((Player) o).reduceHealth();
             }
         }
@@ -31,7 +41,8 @@ public class ZombieEnemy implements Enemy {
     }
     public void setPosition(int x, int y, TileType[][] tileMap) {
         boolean isValid = false;
-        if (x >= 0 && x < tileMap.length && y >=0 && y < tileMap[0].length && tileMap[x][y] == TileType.FLOOR){
+        if (x >= 0 && x < tileMap.length && y >=0 &&
+                y < tileMap[0].length && tileMap[x][y] == TileType.FLOOR){
             isValid = true;
         }
         if (isValid) {
