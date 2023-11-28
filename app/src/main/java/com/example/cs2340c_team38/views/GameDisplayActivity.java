@@ -151,6 +151,8 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         h.postDelayed(r, 1000);
         viewModel.getContinueEvent().observe(this, message -> {
             Intent intent = new Intent(GameDisplayActivity.this, GameDisplayActivity2.class);
+            slime1.destroy();
+            alien1.destroy();
             intent.putExtra("PLAYER_NAME", viewModel.getPlayerName());
             intent.putExtra("DIFFICULTY", difficulty);
             intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
@@ -168,6 +170,15 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         if (powerUpAvailable) {
             moveViewToPosition(findViewById(R.id.powerUp), powerUpY, powerUpX);
         }
+
+        // Attacks
+
+        Button attackButton = findViewById(R.id.attack); // Replace with your actual button ID
+        attackButton.setOnClickListener(v -> {
+            Player.getPlayer().performRadiusAttack(1); // Example: radius of 1 tile
+            update(Player.getPlayer(), "Attack", 0, 0);
+        });
+
 
 
         // Movements
@@ -196,6 +207,7 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
 
 
         Player player = Player.getPlayer();
+
         player.setAlive(true);
         player.addObserver(this);
 
@@ -242,11 +254,21 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
             removePowerUpFromScreen();
         }
 
+        if (slime1 != null && slime1.isDead()) {
+            findViewById(R.id.slime1).setVisibility(View.INVISIBLE);
+        }
+
+        if (alien1 != null && alien1.isDead()) {
+            findViewById(R.id.slime2).setVisibility(View.INVISIBLE);
+        }
+
         if (type.equals("Player")) {
             moveViewToPosition(findViewById(R.id.imageView), y, x);
             // Check if the player is on the EXIT tile
             if (tileMap[y][x] == TileType.EXIT) {
                 Intent intent = new Intent(GameDisplayActivity.this, GameDisplayActivity2.class);
+                slime1.destroy();
+                alien1.destroy();
                 intent.putExtra("PLAYER_NAME", playerName);
                 intent.putExtra("DIFFICULTY", difficulty);
                 intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
@@ -352,7 +374,7 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
     }
 
     private void setPlayerHealth(int difficulty, Player player) {
-
+        player = Player.getPlayer();
         if (difficulty == 0) {
             player.setHealth(150);
             player.setDamage(10);
@@ -376,6 +398,8 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
 
     private void launchGameOver() {
         Intent intent = new Intent(GameDisplayActivity.this, GameOverActivity.class);
+        slime1.destroy();
+        alien1.destroy();
         intent.putExtra("PLAYER_NAME", playerName);
         intent.putExtra("DIFFICULTY", difficulty);
         intent.putExtra("CHARACTER_SPRITE", characterSpriteId);

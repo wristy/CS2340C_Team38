@@ -13,11 +13,21 @@ public class SlimeEnemy implements Enemy {
         return y;
     }
 
+    public boolean isDead() {
+        return isDead;
+    }
+
+    private boolean isDead = false;
+
+    public void destroy() {
+        isDead = true;
+    }
+
 
 
     @Override
     public void onCollisionWithPlayer() {
-        if (this.x == Player.getPlayer().getX() && this.y == Player.getPlayer().getY()) {
+        if (!isDead && this.x == Player.getPlayer().getX() && this.y == Player.getPlayer().getY()) {
             Player.getPlayer().reduceHealth();
         }
     }
@@ -34,8 +44,6 @@ public class SlimeEnemy implements Enemy {
             }
         }
     }
-
-
 
     public Player getPlayer() {
         return player;
