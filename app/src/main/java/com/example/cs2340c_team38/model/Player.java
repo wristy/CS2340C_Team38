@@ -5,49 +5,17 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Player implements Observable {
 
+    private static volatile Player player;
+    private final List<Observer> observers = new CopyOnWriteArrayList<>();
     private int x;
     private int y;
+    private int points;
 
     private boolean isAlive = true;
-
-    public int getDamage() {
-        return damage;
-    }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
-    }
-
     private int damage;
-
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    public void reduceHealth() {
-        health -= damage;
-    }
-
     private int health;
     private TileType currentTile;
     private MoveStrategy moveStrategy;
-
-    public void setMoveStrategy(MoveStrategy moveStrategy) {
-        this.moveStrategy = moveStrategy;
-    }
-
-    public void move(TileType[][] tileMap) {
-        moveStrategy.move(player, tileMap);
-        notifyObservers();
-    }
-
-    private final List<Observer> observers = new CopyOnWriteArrayList<>();
-
-    private static volatile Player player;
 
     /*
      * @param x x-coordinate of player
@@ -71,6 +39,43 @@ public class Player implements Observable {
             }
         }
         return player;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void reduceHealth() {
+        health -= damage;
+    }
+
+    public void setMoveStrategy(MoveStrategy moveStrategy) {
+        this.moveStrategy = moveStrategy;
+    }
+
+    public void move(TileType[][] tileMap) {
+        moveStrategy.move(player, tileMap);
+        notifyObservers();
     }
 
     public void setPosition(int x, int y) {
