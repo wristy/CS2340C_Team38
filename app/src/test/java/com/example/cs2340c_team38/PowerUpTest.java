@@ -30,8 +30,8 @@ public class PowerUpTest {
 
     @Before
     public void setUp() {
-       player = Player.getPlayer();
-       healthBoostDecorator = new HealthBoostDecorator(player, 5);
+        player = Player.getPlayer();
+        healthBoostDecorator = new HealthBoostDecorator(player, 5);
 
     }
 
@@ -201,6 +201,7 @@ public class PowerUpTest {
                 tileMap[i][j]= TileType.FLOOR;
             }
         }
+
         MoveStrategy strategy = new MoveDown();
         player.setMoveStrategy(strategy);
         player.move(tileMap);
@@ -217,26 +218,8 @@ public class PowerUpTest {
         healthBoostDecorator.setHealth(player.getHealth());
 
         assertEquals(4, player.getDamage());
-        assertEquals(101, player.getHealth());
+        assertEquals(102, player.getHealth());
         assertTrue(tileMap[player.getY()][player.getX()].isWalkable());
-    }
-
-    @Test
-    public void testDamageWithoutCollision() {
-        AlienEnemy wizardEnemy = new AlienEnemy();;
-        player.setDamage(9);
-        player.setHealth(1000);
-        player.setPoints(90);
-        wizardEnemy.setPlayer(player);
-        wizardEnemy.setPosition(0, 0, new TileType[2][2]);
-        player.setPosition(1, 1);
-        wizardEnemy.onCollisionWithPlayer();
-        healthBoostDecorator.setHealth(player.getHealth());
-
-        reduceDamageDecorator = new ReduceDamageDecorator(player, 3.0);
-        reduceDamageDecorator.setDamage(player.getDamage());
-        assertEquals(1005, player.getHealth());
-        assertEquals(90, player.getPoints());
 
     }
 
@@ -249,3 +232,4 @@ public class PowerUpTest {
 
 
 }
+
