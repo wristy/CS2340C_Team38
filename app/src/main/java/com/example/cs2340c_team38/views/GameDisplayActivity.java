@@ -2,14 +2,6 @@ package com.example.cs2340c_team38.views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.GridLayout;
-import android.widget.Space;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -19,7 +11,6 @@ import com.example.cs2340c_team38.R;
 import com.example.cs2340c_team38.databinding.ActivityGameDisplayBinding;
 import com.example.cs2340c_team38.model.Enemy;
 import com.example.cs2340c_team38.model.EnemyFactory;
-import com.example.cs2340c_team38.model.HealthBoostDecorator;
 import com.example.cs2340c_team38.model.MoveDown;
 import com.example.cs2340c_team38.model.MoveLeft;
 import com.example.cs2340c_team38.model.MoveRight;
@@ -27,89 +18,96 @@ import com.example.cs2340c_team38.model.MoveUp;
 import com.example.cs2340c_team38.model.Observable;
 import com.example.cs2340c_team38.model.Observer;
 import com.example.cs2340c_team38.model.Player;
-import com.example.cs2340c_team38.model.PlayerDecorator;
 import com.example.cs2340c_team38.model.TileType;
 import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel;
 
+import android.os.Handler;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.Space;
+import android.widget.TextView;
+
 public class GameDisplayActivity extends AppCompatActivity implements Observer {
 
-    private final TileType[][] tileMap = {{TileType.GRASS, TileType.GRASS, TileType.GRASS,
-            TileType.GRASS, TileType.WALL, TileType.EXIT, TileType.EXIT, TileType.WALL,
-            TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.GRASS},
-            {TileType.WALL, TileType.WALL, TileType.WALL, TileType.GRASS, TileType.WALL,
-                    TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.GRASS, TileType.WALL,
-                    TileType.WALL, TileType.WALL},
-            {TileType.WALL, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL,
-                    TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL,
-                    TileType.FLOOR, TileType.WALL},
-            {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
-                    TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
-                    TileType.FLOOR, TileType.WALL},
-            {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
-                    TileType.LAVA, TileType.LAVA, TileType.FLOOR, TileType.FLOOR, TileType.LAVA,
-                    TileType.FLOOR, TileType.WALL},
-            {TileType.WALL, TileType.FLOOR, TileType.LAVA, TileType.FLOOR, TileType.FLOOR,
-                    TileType.LAVA, TileType.LAVA, TileType.FLOOR, TileType.FLOOR, TileType.LAVA,
-                    TileType.FLOOR, TileType.WALL},
-            {TileType.WALL, TileType.FLOOR, TileType.LAVA, TileType.FLOOR, TileType.FLOOR,
-                    TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
-                    TileType.FLOOR, TileType.WALL},
-            {TileType.WALL, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL,
-                    TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL,
-                    TileType.FLOOR, TileType.WALL},
-            {TileType.WALL, TileType.WALL, TileType.WALL, TileType.GRASS, TileType.WALL,
-                    TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.GRASS, TileType.WALL,
-                    TileType.WALL, TileType.WALL},
-            {TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.WALL,
-                    TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.GRASS, TileType.GRASS,
-                    TileType.GRASS, TileType.GRASS},
-            {TileType.GRASS, TileType.GRASS, TileType.WALL, TileType.WALL, TileType.WALL,
-                    TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL,
-                    TileType.GRASS, TileType.GRASS},
-            {TileType.GRASS, TileType.GRASS, TileType.WALL, TileType.FLOOR, TileType.FLOOR,
-                    TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.WALL,
-                    TileType.GRASS, TileType.GRASS},
-            {TileType.GRASS, TileType.GRASS, TileType.WALL, TileType.FLOOR, TileType.LAVA,
-                    TileType.LAVA, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.WALL,
-                    TileType.GRASS, TileType.GRASS},
-            {TileType.GRASS, TileType.WALL, TileType.WALL, TileType.WALL, TileType.WALL,
-                    TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL,
-                    TileType.WALL, TileType.GRASS},
-            {TileType.GRASS, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
-                    TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
-                    TileType.WALL, TileType.GRASS},
-            {TileType.GRASS, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
-                    TileType.FLOOR, TileType.FLOOR, TileType.LAVA, TileType.LAVA, TileType.FLOOR,
-                    TileType.WALL, TileType.GRASS},
-            {TileType.GRASS, TileType.WALL, TileType.WALL, TileType.FLOOR, TileType.FLOOR,
-                    TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.WALL,
-                    TileType.WALL, TileType.GRASS},
-            {TileType.GRASS, TileType.GRASS, TileType.WALL, TileType.WALL, TileType.WALL,
-                    TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL,
-                    TileType.GRASS, TileType.GRASS},
-            {TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.WALL,
-                    TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.GRASS, TileType.GRASS,
-                    TileType.GRASS, TileType.GRASS},
-            {TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.WALL,
-                    TileType.ENTRANCE, TileType.ENTRANCE, TileType.WALL, TileType.GRASS,
-                    TileType.GRASS, TileType.GRASS, TileType.GRASS}};
     private GameDisplayViewModel viewModel;
     private String playerName;
     private int difficulty;
     private int characterSpriteId;
     private int[] currScore;
+
     // Add as member variables in the GameDisplayActivity class
     private Enemy slime1;
     private Enemy alien1;
-    private final Handler enemyMoveHandler = new Handler();
+
+    private Handler enemyMoveHandler = new Handler();
     private Runnable enemyMoveRunnable;
+
     // Patrol directions for the slimes (true for right, false for left)
     private boolean slime1Direction = true;
     private boolean slime2Direction = true;
 
-    private int powerUpX = 6;
-    private int powerUpY = 6;
-    private boolean powerUpAvailable = true; // The power-up is available to be picked up
+    private final TileType[][] tileMap = {{TileType.GRASS, TileType.GRASS, TileType.GRASS,
+            TileType.GRASS, TileType.WALL, TileType.EXIT, TileType.EXIT, TileType.WALL,
+            TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.GRASS},
+        {TileType.WALL, TileType.WALL, TileType.WALL, TileType.GRASS, TileType.WALL,
+            TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.GRASS, TileType.WALL,
+            TileType.WALL, TileType.WALL},
+        {TileType.WALL, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL,
+            TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL,
+            TileType.FLOOR, TileType.WALL},
+        {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
+            TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
+            TileType.FLOOR, TileType.WALL},
+        {TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
+            TileType.LAVA, TileType.LAVA, TileType.FLOOR, TileType.FLOOR, TileType.LAVA,
+            TileType.FLOOR, TileType.WALL},
+        {TileType.WALL, TileType.FLOOR, TileType.LAVA, TileType.FLOOR, TileType.FLOOR,
+            TileType.LAVA, TileType.LAVA, TileType.FLOOR, TileType.FLOOR, TileType.LAVA,
+            TileType.FLOOR, TileType.WALL},
+        {TileType.WALL, TileType.FLOOR, TileType.LAVA, TileType.FLOOR, TileType.FLOOR,
+            TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
+            TileType.FLOOR, TileType.WALL},
+        {TileType.WALL, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL,
+            TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL,
+            TileType.FLOOR, TileType.WALL},
+        {TileType.WALL, TileType.WALL, TileType.WALL, TileType.GRASS, TileType.WALL,
+            TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.GRASS, TileType.WALL,
+            TileType.WALL, TileType.WALL},
+        {TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.WALL,
+            TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.GRASS, TileType.GRASS,
+            TileType.GRASS, TileType.GRASS},
+        {TileType.GRASS, TileType.GRASS, TileType.WALL, TileType.WALL, TileType.WALL,
+            TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL,
+            TileType.GRASS, TileType.GRASS},
+        {TileType.GRASS, TileType.GRASS, TileType.WALL, TileType.FLOOR, TileType.FLOOR,
+            TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.WALL,
+            TileType.GRASS, TileType.GRASS},
+        {TileType.GRASS, TileType.GRASS, TileType.WALL, TileType.FLOOR, TileType.LAVA,
+            TileType.LAVA, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.WALL,
+            TileType.GRASS, TileType.GRASS},
+        {TileType.GRASS, TileType.WALL, TileType.WALL, TileType.WALL, TileType.WALL,
+            TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL,
+            TileType.WALL, TileType.GRASS},
+        {TileType.GRASS, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
+            TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
+            TileType.WALL, TileType.GRASS},
+        {TileType.GRASS, TileType.WALL, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR,
+            TileType.FLOOR, TileType.FLOOR, TileType.LAVA, TileType.LAVA, TileType.FLOOR,
+            TileType.WALL, TileType.GRASS},
+        {TileType.GRASS, TileType.WALL, TileType.WALL, TileType.FLOOR, TileType.FLOOR,
+            TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.FLOOR, TileType.WALL,
+            TileType.WALL, TileType.GRASS},
+        {TileType.GRASS, TileType.GRASS, TileType.WALL, TileType.WALL, TileType.WALL,
+            TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.WALL, TileType.WALL,
+            TileType.GRASS, TileType.GRASS},
+        {TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.WALL,
+            TileType.FLOOR, TileType.FLOOR, TileType.WALL, TileType.GRASS, TileType.GRASS,
+            TileType.GRASS, TileType.GRASS},
+        {TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.GRASS, TileType.WALL,
+            TileType.ENTRANCE, TileType.ENTRANCE, TileType.WALL, TileType.GRASS,
+            TileType.GRASS, TileType.GRASS, TileType.GRASS}};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +121,7 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         playerName = getIntent().getStringExtra("PLAYER_NAME");
         difficulty = getIntent().getIntExtra("DIFFICULTY", 3);
         characterSpriteId = getIntent().getIntExtra("CHARACTER_SPRITE", -1);
+
 
 
         viewModel.setPlayerName(playerName);
@@ -151,8 +150,6 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         h.postDelayed(r, 1000);
         viewModel.getContinueEvent().observe(this, message -> {
             Intent intent = new Intent(GameDisplayActivity.this, GameDisplayActivity2.class);
-            slime1.destroy();
-            alien1.destroy();
             intent.putExtra("PLAYER_NAME", viewModel.getPlayerName());
             intent.putExtra("DIFFICULTY", difficulty);
             intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
@@ -161,24 +158,8 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
             Player.getPlayer().removeObserver(slime1);
             Player.getPlayer().removeObserver(alien1);
             finish();
-            enemyMoveHandler.removeCallbacksAndMessages(null);
             startActivity(intent);
         });
-
-        // powerups
-
-        if (powerUpAvailable) {
-            moveViewToPosition(findViewById(R.id.powerUp), powerUpY, powerUpX);
-        }
-
-        // Attacks
-
-        Button attackButton = findViewById(R.id.attack); // Replace with your actual button ID
-        attackButton.setOnClickListener(v -> {
-            Player.getPlayer().performRadiusAttack(1); // Example: radius of 1 tile
-            update(Player.getPlayer(), "Attack", 0, 0);
-        });
-
 
 
         // Movements
@@ -206,8 +187,8 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         }
 
 
-        Player player = Player.getPlayer();
 
+        Player player = Player.getPlayer();
         player.setAlive(true);
         player.addObserver(this);
 
@@ -218,6 +199,7 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         setupEnemies(player);
         startEnemyPatrol(player);
         setPlayerHealth(difficulty, player);
+
 
 
         Button upButton = findViewById(R.id.upButton);
@@ -248,27 +230,11 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
     }
 
     public void update(Observable o, String type, int x, int y) {
-
-        if (powerUpAvailable && x == powerUpX && y == powerUpY) {
-            applyHealthPowerUp();
-            removePowerUpFromScreen();
-        }
-
-        if (slime1 != null && slime1.isDead()) {
-            findViewById(R.id.slime1).setVisibility(View.INVISIBLE);
-        }
-
-        if (alien1 != null && alien1.isDead()) {
-            findViewById(R.id.slime2).setVisibility(View.INVISIBLE);
-        }
-
         if (type.equals("Player")) {
             moveViewToPosition(findViewById(R.id.imageView), y, x);
             // Check if the player is on the EXIT tile
             if (tileMap[y][x] == TileType.EXIT) {
                 Intent intent = new Intent(GameDisplayActivity.this, GameDisplayActivity2.class);
-                slime1.destroy();
-                alien1.destroy();
                 intent.putExtra("PLAYER_NAME", playerName);
                 intent.putExtra("DIFFICULTY", difficulty);
                 intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
@@ -286,32 +252,38 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Player.getPlayer().removeObserver(this);
+        Player.getPlayer().removeObserver(this); // Unregister the activity when it's destroyed
         Player.getPlayer().removeObserver(slime1);
         Player.getPlayer().removeObserver(alien1);
     }
 
 
     private void moveViewToPosition(View view, int newRow, int newColumn) {
+        // Get the current layout parameters of the view
         GridLayout.LayoutParams params = (GridLayout.LayoutParams) view.getLayoutParams();
+
+        // Update the position
         params.rowSpec = GridLayout.spec(newRow);
         params.columnSpec = GridLayout.spec(newColumn);
 
+        // Apply the updated layout parameters
         view.setLayoutParams(params);
 
+        // Request the parent GridLayout to re-layout its children
         view.getParent().requestLayout();
     }
 
     private void setupEnemies(Player player) {
         EnemyFactory enemyFactory = new EnemyFactory();
         try {
-
+            // Instantiate your enemies
             slime1 = enemyFactory.createEnemy("Slime");
             alien1 = enemyFactory.createEnemy("Alien");
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
 
+        // Set initial positions for the enemies
         slime1.setPosition(2, 3, tileMap);
         alien1.setPosition(5, 11, tileMap);
         slime1.setPlayer(player);
@@ -326,18 +298,19 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         enemyMoveRunnable = new Runnable() {
             @Override
             public void run() {
-                patrol(slime1, 2, 9, slime1Direction, player);
-                patrol(alien1, 3, 8, slime2Direction, player);
+                patrol(slime1, 2, 9, slime1Direction, player); // Assume patrol between columns 2 and 6
+                patrol(alien1, 3, 8, slime2Direction, player); // Assume patrol between columns 5 and 9
 
+
+                // Schedule the next run
                 enemyMoveHandler.postDelayed(this, 1000); // move every second
             }
         };
         enemyMoveHandler.postDelayed(enemyMoveRunnable, 1000);
     }
 
-    private void patrol(Enemy slime, int startColumn, int endColumn,
-                        boolean direction, Player player) {
-
+    private void patrol(Enemy slime, int startColumn, int endColumn, boolean direction, Player player) {
+        // Check the current position and move the slime accordingly
         int currentColumn = slime.getX();
         if (direction && currentColumn < endColumn) {
             if (slime == slime1) {
@@ -353,19 +326,15 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
             }
         } else {
             // Change direction if we've hit the end or start
-            if (slime == slime1) {
-                slime1Direction = !slime1Direction;
-            }
-            if (slime == alien1) {
-                slime2Direction = !slime2Direction;
-            }
+            if (slime == slime1) slime1Direction = !slime1Direction;
+            if (slime == alien1) slime2Direction = !slime2Direction;
             patrol(slime, startColumn, endColumn, !direction, player);
         }
 
         if (slime == slime1) {
             update(null, "Slime1", slime.getX(), slime.getY());
         } else if (slime == alien1) {
-            update(null, "Slime2", slime.getX(), slime.getY());
+            update(null,"Slime2", slime.getX(), slime.getY());
         }
 
         slime.onCollisionWithPlayer();
@@ -374,7 +343,7 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
     }
 
     private void setPlayerHealth(int difficulty, Player player) {
-        player = Player.getPlayer();
+
         if (difficulty == 0) {
             player.setHealth(150);
             player.setDamage(10);
@@ -398,8 +367,6 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
 
     private void launchGameOver() {
         Intent intent = new Intent(GameDisplayActivity.this, GameOverActivity.class);
-        slime1.destroy();
-        alien1.destroy();
         intent.putExtra("PLAYER_NAME", playerName);
         intent.putExtra("DIFFICULTY", difficulty);
         intent.putExtra("CHARACTER_SPRITE", characterSpriteId);
@@ -408,28 +375,11 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
         Player.getPlayer().removeObserver(this); // Unregister the activity when it's destroyed
         Player.getPlayer().removeObserver(slime1);
         Player.getPlayer().removeObserver(alien1);
-        enemyMoveHandler.removeCallbacksAndMessages(null);
         finish();
         startActivity(intent);
 
     }
 
-    private void applyHealthPowerUp() {
-        Player player = Player.getPlayer();
-        PlayerDecorator decorator = new HealthBoostDecorator(player, 20);
-        decorator.setHealth(player.getHealth());
-        powerUpAvailable = false;
-
-        CharSequence text = "Collected health powerup!";
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(this, text, duration);
-        toast.show();
-    }
-
-    private void removePowerUpFromScreen() {
-        findViewById(R.id.powerUp).setVisibility(View.INVISIBLE);
-    }
 
 
 
