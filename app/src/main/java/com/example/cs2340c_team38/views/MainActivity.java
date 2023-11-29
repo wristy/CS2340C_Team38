@@ -14,7 +14,7 @@ import com.example.cs2340c_team38.viewmodels.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
     private MainViewModel viewModel;
-    MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

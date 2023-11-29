@@ -1,7 +1,5 @@
 package com.example.cs2340c_team38.model;
 
-import android.service.quicksettings.Tile;
-
 public abstract class PlayerDecorator implements PowerUp  {
     protected Player player;
 

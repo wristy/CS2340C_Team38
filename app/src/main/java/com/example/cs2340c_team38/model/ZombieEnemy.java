@@ -1,7 +1,5 @@
 package com.example.cs2340c_team38.model;
 
-import android.service.quicksettings.Tile;
-
 public class ZombieEnemy implements Enemy {
     private Player player;
     private int x;
@@ -41,8 +39,8 @@ public class ZombieEnemy implements Enemy {
     }
     public void setPosition(int x, int y, TileType[][] tileMap) {
         boolean isValid = false;
-        if (x >= 0 && x < tileMap.length && y >=0 &&
-                y < tileMap[0].length && tileMap[x][y] == TileType.FLOOR){
+        if (x >= 0 && x < tileMap.length && y >= 0
+                && y < tileMap[0].length && tileMap[x][y] == TileType.FLOOR) {
             isValid = true;
         }
         if (isValid) {

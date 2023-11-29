@@ -17,11 +17,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cs2340c_team38.R;
 import com.example.cs2340c_team38.databinding.ActivityGameDisplay2Binding;
-import com.example.cs2340c_team38.model.AlienEnemy;
 import com.example.cs2340c_team38.model.DoublePointsDecorator;
 import com.example.cs2340c_team38.model.Enemy;
 import com.example.cs2340c_team38.model.EnemyFactory;
-import com.example.cs2340c_team38.model.HealthBoostDecorator;
 import com.example.cs2340c_team38.model.MoveDown;
 import com.example.cs2340c_team38.model.MoveLeft;
 import com.example.cs2340c_team38.model.MoveRight;
@@ -30,7 +28,6 @@ import com.example.cs2340c_team38.model.Observable;
 import com.example.cs2340c_team38.model.Observer;
 import com.example.cs2340c_team38.model.Player;
 import com.example.cs2340c_team38.model.PlayerDecorator;
-import com.example.cs2340c_team38.model.PonyEnemy;
 import com.example.cs2340c_team38.model.TileType;
 import com.example.cs2340c_team38.viewmodels.GameDisplayViewModel2;
 

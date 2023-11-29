@@ -17,7 +17,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cs2340c_team38.R;
 import com.example.cs2340c_team38.databinding.ActivityGameDisplay3Binding;
-import com.example.cs2340c_team38.model.DoublePointsDecorator;
 import com.example.cs2340c_team38.model.Enemy;
 import com.example.cs2340c_team38.model.EnemyFactory;
 import com.example.cs2340c_team38.model.MoveDown;
