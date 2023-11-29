@@ -218,8 +218,23 @@ public class PowerUpTest {
         healthBoostDecorator.setHealth(player.getHealth());
 
         assertEquals(4, player.getDamage());
-        assertEquals(102, player.getHealth());
+        assertEquals(101, player.getHealth());
         assertTrue(tileMap[player.getY()][player.getX()].isWalkable());
+
+    }
+    @Test
+    public void testNoDamage() {
+        PonyEnemy ponyEnemy = new PonyEnemy();
+        player.setHealth(100);
+        player.setDamage(9);
+        ponyEnemy.setPlayer(player);
+        ponyEnemy.setPosition(0, 0, new TileType[2][2]);
+        player.setPosition(1, 1);
+        ponyEnemy.onCollisionWithPlayer();
+        healthBoostDecorator.setHealth(player.getHealth());
+        reduceDamageDecorator = new ReduceDamageDecorator(player, 5.0);
+        reduceDamageDecorator.setDamage(player.getDamage());
+        assertEquals(105, player.getHealth());
 
     }
 
