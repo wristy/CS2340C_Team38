@@ -30,7 +30,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -458,7 +457,8 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
 
             // Calculate the index and check bounds
             int index = newY * gridLayout.getColumnCount() + newX + 4;
-            if (newX >= 0 && newX < gridLayout.getColumnCount() && newY >= 0 && newY < gridLayout.getRowCount() && index < gridLayout.getChildCount()) {
+            if (newX >= 0 && newX < gridLayout.getColumnCount() && newY >= 0
+                    && newY < gridLayout.getRowCount() && index < gridLayout.getChildCount()) {
                 View tile = gridLayout.getChildAt(index);
                 if (tile != null) {
                     tile.setBackgroundColor(semiTransparentRed); // Change color as needed
@@ -475,7 +475,8 @@ public class GameDisplayActivity extends AppCompatActivity implements Observer {
                 int newY = playerY + dy[i];
                 int index = newY * gridLayout.getColumnCount() + newX + 4;
 
-                if (newX >= 0 && newX < gridLayout.getColumnCount() && newY >= 0 && newY < gridLayout.getRowCount() && index < gridLayout.getChildCount()) {
+                if (newX >= 0 && newX < gridLayout.getColumnCount() && newY >= 0
+                        && newY < gridLayout.getRowCount() && index < gridLayout.getChildCount()) {
                     View tile = gridLayout.getChildAt(index);
                     if (tile != null) {
                         tile.setBackgroundColor(Color.TRANSPARENT); // Reset to original color
