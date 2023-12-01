@@ -1,8 +1,10 @@
 package com.example.cs2340c_team38.views;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -180,36 +182,37 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
 
         // Attacks
 
-        Button attackButton = findViewById(R.id.attack); // Replace with your actual button ID
-        attackButton.setOnClickListener(v -> {
-            Player.getPlayer().performRadiusAttack(1); // Example: radius of 1 tile
-            update(Player.getPlayer(), "Attack", 0, 0);
-        });
+
 
         int startY = 18;
         int startX = 5;
 
         GridLayout gridLayout = findViewById(R.id.gameGrid);
+        Player player = Player.getPlayer();
+        Button attackButton = findViewById(R.id.attack); // Replace with your actual button ID
+        attackButton.setOnClickListener(v -> {
 
-        for (int x = 0; x < gridLayout.getColumnCount(); x++) {
-            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-            params.rowSpec = GridLayout.spec(0, 1, 1);
-            params.columnSpec = GridLayout.spec(x, 1, 1);
-            params.setGravity(Gravity.FILL);
-            params.width = 0;
-            gridLayout.addView(new Space(this), params);
-        }
+            player.performRadiusAttack(1); // Example: radius of 1 tile
+            colorAttackTiles(player.getX(), player.getY(), gridLayout);
+            update(Player.getPlayer(), "Attack", 0, 0);
+        });
 
         for (int y = 0; y < gridLayout.getRowCount(); y++) {
-            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-            params.rowSpec = GridLayout.spec(y, 1, 1);
-            params.columnSpec = GridLayout.spec(0, 1, 1);
-            params.setGravity(Gravity.FILL);
-            params.width = 0;
-            gridLayout.addView(new Space(this), params);
+            for (int x = 0; x < gridLayout.getColumnCount(); x++) {
+                View tile = new View(this);
+                GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                params.rowSpec = GridLayout.spec(y, 1, 1);
+                params.columnSpec = GridLayout.spec(x, 1, 1);
+                params.setGravity(Gravity.FILL);
+                params.width = 2; // set appropriate width
+                params.height = 2; // set appropriate height
+                tile.setLayoutParams(params);
+                tile.setBackgroundColor(Color.TRANSPARENT); // initially transparent
+                gridLayout.addView(tile);
+            }
         }
 
-        Player player = Player.getPlayer();
+
         player.addObserver(this);
         player.setPosition(startX, startY);
         player.setCurrentTile(tileMap[startY][startX]);
@@ -465,5 +468,43 @@ public class GameDisplayActivity2 extends AppCompatActivity implements Observer 
 
     private void removePowerUpFromScreen() {
         findViewById(R.id.powerUp).setVisibility(View.INVISIBLE);
+    }
+
+    private void colorAttackTiles(int playerX, int playerY, GridLayout gridLayout) {
+        int[] dx = {-1, 1, 0, 0, 0, -1, -1, 1, 1}; // Left, Right, Up, Down, Current, and Diagonals
+        int[] dy = {0, 0, -1, 1, 0, -1, 1, -1, 1};
+        int semiTransparentRed = Color.argb(128, 255, 0, 0);
+
+        for (int i = 0; i < dx.length; i++) {
+            int newX = playerX + dx[i];
+            int newY = playerY + dy[i];
+
+            // Calculate the index and check bounds
+            int index = newY * gridLayout.getColumnCount() + newX + 4;
+            if (newX >= 0 && newX < gridLayout.getColumnCount() && newY >= 0 && newY < gridLayout.getRowCount() && index < gridLayout.getChildCount()) {
+                View tile = gridLayout.getChildAt(index);
+                if (tile != null) {
+                    tile.setBackgroundColor(semiTransparentRed); // Change color as needed
+                } else {
+                    Log.e("GameDisplayActivity", "Tile at index " + index + " is null.");
+                }
+            }
+        }
+
+        // Reset the color after 1 second
+        new Handler().postDelayed(() -> {
+            for (int i = 0; i < dx.length; i++) {
+                int newX = playerX + dx[i];
+                int newY = playerY + dy[i];
+                int index = newY * gridLayout.getColumnCount() + newX + 4;
+
+                if (newX >= 0 && newX < gridLayout.getColumnCount() && newY >= 0 && newY < gridLayout.getRowCount() && index < gridLayout.getChildCount()) {
+                    View tile = gridLayout.getChildAt(index);
+                    if (tile != null) {
+                        tile.setBackgroundColor(Color.TRANSPARENT); // Reset to original color
+                    }
+                }
+            }
+        }, 1000); // Delay in milliseconds
     }
 }
