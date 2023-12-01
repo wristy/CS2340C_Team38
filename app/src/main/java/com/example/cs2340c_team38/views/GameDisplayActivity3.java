@@ -490,7 +490,7 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
                     && newY < gridLayout.getRowCount() && index < gridLayout.getChildCount()) {
                 View tile = gridLayout.getChildAt(index);
                 if (tile != null) {
-                    tile.setBackgroundColor(semiTransparentRed); // Change color as needed
+                    tile.setBackgroundColor(semiTransparentRed); // Change color as neede
                 } else {
                     Log.e("GameDisplayActivity", "Tile at index " + index + " is null.");
                 }
