@@ -256,7 +256,7 @@ public class GameDisplayActivity3 extends AppCompatActivity implements Observer 
                 params.width = 2; // set appropriate width
                 params.height = 2; // set appropriate height
                 tile.setLayoutParams(params);
-                tile.setBackgroundColor(Color.TRANSPARENT); // initially transparent
+                tile.setBackgroundColor(Color.TRANSPARENT);
                 gridLayout.addView(tile);
             }
         }
